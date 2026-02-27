@@ -47,11 +47,3 @@ export function getWeekSets(weekIndex, useDeload) {
   return WEEK_SETS[weekIndex] || WEEK_SETS[0]
 }
 
-export function get531Days(track) {
-  const days = {
-    hybrid: ['tuesday', 'friday'],
-    conditioning: [],
-    strength: ['monday', 'wednesday', 'friday'],
-  }
-  return days[track] || []
-}

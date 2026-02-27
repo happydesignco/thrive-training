@@ -1,20 +1,26 @@
-import monday from './monday.json'
-import wednesday from './wednesday.json'
-import thursday from './thursday.json'
+import conditioning from './conditioning.json'
+import metcon from './metcon.json'
+import accessory from './accessory.json'
 
-const allWorkouts = [...monday, ...wednesday, ...thursday]
+const allWorkouts = [...conditioning, ...metcon, ...accessory]
 
 export default allWorkouts
 
-export const daySlots = [...new Set(allWorkouts.map(w => w.day_slot))].sort()
+export const categories = [...new Set(allWorkouts.map(w => w.category))].sort()
+
+export const CATEGORY_LABELS = {
+  conditioning: 'Conditioning',
+  metcon: 'MetCon',
+  accessory: 'Accessory',
+}
 
 export const formats = [...new Set(allWorkouts.map(w => w.format))].sort()
 
 export const tracks = [...new Set(allWorkouts.flatMap(w => w.track))].sort()
 
-export function filterWorkouts({ daySlot, format, track, search } = {}) {
+export function filterWorkouts({ category, format, track, search } = {}) {
   return allWorkouts.filter(w => {
-    if (daySlot && w.day_slot !== daySlot) return false
+    if (category && w.category !== category) return false
     if (format && w.format !== format) return false
     if (track && !w.track.includes(track)) return false
     if (search) {

@@ -1,15 +1,26 @@
 [
   {
-    "id": "thu-001",
-    "name": "Susanoo",
+    "id": "acc-001",
+    "name": "Heat",
     "title": "RDL + Hip Thrust + Bent Over Row",
-    "day_slot": "thursday",
-    "track": ["hybrid", "strength", "conditioning"],
+    "category": "accessory",
+    "track": [
+      "hybrid",
+      "strength",
+      "conditioning"
+    ],
     "format": "accessory",
-    "rotation": "posterior_chain",
+    "rotation": "Posterior Chain",
     "energy_system": "aerobic",
-    "movement_patterns": ["hinge", "pull"],
-    "equipment": ["barbell", "dumbbells", "bench"],
+    "movement_patterns": [
+      "hinge",
+      "pull"
+    ],
+    "equipment": [
+      "barbell",
+      "dumbbells",
+      "bench"
+    ],
     "duration_minutes": 40,
     "intensity": "moderate",
     "sections": {
@@ -61,20 +72,34 @@
       "conditioning": "Circuit format: RDL x 8 → Hip Thrust x 12 → Row x 12 → Ham Curl x 15, 4 rounds, 60s rest",
       "hybrid": "As written"
     },
-    "avoid_after": ["deadlift"],
-    "notes": "Classic posterior chain day. Supports deadlift progression. Don't go so heavy you're wrecked for Friday."
+    "avoid_after": [
+      "deadlift"
+    ],
+    "notes": "Classic posterior chain day. Supports deadlift progression. Don't go so heavy you're wrecked for Friday.",
+    "excerpt": "RDLs + hip thrusts — methodical, heavy, professional"
   },
   {
-    "id": "thu-002",
-    "name": "Tsukuyomi",
+    "id": "acc-002",
+    "name": "Ronin",
     "title": "Good Morning + Glute Bridge + Face Pull",
-    "day_slot": "thursday",
-    "track": ["hybrid", "strength", "conditioning"],
+    "category": "accessory",
+    "track": [
+      "hybrid",
+      "strength",
+      "conditioning"
+    ],
     "format": "accessory",
-    "rotation": "posterior_chain",
+    "rotation": "Posterior Chain",
     "energy_system": "aerobic",
-    "movement_patterns": ["hinge", "pull"],
-    "equipment": ["barbell", "dumbbells", "cable_machine"],
+    "movement_patterns": [
+      "hinge",
+      "pull"
+    ],
+    "equipment": [
+      "barbell",
+      "dumbbells",
+      "cable_machine"
+    ],
     "duration_minutes": 40,
     "intensity": "moderate",
     "sections": {
@@ -127,20 +152,33 @@
       "conditioning": "Circuit: Good Morning x 8 → SL Glute Bridge x 10/side → Face Pull x 15 → Back Ext x 10, 4 rounds minimal rest",
       "hybrid": "As written"
     },
-    "avoid_after": ["deadlift"],
-    "notes": "Lighter posterior chain work. Good mornings build the same muscles as deadlifts without the CNS tax."
+    "avoid_after": [
+      "deadlift"
+    ],
+    "notes": "Lighter posterior chain work. Good mornings build the same muscles as deadlifts without the CNS tax.",
+    "excerpt": "Good mornings + face pulls — calculated, no wasted motion"
   },
   {
-    "id": "thu-003",
-    "name": "Raijin",
+    "id": "acc-003",
+    "name": "The Bourne Identity",
     "title": "B-Stance RDL + Seated Row + Hamstring Curl",
-    "day_slot": "thursday",
-    "track": ["hybrid", "strength", "conditioning"],
+    "category": "accessory",
+    "track": [
+      "hybrid",
+      "strength",
+      "conditioning"
+    ],
     "format": "accessory",
-    "rotation": "posterior_chain",
+    "rotation": "Posterior Chain",
     "energy_system": "aerobic",
-    "movement_patterns": ["hinge", "pull"],
-    "equipment": ["dumbbells", "cable_machine"],
+    "movement_patterns": [
+      "hinge",
+      "pull"
+    ],
+    "equipment": [
+      "dumbbells",
+      "cable_machine"
+    ],
     "duration_minutes": 40,
     "intensity": "moderate",
     "sections": {
@@ -188,20 +226,33 @@
       "conditioning": "Circuit format, 4 rounds, 45s rest between rounds",
       "hybrid": "As written"
     },
-    "avoid_after": ["deadlift"],
-    "notes": "B-stance RDL is a unilateral posterior chain builder. Great for identifying L/R imbalances."
+    "avoid_after": [
+      "deadlift"
+    ],
+    "notes": "B-stance RDL is a unilateral posterior chain builder. Great for identifying L/R imbalances.",
+    "excerpt": "B-stance RDL — unilateral, precise, adaptive"
   },
   {
-    "id": "thu-004",
-    "name": "Fujin",
+    "id": "acc-004",
+    "name": "Escape from New York",
     "title": "KB Swing + Pull-Up + Farmer Carry",
-    "day_slot": "thursday",
-    "track": ["hybrid", "conditioning"],
+    "category": "accessory",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "accessory",
-    "rotation": "posterior_chain",
+    "rotation": "Posterior Chain",
     "energy_system": "glycolytic",
-    "movement_patterns": ["hinge", "pull", "carry"],
-    "equipment": ["kettlebells", "pull_up_bar"],
+    "movement_patterns": [
+      "hinge",
+      "pull",
+      "carry"
+    ],
+    "equipment": [
+      "kettlebells",
+      "pull_up_bar"
+    ],
     "duration_minutes": 35,
     "intensity": "moderate",
     "sections": {
@@ -241,20 +292,35 @@
       "conditioning": "As written, push for unbroken carry",
       "hybrid": "As written"
     },
-    "avoid_after": ["deadlift"],
-    "notes": "More conditioning-flavored posterior chain work. KB swings + pull-ups are a HYROX-relevant pairing."
+    "avoid_after": [
+      "deadlift"
+    ],
+    "notes": "More conditioning-flavored posterior chain work. KB swings + pull-ups are a HYROX-relevant pairing.",
+    "excerpt": "KB swings + pull-ups + carry — scrappy, resourceful"
   },
   {
-    "id": "thu-005",
-    "name": "Amaterasu",
+    "id": "acc-005",
+    "name": "Mission Impossible",
     "title": "DB Bench + Dips + Tricep Pushdown",
-    "day_slot": "thursday",
-    "track": ["hybrid", "strength", "conditioning"],
+    "category": "accessory",
+    "track": [
+      "hybrid",
+      "strength",
+      "conditioning"
+    ],
     "format": "accessory",
-    "rotation": "pressing_core",
+    "rotation": "Pressing + Core",
     "energy_system": "aerobic",
-    "movement_patterns": ["press", "push"],
-    "equipment": ["dumbbells", "bench", "dip_station", "cable_machine"],
+    "movement_patterns": [
+      "press",
+      "push"
+    ],
+    "equipment": [
+      "dumbbells",
+      "bench",
+      "dip_station",
+      "cable_machine"
+    ],
     "duration_minutes": 40,
     "intensity": "moderate",
     "sections": {
@@ -309,20 +375,31 @@
       "conditioning": "Circuit: DB Bench x 10 → Dips x 15 → Pushdown x 15 → Plank x 30s, 4 rounds, 60s rest",
       "hybrid": "As written"
     },
-    "avoid_after": ["heavy_bench"],
-    "notes": "Pressing volume to support bench progression. DB bench builds stabilizers barbell doesn't hit."
+    "avoid_after": [
+      "heavy_bench"
+    ],
+    "notes": "Pressing volume to support bench progression. DB bench builds stabilizers barbell doesn't hit.",
+    "excerpt": "DB bench + dips — executing the plan"
   },
   {
-    "id": "thu-006",
-    "name": "Izanagi",
+    "id": "acc-006",
+    "name": "Batman Begins",
     "title": "DB Z-Press + Push-Ups + Lateral Raise",
-    "day_slot": "thursday",
-    "track": ["hybrid", "strength", "conditioning"],
+    "category": "accessory",
+    "track": [
+      "hybrid",
+      "strength",
+      "conditioning"
+    ],
     "format": "accessory",
-    "rotation": "pressing_core",
+    "rotation": "Pressing + Core",
     "energy_system": "aerobic",
-    "movement_patterns": ["press"],
-    "equipment": ["dumbbells"],
+    "movement_patterns": [
+      "press"
+    ],
+    "equipment": [
+      "dumbbells"
+    ],
     "duration_minutes": 35,
     "intensity": "moderate",
     "sections": {
@@ -370,20 +447,35 @@
       "conditioning": "Circuit format, 4 rounds, minimal rest",
       "hybrid": "As written"
     },
-    "avoid_after": ["heavy_press"],
-    "notes": "Z-press forces strict pressing with no leg drive or back arch. Humbling but effective for OHP transfer."
+    "avoid_after": [
+      "heavy_press"
+    ],
+    "notes": "Z-press forces strict pressing with no leg drive or back arch. Humbling but effective for OHP transfer.",
+    "excerpt": "Z-press — humbling, foundational, building from nothing"
   },
   {
-    "id": "thu-007",
-    "name": "Bishamonten",
+    "id": "acc-007",
+    "name": "The Untouchables",
     "title": "Incline DB Press + Dips + Skull Crushers",
-    "day_slot": "thursday",
-    "track": ["hybrid", "strength", "conditioning"],
+    "category": "accessory",
+    "track": [
+      "hybrid",
+      "strength",
+      "conditioning"
+    ],
     "format": "accessory",
-    "rotation": "pressing_core",
+    "rotation": "Pressing + Core",
     "energy_system": "aerobic",
-    "movement_patterns": ["press", "push"],
-    "equipment": ["dumbbells", "bench", "dip_station", "ez_bar"],
+    "movement_patterns": [
+      "press",
+      "push"
+    ],
+    "equipment": [
+      "dumbbells",
+      "bench",
+      "dip_station",
+      "ez_bar"
+    ],
     "duration_minutes": 40,
     "intensity": "moderate",
     "sections": {
@@ -435,20 +527,31 @@
       "conditioning": "Circuit: Incline x 10 → Dips x 12 → Skull Crush x 12 → Carry x 50m, 4 rounds, 60s rest",
       "hybrid": "As written"
     },
-    "avoid_after": ["heavy_bench"],
-    "notes": "Incline pressing builds upper chest and front delt — transfers directly to overhead press."
+    "avoid_after": [
+      "heavy_bench"
+    ],
+    "notes": "Incline pressing builds upper chest and front delt — transfers directly to overhead press.",
+    "excerpt": "Incline press + skull crushers — clean, organized, effective"
   },
   {
-    "id": "thu-008",
-    "name": "Inari",
+    "id": "acc-008",
+    "name": "Fight Club",
     "title": "Push-Up Variations + KB Press + Hollow Body",
-    "day_slot": "thursday",
-    "track": ["hybrid", "conditioning"],
+    "category": "accessory",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "accessory",
-    "rotation": "pressing_core",
+    "rotation": "Pressing + Core",
     "energy_system": "glycolytic",
-    "movement_patterns": ["press", "push"],
-    "equipment": ["kettlebells"],
+    "movement_patterns": [
+      "press",
+      "push"
+    ],
+    "equipment": [
+      "kettlebells"
+    ],
     "duration_minutes": 30,
     "intensity": "moderate",
     "sections": {
@@ -486,20 +589,34 @@
       "conditioning": "As written",
       "hybrid": "As written"
     },
-    "avoid_after": ["heavy_bench", "heavy_press"],
-    "notes": "Minimal equipment pressing day. Push-up variation rotation hits all angles. Track your max set over time."
+    "avoid_after": [
+      "heavy_bench",
+      "heavy_press"
+    ],
+    "notes": "Minimal equipment pressing day. Push-up variation rotation hits all angles. Track your max set over time.",
+    "excerpt": "Push-up variations EMOM — first rule: don't talk about it"
   },
   {
-    "id": "thu-009",
-    "name": "Ryujin",
+    "id": "acc-009",
+    "name": "Crouching Tiger",
     "title": "90/90 Flow + Pistol Progression + Step-Up",
-    "day_slot": "thursday",
-    "track": ["hybrid", "strength", "conditioning"],
+    "category": "accessory",
+    "track": [
+      "hybrid",
+      "strength",
+      "conditioning"
+    ],
     "format": "mobility",
-    "rotation": "mobility_single_leg",
+    "rotation": "Mobility + Single-Leg",
     "energy_system": "aerobic",
-    "movement_patterns": ["squat", "balance"],
-    "equipment": ["box", "dumbbells"],
+    "movement_patterns": [
+      "squat",
+      "balance"
+    ],
+    "equipment": [
+      "box",
+      "dumbbells"
+    ],
     "duration_minutes": 40,
     "intensity": "low",
     "sections": {
@@ -553,19 +670,29 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "Mobility focus — 90/90s are a known weak spot. Progressive overload the pistol box height over weeks."
+    "notes": "Mobility focus — 90/90s are a known weak spot. Progressive overload the pistol box height over weeks.",
+    "excerpt": "90/90 flow + pistol progression — movement mastery"
   },
   {
-    "id": "thu-010",
-    "name": "Kagutsuchi",
+    "id": "acc-010",
+    "name": "The Karate Kid",
     "title": "Shoulder Flow + Turkish Get-Up + Balance Work",
-    "day_slot": "thursday",
-    "track": ["hybrid", "strength", "conditioning"],
+    "category": "accessory",
+    "track": [
+      "hybrid",
+      "strength",
+      "conditioning"
+    ],
     "format": "mobility",
-    "rotation": "mobility_single_leg",
+    "rotation": "Mobility + Single-Leg",
     "energy_system": "aerobic",
-    "movement_patterns": ["press", "balance"],
-    "equipment": ["kettlebells"],
+    "movement_patterns": [
+      "press",
+      "balance"
+    ],
+    "equipment": [
+      "kettlebells"
+    ],
     "duration_minutes": 40,
     "intensity": "low",
     "sections": {
@@ -615,19 +742,31 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "TGU is the ultimate full-body movement quality test. Low weight, high attention. Great for SI/lumbar health."
+    "notes": "TGU is the ultimate full-body movement quality test. Low weight, high attention. Great for SI/lumbar health.",
+    "excerpt": "TGU + balance — wax on, wax off"
   },
   {
-    "id": "thu-011",
-    "name": "Izanami",
+    "id": "acc-011",
+    "name": "Blade Runner",
     "title": "Bulgarian Split Squat + Lateral Work + Hip Flow",
-    "day_slot": "thursday",
-    "track": ["hybrid", "strength", "conditioning"],
+    "category": "accessory",
+    "track": [
+      "hybrid",
+      "strength",
+      "conditioning"
+    ],
     "format": "accessory",
-    "rotation": "mobility_single_leg",
+    "rotation": "Mobility + Single-Leg",
     "energy_system": "aerobic",
-    "movement_patterns": ["squat", "balance"],
-    "equipment": ["dumbbells", "bench", "band"],
+    "movement_patterns": [
+      "squat",
+      "balance"
+    ],
+    "equipment": [
+      "dumbbells",
+      "bench",
+      "band"
+    ],
     "duration_minutes": 40,
     "intensity": "moderate",
     "sections": {
@@ -677,20 +816,33 @@
       "conditioning": "Circuit: BSS x 8/side → Lat Lunge x 8/side → Band Walk x 15/side → 90/90 x 8/side, 4 rounds, 60s rest",
       "hybrid": "As written"
     },
-    "avoid_after": ["heavy_squat"],
-    "notes": "BSS is arguably the best single-leg exercise for squat transfer. Lateral work addresses the frontal plane."
+    "avoid_after": [
+      "heavy_squat"
+    ],
+    "notes": "BSS is arguably the best single-leg exercise for squat transfer. Lateral work addresses the frontal plane.",
+    "excerpt": "Bulgarian split squat + lateral — precision engineering"
   },
   {
-    "id": "thu-012",
-    "name": "Benzaiten",
+    "id": "acc-012",
+    "name": "Big Trouble in Little China",
     "title": "Cossack Squat + Single-Leg Deadlift + Ankle/Hip Flow",
-    "day_slot": "thursday",
-    "track": ["hybrid", "strength", "conditioning"],
+    "category": "accessory",
+    "track": [
+      "hybrid",
+      "strength",
+      "conditioning"
+    ],
     "format": "mobility",
-    "rotation": "mobility_single_leg",
+    "rotation": "Mobility + Single-Leg",
     "energy_system": "aerobic",
-    "movement_patterns": ["squat", "hinge", "balance"],
-    "equipment": ["kettlebells"],
+    "movement_patterns": [
+      "squat",
+      "hinge",
+      "balance"
+    ],
+    "equipment": [
+      "kettlebells"
+    ],
     "duration_minutes": 35,
     "intensity": "low",
     "sections": {
@@ -741,6 +893,7 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "Cossack squats build hip mobility under load — directly transfers to squat depth. Lighter day overall."
+    "notes": "Cossack squats build hip mobility under load — directly transfers to squat depth. Lighter day overall.",
+    "excerpt": "Cossack squat + hip flow — weird, wonderful, secretly brilliant"
   }
 ]

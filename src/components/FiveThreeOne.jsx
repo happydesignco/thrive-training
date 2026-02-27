@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import { useUser } from '../hooks/useUser'
 import {
   LIFTS, WEEK_SETS, DELOAD_SETS, WEEK_LABELS, COLOR_MAP,
-  calcWeight as calcWeightUtil, get531WeekIndex, get531Days,
+  calcWeight as calcWeightUtil, get531WeekIndex,
 } from '../utils/fiveThreeOne'
 
 const DAY_LABELS = {
@@ -20,9 +20,11 @@ function getMonday(date) {
 }
 
 export default function FiveThreeOne() {
-  const { currentUser, getUserData, setUserData, removeUserData } = useUser()
-  const track = currentUser.track || 'hybrid'
-  const fiveThreeOneDays = get531Days(track)
+  const { getUserData, setUserData, removeUserData, getSchedule } = useUser()
+  const schedule = getSchedule()
+  const fiveThreeOneDays = Object.entries(schedule.days)
+    .filter(([, type]) => type === '531')
+    .map(([day]) => day)
 
   const [view, setView] = useState('form') // 'form' | 'results'
   const [mode, setMode] = useState('tm')

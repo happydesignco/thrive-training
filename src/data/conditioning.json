@@ -1,14 +1,26 @@
 [
   {
-    "id": "mon-001",
-    "name": "Ares",
+    "id": "con-001",
+    "name": "Die Hard",
     "title": "Row/Ski Ladder + Sled Push + Farmer Carry",
-    "day_slot": "monday",
-    "track": ["hybrid", "conditioning"],
+    "category": "conditioning",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "hyrox_sim",
     "energy_system": "glycolytic",
-    "movement_patterns": ["hinge", "carry", "machine"],
-    "equipment": ["rower", "ski_erg", "sled", "kettlebells"],
+    "movement_patterns": [
+      "hinge",
+      "carry",
+      "machine"
+    ],
+    "equipment": [
+      "rower",
+      "ski_erg",
+      "sled",
+      "kettlebells"
+    ],
     "duration_minutes": 45,
     "intensity": "high",
     "sections": {
@@ -52,18 +64,32 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "Ascending ladder — pace the early rounds. Good benchmark."
+    "notes": "Ascending ladder — pace the early rounds. Good benchmark.",
+    "rotation": "HYROX Simulation",
+    "excerpt": "Ascending ladder — just keeps escalating, you keep surviving"
   },
   {
-    "id": "mon-002",
-    "name": "Poseidon",
+    "id": "con-002",
+    "name": "Predator",
     "title": "Bike/Row Intervals + Sled Pull + Burpee Broad Jump",
-    "day_slot": "monday",
-    "track": ["hybrid", "conditioning"],
+    "category": "conditioning",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "hyrox_sim",
     "energy_system": "mixed",
-    "movement_patterns": ["push", "pull", "machine"],
-    "equipment": ["assault_bike", "rower", "sled", "open_floor"],
+    "movement_patterns": [
+      "push",
+      "pull",
+      "machine"
+    ],
+    "equipment": [
+      "assault_bike",
+      "rower",
+      "sled",
+      "open_floor"
+    ],
     "duration_minutes": 45,
     "intensity": "high",
     "sections": {
@@ -106,18 +132,31 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "Alternating machine each round keeps it interesting. The sled pull + BBJ combo is a HYROX staple."
+    "notes": "Alternating machine each round keeps it interesting. The sled pull + BBJ combo is a HYROX staple.",
+    "rotation": "HYROX Simulation",
+    "excerpt": "Alternating machine hunts you down round after round"
   },
   {
-    "id": "mon-003",
-    "name": "Anubis",
+    "id": "con-003",
+    "name": "Terminator",
     "title": "Ski Erg Descender + Wall Balls + Sandbag Lunges",
-    "day_slot": "monday",
-    "track": ["hybrid", "conditioning"],
+    "category": "conditioning",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "hyrox_sim",
     "energy_system": "glycolytic",
-    "movement_patterns": ["squat", "carry", "machine"],
-    "equipment": ["ski_erg", "wall_ball", "sandbag"],
+    "movement_patterns": [
+      "squat",
+      "carry",
+      "machine"
+    ],
+    "equipment": [
+      "ski_erg",
+      "wall_ball",
+      "sandbag"
+    ],
     "duration_minutes": 45,
     "intensity": "moderate",
     "sections": {
@@ -152,19 +191,35 @@
       "conditioning": "As written, add a Zone 2 run x 10 min finisher",
       "hybrid": "As written"
     },
-    "avoid_after": ["heavy_squat"],
-    "notes": "Descending ski distances keep the intensity climbing. Wall balls will tax your legs for Tuesday squats — manage effort."
+    "avoid_after": [
+      "heavy_squat"
+    ],
+    "notes": "Descending ski distances keep the intensity climbing. Wall balls will tax your legs for Tuesday squats — manage effort.",
+    "rotation": "HYROX Simulation",
+    "excerpt": "Descending ski distances — it won't stop, it can't be bargained with"
   },
   {
-    "id": "mon-004",
-    "name": "Hephaestus",
+    "id": "con-004",
+    "name": "Rambo",
     "title": "Row/Bike Pyramid + Sled Push/Pull Combo",
-    "day_slot": "monday",
-    "track": ["hybrid", "conditioning", "strength"],
+    "category": "conditioning",
+    "track": [
+      "hybrid",
+      "conditioning",
+      "strength"
+    ],
     "format": "hyrox_sim",
     "energy_system": "mixed",
-    "movement_patterns": ["push", "pull", "machine"],
-    "equipment": ["rower", "assault_bike", "sled"],
+    "movement_patterns": [
+      "push",
+      "pull",
+      "machine"
+    ],
+    "equipment": [
+      "rower",
+      "assault_bike",
+      "sled"
+    ],
     "duration_minutes": 50,
     "intensity": "high",
     "sections": {
@@ -200,18 +255,33 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "Pyramid up then back down. The middle round (Row 750m) is the peak — don't go out too hot."
+    "notes": "Pyramid up then back down. The middle round (Row 750m) is the peak — don't go out too hot.",
+    "rotation": "HYROX Simulation",
+    "excerpt": "Pyramid up and back — drawn-out war of attrition"
   },
   {
-    "id": "mon-005",
-    "name": "Osiris",
+    "id": "con-005",
+    "name": "Braveheart",
     "title": "Machine Mixer AMRAP 30 + Farmer Carry + Wall Balls",
-    "day_slot": "monday",
-    "track": ["hybrid", "conditioning"],
+    "category": "conditioning",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "amrap",
     "energy_system": "aerobic",
-    "movement_patterns": ["carry", "squat", "machine"],
-    "equipment": ["rower", "ski_erg", "assault_bike", "kettlebells", "wall_ball"],
+    "movement_patterns": [
+      "carry",
+      "squat",
+      "machine"
+    ],
+    "equipment": [
+      "rower",
+      "ski_erg",
+      "assault_bike",
+      "kettlebells",
+      "wall_ball"
+    ],
     "duration_minutes": 45,
     "intensity": "moderate",
     "sections": {
@@ -254,18 +324,34 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "Long AMRAP — find a sustainable pace. All 3 machines in one workout. Score = rounds + reps."
+    "notes": "Long AMRAP — find a sustainable pace. All 3 machines in one workout. Score = rounds + reps.",
+    "rotation": "AMRAP",
+    "excerpt": "30-minute AMRAP — long, sprawling, you'll need heart"
   },
   {
-    "id": "mon-006",
-    "name": "Odin",
+    "id": "con-006",
+    "name": "Mad Max",
     "title": "6-Round Machine Cycle + Sled Push + Farmer Carry",
-    "day_slot": "monday",
-    "track": ["hybrid", "conditioning", "strength"],
+    "category": "conditioning",
+    "track": [
+      "hybrid",
+      "conditioning",
+      "strength"
+    ],
     "format": "hyrox_sim",
     "energy_system": "glycolytic",
-    "movement_patterns": ["push", "carry", "machine"],
-    "equipment": ["ski_erg", "rower", "assault_bike", "sled", "kettlebells"],
+    "movement_patterns": [
+      "push",
+      "carry",
+      "machine"
+    ],
+    "equipment": [
+      "ski_erg",
+      "rower",
+      "assault_bike",
+      "sled",
+      "kettlebells"
+    ],
     "duration_minutes": 50,
     "intensity": "high",
     "sections": {
@@ -307,18 +393,32 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "Full HYROX station density. All 3 machines cycled. This is a long grinder — pace early."
+    "notes": "Full HYROX station density. All 3 machines cycled. This is a long grinder — pace early.",
+    "rotation": "HYROX Simulation",
+    "excerpt": "6-round machine cycle — pure vehicular chaos"
   },
   {
-    "id": "mon-007",
-    "name": "Horus",
+    "id": "con-007",
+    "name": "Gladiator",
     "title": "Row/Ski Intervals + Sandbag Lunges + Burpee Broad Jump",
-    "day_slot": "monday",
-    "track": ["hybrid", "conditioning"],
+    "category": "conditioning",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "for_time",
     "energy_system": "glycolytic",
-    "movement_patterns": ["squat", "push", "machine"],
-    "equipment": ["rower", "ski_erg", "sandbag", "open_floor"],
+    "movement_patterns": [
+      "squat",
+      "push",
+      "machine"
+    ],
+    "equipment": [
+      "rower",
+      "ski_erg",
+      "sandbag",
+      "open_floor"
+    ],
     "duration_minutes": 40,
     "intensity": "high",
     "sections": {
@@ -359,19 +459,36 @@
       "conditioning": "As written, target sub-25 min",
       "hybrid": "As written"
     },
-    "avoid_after": ["heavy_squat"],
-    "notes": "Lunges + BBJ will light up the quads. Be aware of Tuesday squat day."
+    "avoid_after": [
+      "heavy_squat"
+    ],
+    "notes": "Lunges + BBJ will light up the quads. Be aware of Tuesday squat day.",
+    "rotation": "For Time",
+    "excerpt": "Lunges + BBJ every round — arena punishment"
   },
   {
-    "id": "mon-008",
-    "name": "Kali",
+    "id": "con-008",
+    "name": "Aliens",
     "title": "Ski/Row/Bike Chipper + Sled Push + Wall Balls",
-    "day_slot": "monday",
-    "track": ["hybrid", "conditioning"],
+    "category": "conditioning",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "for_time",
     "energy_system": "glycolytic",
-    "movement_patterns": ["squat", "push", "machine"],
-    "equipment": ["ski_erg", "rower", "assault_bike", "sled", "wall_ball"],
+    "movement_patterns": [
+      "squat",
+      "push",
+      "machine"
+    ],
+    "equipment": [
+      "ski_erg",
+      "rower",
+      "assault_bike",
+      "sled",
+      "wall_ball"
+    ],
     "duration_minutes": 45,
     "intensity": "high",
     "sections": {
@@ -408,19 +525,36 @@
       "conditioning": "As written — straight through, no breaks on machines if possible",
       "hybrid": "As written"
     },
-    "avoid_after": ["heavy_squat"],
-    "notes": "Long chipper. 100 total wall balls is a grind — break early (sets of 15–20) to avoid redlining."
+    "avoid_after": [
+      "heavy_squat"
+    ],
+    "notes": "Long chipper. 100 total wall balls is a grind — break early (sets of 15–20) to avoid redlining.",
+    "rotation": "For Time",
+    "excerpt": "Chipper — one long march through hostile territory"
   },
   {
-    "id": "mon-009",
-    "name": "Hermes",
+    "id": "con-009",
+    "name": "Lethal Weapon",
     "title": "E3MOM Machine + Sled Push/Pull Couplet",
-    "day_slot": "monday",
-    "track": ["hybrid", "strength", "conditioning"],
+    "category": "conditioning",
+    "track": [
+      "hybrid",
+      "strength",
+      "conditioning"
+    ],
     "format": "emom",
     "energy_system": "mixed",
-    "movement_patterns": ["push", "pull", "machine"],
-    "equipment": ["rower", "ski_erg", "assault_bike", "sled"],
+    "movement_patterns": [
+      "push",
+      "pull",
+      "machine"
+    ],
+    "equipment": [
+      "rower",
+      "ski_erg",
+      "assault_bike",
+      "sled"
+    ],
     "duration_minutes": 45,
     "intensity": "moderate",
     "sections": {
@@ -469,18 +603,31 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "Built-in rest if you move fast. The rotating machine keeps it fresh. Farmer carry finisher is a grip test."
+    "notes": "Built-in rest if you move fast. The rotating machine keeps it fresh. Farmer carry finisher is a grip test.",
+    "rotation": "EMOM",
+    "excerpt": "E3MOM with built-in rest — buddy-cop pacing, intense then chill"
   },
   {
-    "id": "mon-010",
-    "name": "Sobek",
+    "id": "con-010",
+    "name": "Rocky",
     "title": "Assault Bike Ladder + Sled Pull + Sandbag Lunges",
-    "day_slot": "monday",
-    "track": ["hybrid", "conditioning"],
+    "category": "conditioning",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "for_time",
     "energy_system": "glycolytic",
-    "movement_patterns": ["squat", "pull", "machine"],
-    "equipment": ["assault_bike", "sled", "sandbag"],
+    "movement_patterns": [
+      "squat",
+      "pull",
+      "machine"
+    ],
+    "equipment": [
+      "assault_bike",
+      "sled",
+      "sandbag"
+    ],
     "duration_minutes": 40,
     "intensity": "high",
     "sections": {
@@ -515,19 +662,37 @@
       "conditioning": "As written",
       "hybrid": "As written"
     },
-    "avoid_after": ["heavy_squat"],
-    "notes": "Ascending ladder — the bike calories climb fast. Last round is a suffer-fest."
+    "avoid_after": [
+      "heavy_squat"
+    ],
+    "notes": "Ascending ladder — the bike calories climb fast. Last round is a suffer-fest.",
+    "rotation": "For Time",
+    "excerpt": "Ascending bike ladder — each round hits harder"
   },
   {
-    "id": "mon-011",
-    "name": "Athena",
+    "id": "con-011",
+    "name": "The Matrix",
     "title": "Mini HYROX Simulation — 4 Stations",
-    "day_slot": "monday",
-    "track": ["hybrid", "conditioning", "strength"],
+    "category": "conditioning",
+    "track": [
+      "hybrid",
+      "conditioning",
+      "strength"
+    ],
     "format": "hyrox_sim",
     "energy_system": "mixed",
-    "movement_patterns": ["push", "carry", "squat", "machine"],
-    "equipment": ["rower", "sled", "kettlebells", "wall_ball"],
+    "movement_patterns": [
+      "push",
+      "carry",
+      "squat",
+      "machine"
+    ],
+    "equipment": [
+      "rower",
+      "sled",
+      "kettlebells",
+      "wall_ball"
+    ],
     "duration_minutes": 45,
     "intensity": "high",
     "sections": {
@@ -565,18 +730,32 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "Closest thing to a real HYROX race simulation. Track total time — monthly benchmark."
+    "notes": "Closest thing to a real HYROX race simulation. Track total time — monthly benchmark.",
+    "rotation": "HYROX Simulation",
+    "excerpt": "Mini HYROX sim — the one where you find out what you're made of"
   },
   {
-    "id": "mon-012",
-    "name": "Apollo",
+    "id": "con-012",
+    "name": "Point Break",
     "title": "Alternating Machine Intervals + Burpee Broad Jump + Carry",
-    "day_slot": "monday",
-    "track": ["hybrid", "conditioning"],
+    "category": "conditioning",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "for_time",
     "energy_system": "glycolytic",
-    "movement_patterns": ["push", "carry", "machine"],
-    "equipment": ["rower", "ski_erg", "open_floor", "kettlebells"],
+    "movement_patterns": [
+      "push",
+      "carry",
+      "machine"
+    ],
+    "equipment": [
+      "rower",
+      "ski_erg",
+      "open_floor",
+      "kettlebells"
+    ],
     "duration_minutes": 40,
     "intensity": "high",
     "sections": {
@@ -618,6 +797,8 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "BBJ + carry every round is brutal grip and leg work. Short machine distances keep transitions fast."
+    "notes": "BBJ + carry every round is brutal grip and leg work. Short machine distances keep transitions fast.",
+    "rotation": "For Time",
+    "excerpt": "BBJ + carry every round — relentless adrenaline"
   }
 ]

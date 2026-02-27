@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import { filterWorkouts, daySlots, formats, tracks, getWorkoutById } from '../data/workouts'
+import { filterWorkouts, categories, CATEGORY_LABELS, formats, tracks, getWorkoutById } from '../data/workouts'
 import WorkoutCard from './WorkoutCard'
 
 export default function WorkoutLibrary() {
-  const [daySlot, setDaySlot] = useState('')
+  const [category, setCategory] = useState('')
   const [format, setFormat] = useState('')
   const [track, setTrack] = useState('')
   const [search, setSearch] = useState('')
@@ -23,7 +23,7 @@ export default function WorkoutLibrary() {
     }
   }, [])
 
-  const results = filterWorkouts({ daySlot, format, track, search })
+  const results = filterWorkouts({ category, format, track, search })
 
   const selectClass = "bg-input-bg border border-border rounded-md px-2 py-2 font-mono text-xs"
 
@@ -31,10 +31,10 @@ export default function WorkoutLibrary() {
     <div>
       {/* Filters */}
       <div className="flex flex-wrap gap-2 mb-6">
-        <select value={daySlot} onChange={e => setDaySlot(e.target.value)} className={selectClass}>
-          <option value="">All Days</option>
-          {daySlots.map(d => (
-            <option key={d} value={d}>{d.charAt(0).toUpperCase() + d.slice(1)}</option>
+        <select value={category} onChange={e => setCategory(e.target.value)} className={selectClass}>
+          <option value="">All Categories</option>
+          {categories.map(c => (
+            <option key={c} value={c}>{CATEGORY_LABELS[c] || c}</option>
           ))}
         </select>
 

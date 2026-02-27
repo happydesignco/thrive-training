@@ -1,9 +1,10 @@
 import { createContext, useContext, useState, useCallback } from 'react'
+import { DEFAULT_SCHEDULES } from '../data/schedules'
 
 const UserContext = createContext()
 
 const DEFAULT_USERS = [
-  { id: 'adam', name: 'Adam', track: 'hybrid' },
+  { id: 'adam', name: 'Adam', scheduleId: 'hybrid' },
 ]
 
 function storageKey(userId, key) {
@@ -50,10 +51,17 @@ export function UserProvider({ children }) {
     localStorage.removeItem(storageKey(currentUser.id, key))
   }, [currentUser.id])
 
+  const getSchedule = useCallback(() => {
+    const custom = getUserData('schedule')
+    if (custom) return custom
+    const id = currentUser.scheduleId || currentUser.track || 'hybrid'
+    return DEFAULT_SCHEDULES[id] || DEFAULT_SCHEDULES.hybrid
+  }, [currentUser.scheduleId, currentUser.track, getUserData])
+
   return (
     <UserContext.Provider value={{
       currentUser, users, setCurrentUser, addUser,
-      getUserData, setUserData, removeUserData,
+      getUserData, setUserData, removeUserData, getSchedule,
     }}>
       {children}
     </UserContext.Provider>

@@ -12,21 +12,6 @@ const DAY_LABELS = {
   thursday: 'Thu', friday: 'Fri', saturday: 'Sat', sunday: 'Sun',
 }
 
-const TRACK_SCHEDULES = {
-  hybrid: {
-    monday: 'workout', tuesday: '531', wednesday: 'workout',
-    thursday: 'workout', friday: '531', saturday: 'rest', sunday: 'rest',
-  },
-  conditioning: {
-    monday: 'workout', tuesday: 'rest', wednesday: 'workout',
-    thursday: 'workout', friday: 'rest', saturday: 'rest', sunday: 'rest',
-  },
-  strength: {
-    monday: '531', tuesday: 'rest', wednesday: '531',
-    thursday: 'workout', friday: '531', saturday: 'rest', sunday: 'rest',
-  },
-}
-
 const SECTION_COLORS = [
   'var(--color-magenta)',
   'var(--color-cyan)',
@@ -67,9 +52,8 @@ function getTodayIndex(mondayStr) {
 }
 
 export default function WeekView({ onNavigate }) {
-  const { currentUser, getUserData, setUserData } = useUser()
-  const track = currentUser.track || 'hybrid'
-  const schedule = TRACK_SCHEDULES[track] || TRACK_SCHEDULES.hybrid
+  const { getUserData, setUserData, getSchedule } = useUser()
+  const schedule = getSchedule()
 
   const [weekOffset, setWeekOffset] = useState(0)
   const [expandedDay, setExpandedDay] = useState(null)
@@ -87,7 +71,6 @@ export default function WeekView({ onNavigate }) {
 
   const [assignments, setAssignments] = useState(() => getUserData(storageKey) || {})
 
-  // Load 531 config for auto-populating lift details
   const fiveThreeOneData = useMemo(() => getUserData('531'), [getUserData])
 
   useEffect(() => {
@@ -96,8 +79,8 @@ export default function WeekView({ onNavigate }) {
     setSwappingDay(null)
   }, [storageKey, getUserData])
 
-  function getAutoWorkout(daySlot) {
-    const pool = filterWorkouts({ daySlot, track })
+  function getAutoWorkout(category) {
+    const pool = filterWorkouts({ category })
     if (pool.length === 0) return null
     return pool[weekNum % pool.length]
   }
@@ -140,17 +123,18 @@ export default function WeekView({ onNavigate }) {
   }
 
   function getAssignment(day) {
-    const type = schedule[day]
-    if (type === 'rest') return { type: 'rest' }
-    if (type === '531') return get531Assignment(day)
+    const slotType = schedule.days[day]
+    if (slotType === 'rest') return { type: 'rest' }
+    if (slotType === '531') return get531Assignment(day)
 
+    // It's a workout category (conditioning, metcon, accessory)
     if (assignments[day]) {
       const workout = getWorkoutById(assignments[day])
-      if (workout) return { type: 'workout', workout }
+      if (workout) return { type: 'workout', workout, category: slotType }
     }
 
-    const workout = getAutoWorkout(day)
-    return workout ? { type: 'workout', workout } : { type: 'rest' }
+    const workout = getAutoWorkout(slotType)
+    return workout ? { type: 'workout', workout, category: slotType } : { type: 'rest' }
   }
 
   function handleSwap(day, workoutId) {
@@ -234,7 +218,7 @@ export default function WeekView({ onNavigate }) {
                   {assignment.type === 'workout' && (
                     <div className="min-w-0">
                       <span className="text-sm font-semibold">{assignment.workout.name}</span>
-                      <p className="text-xs opacity-50 truncate">{assignment.workout.title}</p>
+                      <p className="text-xs opacity-50 truncate">{assignment.workout.excerpt || assignment.workout.title}</p>
                     </div>
                   )}
 
@@ -301,7 +285,7 @@ export default function WeekView({ onNavigate }) {
                     Choose a workout
                   </p>
                   <div className="flex flex-col gap-1">
-                    {filterWorkouts({ daySlot: day, track }).map(w => (
+                    {filterWorkouts({ category: assignment.category }).map(w => (
                       <button
                         key={w.id}
                         onClick={() => handleSwap(day, w.id)}

@@ -21,7 +21,10 @@ export default function WorkoutCard({ workout }) {
           #{workout.workout_number || workout.id}
         </span>
         <h3 className="text-base font-semibold">{workout.name}</h3>
-        <p className="text-xs opacity-60 mt-1">{workout.title}</p>
+        {workout.excerpt && (
+          <p className="text-xs opacity-60 mt-1 italic">{workout.excerpt}</p>
+        )}
+        <p className="text-xs opacity-40 mt-1">{workout.title}</p>
       </div>
 
       {sections.map(([key, section], idx) => {

@@ -1,15 +1,23 @@
 [
   {
-    "id": "wed-001",
-    "name": "Fenrir",
+    "id": "met-001",
+    "name": "Speed",
     "title": "Bike Sprint Tabata + Ski Erg Tabata",
-    "day_slot": "wednesday",
-    "track": ["hybrid", "conditioning"],
+    "category": "metcon",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "tabata",
     "sub_format": "intervals",
     "energy_system": "alactic",
-    "movement_patterns": ["machine"],
-    "equipment": ["assault_bike", "ski_erg"],
+    "movement_patterns": [
+      "machine"
+    ],
+    "equipment": [
+      "assault_bike",
+      "ski_erg"
+    ],
     "duration_minutes": 25,
     "intensity": "high",
     "sections": {
@@ -51,19 +59,28 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "Pure sprint work. Short session but devastating. Track peak cals per interval."
+    "notes": "Pure sprint work. Short session but devastating. Track peak cals per interval.",
+    "rotation": "Intervals",
+    "excerpt": "Tabata sprints — don't drop below 50"
   },
   {
-    "id": "wed-002",
-    "name": "Jormungandr",
+    "id": "met-002",
+    "name": "Crank",
     "title": "Row Interval Ladder",
-    "day_slot": "wednesday",
-    "track": ["hybrid", "conditioning"],
+    "category": "metcon",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "intervals",
     "sub_format": "intervals",
     "energy_system": "glycolytic",
-    "movement_patterns": ["machine"],
-    "equipment": ["rower"],
+    "movement_patterns": [
+      "machine"
+    ],
+    "equipment": [
+      "rower"
+    ],
     "duration_minutes": 30,
     "intensity": "high",
     "sections": {
@@ -103,19 +120,29 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "Classic pyramid. The 1000m in the middle is the test. Track your 500m split."
+    "notes": "Classic pyramid. The 1000m in the middle is the test. Track your 500m split.",
+    "rotation": "Intervals",
+    "excerpt": "Row ladder — keep the heart rate up or you die"
   },
   {
-    "id": "wed-003",
-    "name": "Huginn",
+    "id": "met-003",
+    "name": "Top Gun",
     "title": "Ski Erg EMOM + Bike Finisher",
-    "day_slot": "wednesday",
-    "track": ["hybrid", "conditioning"],
+    "category": "metcon",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "emom",
     "sub_format": "intervals",
     "energy_system": "glycolytic",
-    "movement_patterns": ["machine"],
-    "equipment": ["ski_erg", "assault_bike"],
+    "movement_patterns": [
+      "machine"
+    ],
+    "equipment": [
+      "ski_erg",
+      "assault_bike"
+    ],
     "duration_minutes": 28,
     "intensity": "moderate",
     "sections": {
@@ -151,19 +178,38 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "The EMOM gives you built-in rest. The bike finisher is a gut check — just go."
+    "notes": "The EMOM gives you built-in rest. The bike finisher is a gut check — just go.",
+    "rotation": "Intervals",
+    "excerpt": "Ski EMOM + bike finisher — need for speed"
   },
   {
-    "id": "wed-004",
-    "name": "Norns",
+    "id": "met-004",
+    "name": "Jumanji",
     "title": "HYROX Roulette — 8 Stations",
-    "day_slot": "wednesday",
-    "track": ["hybrid", "conditioning"],
+    "category": "metcon",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "roulette",
     "sub_format": "roulette",
     "energy_system": "mixed",
-    "movement_patterns": ["push", "pull", "carry", "squat", "machine"],
-    "equipment": ["rower", "ski_erg", "sled", "kettlebells", "wall_ball", "sandbag", "open_floor"],
+    "movement_patterns": [
+      "push",
+      "pull",
+      "carry",
+      "squat",
+      "machine"
+    ],
+    "equipment": [
+      "rower",
+      "ski_erg",
+      "sled",
+      "kettlebells",
+      "wall_ball",
+      "sandbag",
+      "open_floor"
+    ],
     "duration_minutes": 35,
     "intensity": "high",
     "sections": {
@@ -197,19 +243,36 @@
       "hybrid": "Partner format (half volume), 8 rounds with 500m runs"
     },
     "avoid_after": [],
-    "notes": "Uses the Roulette tool. Randomness keeps it fun and prevents gaming."
+    "notes": "Uses the Roulette tool. Randomness keeps it fun and prevents gaming.",
+    "rotation": "Roulette",
+    "excerpt": "8 random stations — you don't pick what comes next"
   },
   {
-    "id": "wed-005",
-    "name": "Valkyrie",
+    "id": "met-005",
+    "name": "Clue",
     "title": "Station Roulette AMRAP 20",
-    "day_slot": "wednesday",
-    "track": ["hybrid", "conditioning"],
+    "category": "metcon",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "roulette",
     "sub_format": "roulette",
     "energy_system": "mixed",
-    "movement_patterns": ["push", "pull", "carry", "squat", "machine"],
-    "equipment": ["assault_bike", "sled", "kettlebells", "wall_ball", "sandbag"],
+    "movement_patterns": [
+      "push",
+      "pull",
+      "carry",
+      "squat",
+      "machine"
+    ],
+    "equipment": [
+      "assault_bike",
+      "sled",
+      "kettlebells",
+      "wall_ball",
+      "sandbag"
+    ],
     "duration_minutes": 30,
     "intensity": "moderate",
     "sections": {
@@ -242,19 +305,38 @@
       "hybrid": "Partner format, 20 min AMRAP"
     },
     "avoid_after": [],
-    "notes": "Bike between every station keeps HR elevated. Score is total stations — simple and competitive."
+    "notes": "Bike between every station keeps HR elevated. Score is total stations — simple and competitive.",
+    "rotation": "Roulette",
+    "excerpt": "AMRAP roulette — whodunit energy, different every time"
   },
   {
-    "id": "wed-006",
-    "name": "Bifrost",
+    "id": "met-006",
+    "name": "Total Recall",
     "title": "Roulette Pairs — Run + 2 Random Stations",
-    "day_slot": "wednesday",
-    "track": ["hybrid", "conditioning"],
+    "category": "metcon",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "roulette",
     "sub_format": "roulette",
     "energy_system": "mixed",
-    "movement_patterns": ["push", "pull", "carry", "squat", "machine"],
-    "equipment": ["rower", "ski_erg", "sled", "kettlebells", "wall_ball", "sandbag", "open_floor"],
+    "movement_patterns": [
+      "push",
+      "pull",
+      "carry",
+      "squat",
+      "machine"
+    ],
+    "equipment": [
+      "rower",
+      "ski_erg",
+      "sled",
+      "kettlebells",
+      "wall_ball",
+      "sandbag",
+      "open_floor"
+    ],
     "duration_minutes": 35,
     "intensity": "high",
     "sections": {
@@ -288,19 +370,32 @@
       "hybrid": "Partner format, 5 rounds, 400m runs"
     },
     "avoid_after": [],
-    "notes": "Double roulette per round is chaotic. You might get sled push + sled pull back-to-back. That's the game."
+    "notes": "Double roulette per round is chaotic. You might get sled push + sled pull back-to-back. That's the game.",
+    "rotation": "Roulette",
+    "excerpt": "Double roulette — is this real life?"
   },
   {
-    "id": "wed-007",
-    "name": "Tyr",
+    "id": "met-007",
+    "name": "Demolition Man",
     "title": "Compromised Run — DB Complex",
-    "day_slot": "wednesday",
-    "track": ["hybrid", "conditioning"],
+    "category": "metcon",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "compromised_run",
     "sub_format": "compromised_running",
     "energy_system": "glycolytic",
-    "movement_patterns": ["press", "hinge", "squat", "run"],
-    "equipment": ["dumbbells", "open_floor"],
+    "movement_patterns": [
+      "press",
+      "hinge",
+      "squat",
+      "run"
+    ],
+    "equipment": [
+      "dumbbells",
+      "open_floor"
+    ],
     "duration_minutes": 30,
     "intensity": "high",
     "sections": {
@@ -337,20 +432,33 @@
       "conditioning": "As written, push for sub-25 min",
       "hybrid": "As written"
     },
-    "avoid_after": ["heavy_press"],
-    "notes": "The devil presses are the killer. Break early if needed (sets of 8/7 or 10/5)."
+    "avoid_after": [
+      "heavy_press"
+    ],
+    "notes": "The devil presses are the killer. Break early if needed (sets of 8/7 or 10/5).",
+    "rotation": "Compromised Running",
+    "excerpt": "DB complex between runs — controlled destruction"
   },
   {
-    "id": "wed-008",
-    "name": "Skadi",
+    "id": "met-008",
+    "name": "Cliffhanger",
     "title": "Run + Wall Ball Ladder",
-    "day_slot": "wednesday",
-    "track": ["hybrid", "conditioning"],
+    "category": "metcon",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "compromised_run",
     "sub_format": "compromised_running",
     "energy_system": "glycolytic",
-    "movement_patterns": ["squat", "run"],
-    "equipment": ["wall_ball", "open_floor"],
+    "movement_patterns": [
+      "squat",
+      "run"
+    ],
+    "equipment": [
+      "wall_ball",
+      "open_floor"
+    ],
     "duration_minutes": 30,
     "intensity": "high",
     "sections": {
@@ -385,20 +493,32 @@
       "conditioning": "As written, target consistent run pace",
       "hybrid": "As written"
     },
-    "avoid_after": ["heavy_squat"],
-    "notes": "120 total wall balls. The 800m + 40 WB round is where you earn it."
+    "avoid_after": [
+      "heavy_squat"
+    ],
+    "notes": "120 total wall balls. The 800m + 40 WB round is where you earn it.",
+    "rotation": "Compromised Running",
+    "excerpt": "Run + wall ball ladder — the climb keeps getting steeper"
   },
   {
-    "id": "wed-009",
-    "name": "Freya",
+    "id": "met-009",
+    "name": "The Fugitive",
     "title": "Fartlek Run + Burpee Buy-In",
-    "day_slot": "wednesday",
-    "track": ["hybrid", "conditioning"],
+    "category": "metcon",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "compromised_run",
     "sub_format": "compromised_running",
     "energy_system": "mixed",
-    "movement_patterns": ["push", "run"],
-    "equipment": ["open_floor"],
+    "movement_patterns": [
+      "push",
+      "run"
+    ],
+    "equipment": [
+      "open_floor"
+    ],
     "duration_minutes": 30,
     "intensity": "moderate",
     "sections": {
@@ -433,19 +553,30 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "Burpees before each fast interval simulate compromised running. Zone 2 finisher builds aerobic base."
+    "notes": "Burpees before each fast interval simulate compromised running. Zone 2 finisher builds aerobic base.",
+    "rotation": "Compromised Running",
+    "excerpt": "Fartlek + burpees — running from something"
   },
   {
-    "id": "wed-010",
-    "name": "Baldur",
+    "id": "met-010",
+    "name": "Bloodsport",
     "title": "Bodyweight AMRAP 15",
-    "day_slot": "wednesday",
-    "track": ["hybrid", "conditioning"],
+    "category": "metcon",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "amrap",
     "sub_format": "bodyweight_metcon",
     "energy_system": "glycolytic",
-    "movement_patterns": ["push", "squat", "pull"],
-    "equipment": ["pull_up_bar"],
+    "movement_patterns": [
+      "push",
+      "squat",
+      "pull"
+    ],
+    "equipment": [
+      "pull_up_bar"
+    ],
     "duration_minutes": 25,
     "intensity": "moderate",
     "sections": {
@@ -487,19 +618,30 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "Zero equipment needed (just a pull-up bar). Great for busy gym days. Score = rounds + reps."
+    "notes": "Zero equipment needed (just a pull-up bar). Great for busy gym days. Score = rounds + reps.",
+    "rotation": "Bodyweight Metcon",
+    "excerpt": "Bodyweight AMRAP — pure fighting shape"
   },
   {
-    "id": "wed-011",
-    "name": "Heimdall",
+    "id": "met-011",
+    "name": "Kickboxer",
     "title": "DB Complex EMOM",
-    "day_slot": "wednesday",
-    "track": ["hybrid", "conditioning"],
+    "category": "metcon",
+    "track": [
+      "hybrid",
+      "conditioning"
+    ],
     "format": "emom",
     "sub_format": "bodyweight_metcon",
     "energy_system": "glycolytic",
-    "movement_patterns": ["press", "hinge", "squat"],
-    "equipment": ["dumbbells"],
+    "movement_patterns": [
+      "press",
+      "hinge",
+      "squat"
+    ],
+    "equipment": [
+      "dumbbells"
+    ],
     "duration_minutes": 25,
     "intensity": "moderate",
     "sections": {
@@ -541,19 +683,30 @@
       "conditioning": "As written, 18 min EMOM (6 rounds)",
       "hybrid": "As written"
     },
-    "avoid_after": ["heavy_press"],
-    "notes": "Light DBs, high density. The EMOM forces efficient movement."
+    "avoid_after": [
+      "heavy_press"
+    ],
+    "notes": "Light DBs, high density. The EMOM forces efficient movement.",
+    "rotation": "Bodyweight Metcon",
+    "excerpt": "DB complex EMOM — Van Damme energy"
   },
   {
-    "id": "wed-012",
-    "name": "Ragnarok",
+    "id": "met-012",
+    "name": "Cobra",
     "title": "Push-Up + Air Squat Descender + Core Finisher",
-    "day_slot": "wednesday",
-    "track": ["hybrid", "conditioning", "strength"],
+    "category": "metcon",
+    "track": [
+      "hybrid",
+      "conditioning",
+      "strength"
+    ],
     "format": "for_time",
     "sub_format": "bodyweight_metcon",
     "energy_system": "glycolytic",
-    "movement_patterns": ["push", "squat"],
+    "movement_patterns": [
+      "push",
+      "squat"
+    ],
     "equipment": [],
     "duration_minutes": 25,
     "intensity": "moderate",
@@ -595,6 +748,8 @@
       "hybrid": "As written"
     },
     "avoid_after": [],
-    "notes": "Zero equipment. Total reps: 55 push-ups, 110 air squats, 30 burpees. Deceptively hard."
+    "notes": "Zero equipment. Total reps: 55 push-ups, 110 air squats, 30 burpees. Deceptively hard.",
+    "rotation": "Bodyweight Metcon",
+    "excerpt": "Descending ladder, zero equipment — stripped down and mean"
   }
 ]
