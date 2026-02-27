@@ -1,0 +1,623 @@
+[
+  {
+    "id": "mon-001",
+    "name": "Ares",
+    "title": "Row/Ski Ladder + Sled Push + Farmer Carry",
+    "day_slot": "monday",
+    "track": ["hybrid", "conditioning"],
+    "format": "hyrox_sim",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["hinge", "carry", "machine"],
+    "equipment": ["rower", "ski_erg", "sled", "kettlebells"],
+    "duration_minutes": 45,
+    "intensity": "high",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Row or Assault Bike x 3–5 min",
+          "Leg Swings (forward/back) x 10 each",
+          "Lateral Lunges x 10 each side",
+          "Arm Circles x 10 each way",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "FOR TIME",
+        "title": "Machine Ladder + Sled Push",
+        "description": [
+          "Row 400m → Sled Push 10m @ 125/75kg",
+          "Ski 400m → Sled Push 15m",
+          "Row 600m → Sled Push 20m",
+          "Ski 600m → Sled Push 25m",
+          "Row 800m → Sled Push 30m"
+        ],
+        "alternatives": [
+          "Sled Push → DB Front Rack Step-Up x 12 @ 2×15/10kg (20\" box)",
+          "Sled Push → DB Front Rack Walking Lunges x 12 @ 2×15/10kg"
+        ]
+      },
+      "C": {
+        "type": "FINISHER",
+        "title": "Farmer Carry",
+        "description": [
+          "200m Farmer Carry @ 2×24/16kg",
+          "Break as needed, clock keeps running"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier sled (150/100kg), reduce machine distances by 25%",
+      "conditioning": "Lighter sled (100/60kg), add a 6th round: Assault Bike x 20/15 cal → Sled Push 30m",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "Ascending ladder — pace the early rounds. Good benchmark."
+  },
+  {
+    "id": "mon-002",
+    "name": "Poseidon",
+    "title": "Bike/Row Intervals + Sled Pull + Burpee Broad Jump",
+    "day_slot": "monday",
+    "track": ["hybrid", "conditioning"],
+    "format": "hyrox_sim",
+    "energy_system": "mixed",
+    "movement_patterns": ["push", "pull", "machine"],
+    "equipment": ["assault_bike", "rower", "sled", "open_floor"],
+    "duration_minutes": 45,
+    "intensity": "high",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike x 3–5 min easy",
+          "Inch Worm to Push-Up x 5",
+          "Bodyweight Squats x 10",
+          "Dynamic Hamstring Scoops x 10 each",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "FOR TIME",
+        "title": "5 Rounds — Bike/Row + Sled Pull + Burpee Broad Jump",
+        "description": [
+          "Odd rounds: Assault Bike x 15/12 cal",
+          "Even rounds: Row x 250m",
+          "Every round: Sled Pull x 20m @ 100/60kg",
+          "Every round: Burpee Broad Jump x 20m"
+        ],
+        "alternatives": [
+          "Sled Pull → Sandbag Clean x 10 @ 40/30kg",
+          "Sled Pull → DB RDL + Bent Over Row x 10 @ 2×15/10kg",
+          "Burpee Broad Jump → 10 Burpees + 10 Broad Jumps (in place)"
+        ]
+      },
+      "C": {
+        "type": "COOLDOWN",
+        "title": "Easy Bike",
+        "description": [
+          "Assault Bike x 5 min @ Zone 1"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier sled pull (125/75kg), 4 rounds",
+      "conditioning": "As written, push for sub-20 min",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "Alternating machine each round keeps it interesting. The sled pull + BBJ combo is a HYROX staple."
+  },
+  {
+    "id": "mon-003",
+    "name": "Anubis",
+    "title": "Ski Erg Descender + Wall Balls + Sandbag Lunges",
+    "day_slot": "monday",
+    "track": ["hybrid", "conditioning"],
+    "format": "hyrox_sim",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["squat", "carry", "machine"],
+    "equipment": ["ski_erg", "wall_ball", "sandbag"],
+    "duration_minutes": 45,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Ski Erg x 3 min easy",
+          "PVC Shoulder Pass-Throughs x 10",
+          "Bodyweight Lunges x 10 each leg",
+          "Cat-Cow Stretch x 5",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "FOR TIME",
+        "title": "Ski Descender + Stations",
+        "description": [
+          "Ski 1000m → Wall Balls x 30 @ 14/9lb",
+          "Ski 800m → Sandbag Lunges x 40m @ 20/10kg",
+          "Ski 600m → Wall Balls x 20",
+          "Ski 400m → Sandbag Lunges x 20m",
+          "Ski 200m → Wall Balls x 10"
+        ],
+        "alternatives": [
+          "Sandbag Lunges → Front Rack DB Walking Lunges @ 2×10/5kg",
+          "Wall Balls → DB Thrusters @ 2×8/4kg"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier wall ball (20/14lb), heavier sandbag (30/20kg), cut ski distances by 200m each",
+      "conditioning": "As written, add a Zone 2 run x 10 min finisher",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["heavy_squat"],
+    "notes": "Descending ski distances keep the intensity climbing. Wall balls will tax your legs for Tuesday squats — manage effort."
+  },
+  {
+    "id": "mon-004",
+    "name": "Hephaestus",
+    "title": "Row/Bike Pyramid + Sled Push/Pull Combo",
+    "day_slot": "monday",
+    "track": ["hybrid", "conditioning", "strength"],
+    "format": "hyrox_sim",
+    "energy_system": "mixed",
+    "movement_patterns": ["push", "pull", "machine"],
+    "equipment": ["rower", "assault_bike", "sled"],
+    "duration_minutes": 50,
+    "intensity": "high",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Row x 3 min easy",
+          "Arm Circles x 10 each way",
+          "Torso Twists x 10",
+          "Bodyweight Deadlifts (hinge pattern) x 10",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "FOR TIME",
+        "title": "Machine Pyramid + Sled Combo",
+        "description": [
+          "Row 500m → Sled Push 10m + Sled Pull 10m @ 125/75kg",
+          "Assault Bike x 20/15 cal → Sled Push 15m + Sled Pull 15m",
+          "Row 750m → Sled Push 20m + Sled Pull 20m",
+          "Assault Bike x 30/22 cal → Sled Push 15m + Sled Pull 15m",
+          "Row 500m → Sled Push 10m + Sled Pull 10m"
+        ],
+        "alternatives": [
+          "Sled Push → DB Front Rack Step-Up x 8 @ 2×15/10kg (20\" box)",
+          "Sled Pull → DB RDL + Bent Over Row x 8 @ 2×15/10kg"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier sled (150/100kg push, 125/75kg pull), cap at 30 min",
+      "conditioning": "Lighter sled (100/60kg), push for continuous effort",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "Pyramid up then back down. The middle round (Row 750m) is the peak — don't go out too hot."
+  },
+  {
+    "id": "mon-005",
+    "name": "Osiris",
+    "title": "Machine Mixer AMRAP 30 + Farmer Carry + Wall Balls",
+    "day_slot": "monday",
+    "track": ["hybrid", "conditioning"],
+    "format": "amrap",
+    "energy_system": "aerobic",
+    "movement_patterns": ["carry", "squat", "machine"],
+    "equipment": ["rower", "ski_erg", "assault_bike", "kettlebells", "wall_ball"],
+    "duration_minutes": 45,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike x 3–5 min easy",
+          "Bodyweight Squats x 10",
+          "Lateral Lunges x 10 each side",
+          "PVC Shoulder Pass-Throughs x 10",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "AMRAP 30",
+        "title": "Machine Mixer",
+        "description": [
+          "Row x 500m",
+          "Farmer Carry x 100m @ 2×24/16kg",
+          "Ski Erg x 500m",
+          "Wall Balls x 20 @ 14/9lb",
+          "Assault Bike x 15/12 cal",
+          "Farmer Carry x 100m @ 2×24/16kg"
+        ],
+        "alternatives": [
+          "Farmer Carry → DB Front Rack Carry @ 2×15/10kg"
+        ]
+      },
+      "C": {
+        "type": "COOLDOWN",
+        "title": "Easy Walk or Bike",
+        "description": [
+          "5 min easy effort — flush it out"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier carries (2×32/24kg), reduce machine distances to 400m",
+      "conditioning": "As written, target 4+ rounds",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "Long AMRAP — find a sustainable pace. All 3 machines in one workout. Score = rounds + reps."
+  },
+  {
+    "id": "mon-006",
+    "name": "Odin",
+    "title": "6-Round Machine Cycle + Sled Push + Farmer Carry",
+    "day_slot": "monday",
+    "track": ["hybrid", "conditioning", "strength"],
+    "format": "hyrox_sim",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["push", "carry", "machine"],
+    "equipment": ["ski_erg", "rower", "assault_bike", "sled", "kettlebells"],
+    "duration_minutes": 50,
+    "intensity": "high",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Row x 3 min easy",
+          "Walking Lunges x 10 each leg",
+          "Torso Twists x 10",
+          "Cat-Cow Stretch x 5",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "FOR TIME",
+        "title": "6-Round Machine Cycle",
+        "description": [
+          "Each round:",
+          "→ Machine effort (see cycle below)",
+          "→ Sled Push x 30m @ 125/75kg",
+          "→ Farmer Carry x 100m @ 2×24/16kg",
+          "",
+          "Round 1: Ski Erg x 500m",
+          "Round 2: Row x 500m",
+          "Round 3: Assault Bike x 20/15 cal",
+          "Round 4: Ski Erg x 500m",
+          "Round 5: Row x 500m",
+          "Round 6: Assault Bike x 20/15 cal"
+        ],
+        "alternatives": [
+          "Sled Push → DB Front Rack Step-Up x 12 @ 2×15/10kg",
+          "Farmer Carry → DB Front Rack Carry x 100m @ 2×15/10kg"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier sled (150/100kg), heavier carry (2×32/24kg), 4 rounds",
+      "conditioning": "Lighter sled (100/60kg), push for sub-35 min",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "Full HYROX station density. All 3 machines cycled. This is a long grinder — pace early."
+  },
+  {
+    "id": "mon-007",
+    "name": "Horus",
+    "title": "Row/Ski Intervals + Sandbag Lunges + Burpee Broad Jump",
+    "day_slot": "monday",
+    "track": ["hybrid", "conditioning"],
+    "format": "for_time",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["squat", "push", "machine"],
+    "equipment": ["rower", "ski_erg", "sandbag", "open_floor"],
+    "duration_minutes": 40,
+    "intensity": "high",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike or Row x 3–5 min",
+          "Leg Swings x 10 each direction",
+          "Bodyweight Lunges x 10 each leg",
+          "Inch Worm to Stretch x 5",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "FOR TIME",
+        "title": "4 Rounds",
+        "description": [
+          "Odd rounds: Row x 500m",
+          "Even rounds: Ski Erg x 500m",
+          "Every round: Sandbag Lunges x 40m @ 20/10kg",
+          "Every round: Burpee Broad Jump x 40m"
+        ],
+        "alternatives": [
+          "Sandbag Lunges → Front Rack DB Walking Lunges @ 2×10/5kg",
+          "Burpee Broad Jump → 10 Burpees + 10 Broad Jumps"
+        ]
+      },
+      "C": {
+        "type": "COOLDOWN",
+        "title": "Easy Bike or Walk",
+        "description": [
+          "5 min @ Zone 1"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier sandbag (30/20kg), 3 rounds, add 200m to machine distances",
+      "conditioning": "As written, target sub-25 min",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["heavy_squat"],
+    "notes": "Lunges + BBJ will light up the quads. Be aware of Tuesday squat day."
+  },
+  {
+    "id": "mon-008",
+    "name": "Kali",
+    "title": "Ski/Row/Bike Chipper + Sled Push + Wall Balls",
+    "day_slot": "monday",
+    "track": ["hybrid", "conditioning"],
+    "format": "for_time",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["squat", "push", "machine"],
+    "equipment": ["ski_erg", "rower", "assault_bike", "sled", "wall_ball"],
+    "duration_minutes": 45,
+    "intensity": "high",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Row x 3 min easy",
+          "PVC Shoulder Pass-Throughs x 10",
+          "Bodyweight Squats x 10",
+          "Arm Circles x 10 each way",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "FOR TIME",
+        "title": "Chipper",
+        "description": [
+          "Ski Erg x 1000m",
+          "Sled Push x 25m @ 125/75kg",
+          "Wall Balls x 50 @ 14/9lb",
+          "Row x 1000m",
+          "Sled Push x 25m",
+          "Wall Balls x 50",
+          "Assault Bike x 40/30 cal"
+        ],
+        "alternatives": [
+          "Sled Push → DB Front Rack Walking Lunges x 20 @ 2×15/10kg",
+          "Wall Balls → DB Thrusters @ 2×8/4kg"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier sled (150/100kg), heavier wall ball (20/14lb), cut wall balls to 30 each set",
+      "conditioning": "As written — straight through, no breaks on machines if possible",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["heavy_squat"],
+    "notes": "Long chipper. 100 total wall balls is a grind — break early (sets of 15–20) to avoid redlining."
+  },
+  {
+    "id": "mon-009",
+    "name": "Hermes",
+    "title": "E3MOM Machine + Sled Push/Pull Couplet",
+    "day_slot": "monday",
+    "track": ["hybrid", "strength", "conditioning"],
+    "format": "emom",
+    "energy_system": "mixed",
+    "movement_patterns": ["push", "pull", "machine"],
+    "equipment": ["rower", "ski_erg", "assault_bike", "sled"],
+    "duration_minutes": 45,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike x 5 min easy",
+          "Torso Twists x 10",
+          "Bodyweight Deadlifts (hinge) x 10",
+          "Arm Circles x 10 each way",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "E3MOM x 8 ROUNDS",
+        "title": "Machine + Sled Couplet",
+        "description": [
+          "Every 3 minutes for 8 rounds (24 min):",
+          "Round 1: Row 300m + Sled Push 15m @ 125/75kg",
+          "Round 2: Ski 300m + Sled Pull 15m @ 100/60kg",
+          "Round 3: Assault Bike x 12/10 cal + Sled Push 15m",
+          "Round 4: Row 300m + Sled Pull 15m",
+          "(Repeat cycle for rounds 5–8)",
+          "",
+          "Goal: finish each round in <2:30 to earn rest"
+        ],
+        "alternatives": [
+          "Sled Push → DB Front Rack Step-Up x 8 @ 2×15/10kg",
+          "Sled Pull → DB RDL + Bent Over Row x 8 @ 2×15/10kg"
+        ]
+      },
+      "C": {
+        "type": "FINISHER",
+        "title": "200m Farmer Carry",
+        "description": [
+          "200m Farmer Carry @ 2×24/16kg for time"
+        ],
+        "alternatives": [
+          "Farmer Carry → DB Front Rack Carry @ 2×15/10kg"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier sled, 6 rounds with E3:30MOM window",
+      "conditioning": "Lighter sled, target finishing each round in <2:00",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "Built-in rest if you move fast. The rotating machine keeps it fresh. Farmer carry finisher is a grip test."
+  },
+  {
+    "id": "mon-010",
+    "name": "Sobek",
+    "title": "Assault Bike Ladder + Sled Pull + Sandbag Lunges",
+    "day_slot": "monday",
+    "track": ["hybrid", "conditioning"],
+    "format": "for_time",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["squat", "pull", "machine"],
+    "equipment": ["assault_bike", "sled", "sandbag"],
+    "duration_minutes": 40,
+    "intensity": "high",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike x 3–5 min easy",
+          "Bodyweight Lunges x 10 each leg",
+          "Lateral Lunges x 10 each side",
+          "Cat-Cow Stretch x 5",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "FOR TIME",
+        "title": "Assault Bike Ladder + Stations",
+        "description": [
+          "Bike 10 cal → Sled Pull 10m @ 100/60kg → Sandbag Lunges 20m @ 20/10kg",
+          "Bike 15 cal → Sled Pull 15m → Sandbag Lunges 30m",
+          "Bike 20 cal → Sled Pull 20m → Sandbag Lunges 40m",
+          "Bike 25 cal → Sled Pull 25m → Sandbag Lunges 50m",
+          "Bike 30 cal → Sled Pull 30m → Sandbag Lunges 50m"
+        ],
+        "alternatives": [
+          "Sled Pull → Sandbag Clean x 10/12/14/16/18 reps (ascending)",
+          "Sandbag Lunges → Front Rack DB Walking Lunges @ 2×10/5kg"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier sled (125/75kg), heavier sandbag (30/20kg), cap at 4 rounds",
+      "conditioning": "As written",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["heavy_squat"],
+    "notes": "Ascending ladder — the bike calories climb fast. Last round is a suffer-fest."
+  },
+  {
+    "id": "mon-011",
+    "name": "Athena",
+    "title": "Mini HYROX Simulation — 4 Stations",
+    "day_slot": "monday",
+    "track": ["hybrid", "conditioning", "strength"],
+    "format": "hyrox_sim",
+    "energy_system": "mixed",
+    "movement_patterns": ["push", "carry", "squat", "machine"],
+    "equipment": ["rower", "sled", "kettlebells", "wall_ball"],
+    "duration_minutes": 45,
+    "intensity": "high",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Row x 3 min easy",
+          "Walking Lunges x 10 each leg",
+          "Bodyweight Squats x 10",
+          "Arm Circles x 10 each way",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "FOR TIME",
+        "title": "Mini HYROX — 4 Stations",
+        "description": [
+          "Run 1000m",
+          "Sled Push x 50m @ 125/75kg",
+          "Run 1000m",
+          "Farmer Carry x 200m @ 2×24/16kg",
+          "Run 1000m",
+          "Wall Balls x 75 @ 14/9lb",
+          "Run 1000m"
+        ],
+        "alternatives": [
+          "Run → Row 1000m or Assault Bike x 50/40 cal",
+          "Sled Push → DB Front Rack Step-Up x 20 @ 2×15/10kg"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Pro weights (sled 152/102kg, carry 2×32/24kg, wall ball 20/14lb), 3 stations",
+      "conditioning": "Open division as written, push pace on runs",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "Closest thing to a real HYROX race simulation. Track total time — monthly benchmark."
+  },
+  {
+    "id": "mon-012",
+    "name": "Apollo",
+    "title": "Alternating Machine Intervals + Burpee Broad Jump + Carry",
+    "day_slot": "monday",
+    "track": ["hybrid", "conditioning"],
+    "format": "for_time",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["push", "carry", "machine"],
+    "equipment": ["rower", "ski_erg", "open_floor", "kettlebells"],
+    "duration_minutes": 40,
+    "intensity": "high",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Ski Erg x 3 min easy",
+          "Inch Worm to Push-Up x 5",
+          "Leg Swings x 10 each direction",
+          "High Knees x 20",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "FOR TIME",
+        "title": "5 Rounds",
+        "description": [
+          "Odd rounds: Row x 400m",
+          "Even rounds: Ski Erg x 400m",
+          "Every round: Burpee Broad Jump x 40m",
+          "Every round: Farmer Carry x 100m @ 2×24/16kg"
+        ],
+        "alternatives": [
+          "Burpee Broad Jump → 8 Burpees + 8 Broad Jumps",
+          "Farmer Carry → DB Front Rack Carry x 100m @ 2×15/10kg"
+        ]
+      },
+      "C": {
+        "type": "COOLDOWN",
+        "title": "Easy Walk",
+        "description": [
+          "3–5 min walk, shake it out"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier carry (2×32/24kg), 4 rounds, add 100m to machine distances",
+      "conditioning": "As written, target sub-22 min",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "BBJ + carry every round is brutal grip and leg work. Short machine distances keep transitions fast."
+  }
+]

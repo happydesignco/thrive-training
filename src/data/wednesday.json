@@ -1,0 +1,600 @@
+[
+  {
+    "id": "wed-001",
+    "name": "Fenrir",
+    "title": "Bike Sprint Tabata + Ski Erg Tabata",
+    "day_slot": "wednesday",
+    "track": ["hybrid", "conditioning"],
+    "format": "tabata",
+    "sub_format": "intervals",
+    "energy_system": "alactic",
+    "movement_patterns": ["machine"],
+    "equipment": ["assault_bike", "ski_erg"],
+    "duration_minutes": 25,
+    "intensity": "high",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike x 3 min easy",
+          "Arm Circles x 10 each way",
+          "Leg Swings x 10 each direction",
+          "2 rounds: Bike x 15s hard / 45s easy"
+        ]
+      },
+      "B": {
+        "type": "TABATA",
+        "title": "Bike Sprints",
+        "description": [
+          "8 rounds: Assault Bike x 20s MAX effort / Rest 10s",
+          "Rest 2 min"
+        ]
+      },
+      "C": {
+        "type": "TABATA",
+        "title": "Ski Erg Sprints",
+        "description": [
+          "8 rounds: Ski Erg x 20s MAX effort / Rest 10s"
+        ]
+      },
+      "D": {
+        "type": "COOLDOWN",
+        "title": "Easy Bike",
+        "description": [
+          "Assault Bike x 5 min @ Zone 1"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "6 rounds per block — preserve CNS for Friday",
+      "conditioning": "As written, track peak cals per round",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "Pure sprint work. Short session but devastating. Track peak cals per interval."
+  },
+  {
+    "id": "wed-002",
+    "name": "Jormungandr",
+    "title": "Row Interval Ladder",
+    "day_slot": "wednesday",
+    "track": ["hybrid", "conditioning"],
+    "format": "intervals",
+    "sub_format": "intervals",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["machine"],
+    "equipment": ["rower"],
+    "duration_minutes": 30,
+    "intensity": "high",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Row x 3 min easy",
+          "Dynamic Hamstring Scoops x 10 each leg",
+          "Torso Twists x 10",
+          "2 rounds: Row x 100m @ moderate effort / Rest 30s"
+        ]
+      },
+      "B": {
+        "type": "INTERVALS",
+        "title": "Row Ladder",
+        "description": [
+          "Row 250m @ 8–9 RPE → Rest 60s",
+          "Row 500m @ 8–9 RPE → Rest 90s",
+          "Row 750m @ 8–9 RPE → Rest 2 min",
+          "Row 1000m @ 8–9 RPE → Rest 2 min",
+          "Row 750m @ 8–9 RPE → Rest 90s",
+          "Row 500m @ 8–9 RPE → Rest 60s",
+          "Row 250m @ 8–9 RPE"
+        ]
+      },
+      "C": {
+        "type": "COOLDOWN",
+        "title": "Easy Row",
+        "description": [
+          "Row x 3 min @ Zone 1"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Cap at 750m peak (skip 1000m), add 30s rest",
+      "conditioning": "As written, target consistent pace across all intervals",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "Classic pyramid. The 1000m in the middle is the test. Track your 500m split."
+  },
+  {
+    "id": "wed-003",
+    "name": "Huginn",
+    "title": "Ski Erg EMOM + Bike Finisher",
+    "day_slot": "wednesday",
+    "track": ["hybrid", "conditioning"],
+    "format": "emom",
+    "sub_format": "intervals",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["machine"],
+    "equipment": ["ski_erg", "assault_bike"],
+    "duration_minutes": 28,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Ski Erg x 3 min easy",
+          "PVC Shoulder Pass-Throughs x 10",
+          "Arm Circles x 10 each way",
+          "Cat-Cow Stretch x 5"
+        ]
+      },
+      "B": {
+        "type": "EMOM 16",
+        "title": "Ski Erg Intervals",
+        "description": [
+          "Min 1: Ski Erg x 200m @ 7–8 RPE",
+          "Min 2: Rest",
+          "(Repeat for 16 min = 8 working sets)"
+        ]
+      },
+      "C": {
+        "type": "FOR TIME",
+        "title": "Bike Finisher",
+        "description": [
+          "Assault Bike x 50/40 cal for time"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "EMOM 12 (6 working sets), skip bike finisher",
+      "conditioning": "Increase to 250m per ski interval, 60/50 cal bike finisher",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "The EMOM gives you built-in rest. The bike finisher is a gut check — just go."
+  },
+  {
+    "id": "wed-004",
+    "name": "Norns",
+    "title": "HYROX Roulette — 8 Stations",
+    "day_slot": "wednesday",
+    "track": ["hybrid", "conditioning"],
+    "format": "roulette",
+    "sub_format": "roulette",
+    "energy_system": "mixed",
+    "movement_patterns": ["push", "pull", "carry", "squat", "machine"],
+    "equipment": ["rower", "ski_erg", "sled", "kettlebells", "wall_ball", "sandbag", "open_floor"],
+    "duration_minutes": 35,
+    "intensity": "high",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike or Row x 3–5 min",
+          "Bodyweight Squats x 10",
+          "Walking Lunges x 10 each leg",
+          "Arm Circles x 10 each way",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "ROULETTE",
+        "title": "HYROX Roulette — Run + Random Station x 8",
+        "description": [
+          "8 rounds:",
+          "Run 500m (or Row 500m / Assault Bike x 15 cal)",
+          "→ Hit the Roulette button → Complete the station",
+          "If station repeats, hit again (or don't — your call)",
+          "",
+          "Use Partner format (half volume) for solo athletes",
+          "Use Solo format for partner teams"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Pro division weights, 6 rounds, 1000m runs",
+      "conditioning": "Open division, 8 rounds, push for continuous effort",
+      "hybrid": "Partner format (half volume), 8 rounds with 500m runs"
+    },
+    "avoid_after": [],
+    "notes": "Uses the Roulette tool. Randomness keeps it fun and prevents gaming."
+  },
+  {
+    "id": "wed-005",
+    "name": "Valkyrie",
+    "title": "Station Roulette AMRAP 20",
+    "day_slot": "wednesday",
+    "track": ["hybrid", "conditioning"],
+    "format": "roulette",
+    "sub_format": "roulette",
+    "energy_system": "mixed",
+    "movement_patterns": ["push", "pull", "carry", "squat", "machine"],
+    "equipment": ["assault_bike", "sled", "kettlebells", "wall_ball", "sandbag"],
+    "duration_minutes": 30,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike x 3–5 min easy",
+          "Inch Worm to Push-Up x 5",
+          "Lateral Lunges x 10 each side",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "AMRAP 20",
+        "title": "Station Roulette",
+        "description": [
+          "Assault Bike x 15/12 cal",
+          "→ Hit Roulette button → Complete the station",
+          "→ Back to the bike",
+          "→ Hit Roulette again",
+          "Repeat for 20 min",
+          "",
+          "Score = total stations completed"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Pro weights, 15 min AMRAP",
+      "conditioning": "Open weights, 25 min AMRAP",
+      "hybrid": "Partner format, 20 min AMRAP"
+    },
+    "avoid_after": [],
+    "notes": "Bike between every station keeps HR elevated. Score is total stations — simple and competitive."
+  },
+  {
+    "id": "wed-006",
+    "name": "Bifrost",
+    "title": "Roulette Pairs — Run + 2 Random Stations",
+    "day_slot": "wednesday",
+    "track": ["hybrid", "conditioning"],
+    "format": "roulette",
+    "sub_format": "roulette",
+    "energy_system": "mixed",
+    "movement_patterns": ["push", "pull", "carry", "squat", "machine"],
+    "equipment": ["rower", "ski_erg", "sled", "kettlebells", "wall_ball", "sandbag", "open_floor"],
+    "duration_minutes": 35,
+    "intensity": "high",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Row or Assault Bike x 3–5 min",
+          "High Knees x 20",
+          "Butt Kicks x 20",
+          "Dynamic Hamstring Scoops x 10 each leg",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "FOR TIME",
+        "title": "5 Rounds — Run + Roulette Pairs",
+        "description": [
+          "Each round:",
+          "Run 400m",
+          "→ Hit Roulette → Complete station",
+          "→ Hit Roulette again → Complete second station",
+          "→ Run 400m (next round)",
+          "",
+          "5 rounds total = 10 random stations + 5 runs"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Pro weights, 4 rounds, 800m runs",
+      "conditioning": "Open weights, 6 rounds, 400m runs",
+      "hybrid": "Partner format, 5 rounds, 400m runs"
+    },
+    "avoid_after": [],
+    "notes": "Double roulette per round is chaotic. You might get sled push + sled pull back-to-back. That's the game."
+  },
+  {
+    "id": "wed-007",
+    "name": "Tyr",
+    "title": "Compromised Run — DB Complex",
+    "day_slot": "wednesday",
+    "track": ["hybrid", "conditioning"],
+    "format": "compromised_run",
+    "sub_format": "compromised_running",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["press", "hinge", "squat", "run"],
+    "equipment": ["dumbbells", "open_floor"],
+    "duration_minutes": 30,
+    "intensity": "high",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Jog x 3–5 min easy",
+          "Bodyweight Squats x 10",
+          "Walking Lunges x 10 each leg",
+          "Arm Circles x 10 each way",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "FOR TIME",
+        "title": "Compromised Run — DB Complex",
+        "description": [
+          "Run 800m",
+          "DB Hang Power Clean x 15 @ 2×15/10kg",
+          "Run 800m",
+          "DB Devil Press x 15 @ 2×15/10kg",
+          "Run 800m",
+          "DB Thrusters x 15 @ 2×15/10kg",
+          "Run 800m"
+        ],
+        "alternatives": [
+          "Run → High Knees x 3 min or Assault Bike x 30/22 cal",
+          "Scale DB load to ensure good form"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier DBs (2×20/15kg), 600m runs",
+      "conditioning": "As written, push for sub-25 min",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["heavy_press"],
+    "notes": "The devil presses are the killer. Break early if needed (sets of 8/7 or 10/5)."
+  },
+  {
+    "id": "wed-008",
+    "name": "Skadi",
+    "title": "Run + Wall Ball Ladder",
+    "day_slot": "wednesday",
+    "track": ["hybrid", "conditioning"],
+    "format": "compromised_run",
+    "sub_format": "compromised_running",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["squat", "run"],
+    "equipment": ["wall_ball", "open_floor"],
+    "duration_minutes": 30,
+    "intensity": "high",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Jog x 3 min easy",
+          "High Knees x 20",
+          "Butt Kicks x 20",
+          "Bodyweight Squats x 10",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "FOR TIME",
+        "title": "Run + Wall Ball Ladder",
+        "description": [
+          "Run 200m + Wall Balls x 10 @ 14/9lb",
+          "Run 400m + Wall Balls x 20",
+          "Run 600m + Wall Balls x 30",
+          "Run 800m + Wall Balls x 40",
+          "Run 400m + Wall Balls x 20"
+        ],
+        "alternatives": [
+          "Run → Assault Bike x 2.5× distance in meters of cal",
+          "Wall Balls → DB Thrusters @ 2×8/4kg"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier wall ball (20/14lb), cap at 20 reps per round, add 200m to runs",
+      "conditioning": "As written, target consistent run pace",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["heavy_squat"],
+    "notes": "120 total wall balls. The 800m + 40 WB round is where you earn it."
+  },
+  {
+    "id": "wed-009",
+    "name": "Freya",
+    "title": "Fartlek Run + Burpee Buy-In",
+    "day_slot": "wednesday",
+    "track": ["hybrid", "conditioning"],
+    "format": "compromised_run",
+    "sub_format": "compromised_running",
+    "energy_system": "mixed",
+    "movement_patterns": ["push", "run"],
+    "equipment": ["open_floor"],
+    "duration_minutes": 30,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Jog x 5 min easy",
+          "High Knees x 20",
+          "Butt Kicks x 20",
+          "Skips x 10m",
+          "Dynamic Hamstring Scoops x 10 each leg"
+        ]
+      },
+      "B": {
+        "type": "FARTLEK",
+        "title": "Fartlek + Burpee Buy-In",
+        "description": [
+          "5 Rounds:",
+          "Burpees x 10",
+          "Run 60s @ 7–8 RPE (faster than 5k pace)",
+          "Jog 90s @ 3–4 RPE",
+          "",
+          "Then:",
+          "Continuous run x 10 min @ Zone 2 (3–4 RPE)",
+          "Record total distance if possible"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "3 rounds of burpee/fartlek, 8 min Zone 2 run",
+      "conditioning": "7 rounds of burpee/fartlek, 12 min Zone 2 run",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "Burpees before each fast interval simulate compromised running. Zone 2 finisher builds aerobic base."
+  },
+  {
+    "id": "wed-010",
+    "name": "Baldur",
+    "title": "Bodyweight AMRAP 15",
+    "day_slot": "wednesday",
+    "track": ["hybrid", "conditioning"],
+    "format": "amrap",
+    "sub_format": "bodyweight_metcon",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["push", "squat", "pull"],
+    "equipment": ["pull_up_bar"],
+    "duration_minutes": 25,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Jog or Assault Bike x 3 min",
+          "Scapular Pull-Ups x 10",
+          "Scapular Push-Ups x 10",
+          "Bodyweight Squats x 10",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "AMRAP 15",
+        "title": "Bodyweight Grinder",
+        "description": [
+          "Pull-Ups x 8 (band if needed)",
+          "Push-Ups x 16",
+          "Air Squats x 24",
+          "Sit-Ups x 12"
+        ],
+        "alternatives": [
+          "Pull-Ups → Ring Rows or Inverted Rows",
+          "Push-Ups → Incline Push-Ups"
+        ]
+      },
+      "C": {
+        "type": "COOLDOWN",
+        "title": "Easy Walk or Bike",
+        "description": [
+          "3–5 min @ Zone 1"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Weighted pull-ups, deficit push-ups, 12 min AMRAP",
+      "conditioning": "As written, 20 min AMRAP",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "Zero equipment needed (just a pull-up bar). Great for busy gym days. Score = rounds + reps."
+  },
+  {
+    "id": "wed-011",
+    "name": "Heimdall",
+    "title": "DB Complex EMOM",
+    "day_slot": "wednesday",
+    "track": ["hybrid", "conditioning"],
+    "format": "emom",
+    "sub_format": "bodyweight_metcon",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["press", "hinge", "squat"],
+    "equipment": ["dumbbells"],
+    "duration_minutes": 25,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike or Row x 3 min",
+          "Bodyweight Squats x 10",
+          "Arm Circles x 10 each way",
+          "Walking Lunges x 10 each leg",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "EMOM 15",
+        "title": "DB Complex",
+        "description": [
+          "Min 1: DB Hang Clean + Push Press x 8 @ 2×15/10kg",
+          "Min 2: DB Front Rack Walking Lunges x 12 @ 2×15/10kg",
+          "Min 3: DB Renegade Rows x 10 @ 2×15/10kg",
+          "(Repeat for 15 min = 5 rounds)"
+        ],
+        "alternatives": [
+          "Renegade Rows → DB Bent Over Rows x 12",
+          "Walking Lunges → Reverse Lunges (stationary)"
+        ]
+      },
+      "C": {
+        "type": "FINISHER",
+        "title": "Plank Hold",
+        "description": [
+          "Max hold plank — record time",
+          "Rest 60s → Max hold again"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier DBs (2×20/15kg), 12 min EMOM",
+      "conditioning": "As written, 18 min EMOM (6 rounds)",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["heavy_press"],
+    "notes": "Light DBs, high density. The EMOM forces efficient movement."
+  },
+  {
+    "id": "wed-012",
+    "name": "Ragnarok",
+    "title": "Push-Up + Air Squat Descender + Core Finisher",
+    "day_slot": "wednesday",
+    "track": ["hybrid", "conditioning", "strength"],
+    "format": "for_time",
+    "sub_format": "bodyweight_metcon",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["push", "squat"],
+    "equipment": [],
+    "duration_minutes": 25,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Jog x 3 min",
+          "Scapular Push-Ups x 10",
+          "Bodyweight Squats x 10",
+          "Inch Worm to Push-Up x 5",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "FOR TIME",
+        "title": "Descending Ladder",
+        "description": [
+          "10-9-8-7-6-5-4-3-2-1:",
+          "Push-Ups",
+          "Air Squats (×2 — so 20-18-16-14-12-10-8-6-4-2)",
+          "Burpees (÷2 — so 5-5-4-4-3-3-2-2-1-1)"
+        ]
+      },
+      "C": {
+        "type": "CORE",
+        "title": "Core Finisher",
+        "description": [
+          "3 rounds:",
+          "Hollow Hold x 30s",
+          "Russian Twists x 20",
+          "Side Plank x 20s each side"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Deficit push-ups, add a 20lb vest",
+      "conditioning": "As written",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "Zero equipment. Total reps: 55 push-ups, 110 air squats, 30 burpees. Deceptively hard."
+  }
+]

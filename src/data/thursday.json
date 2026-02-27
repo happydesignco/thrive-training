@@ -1,0 +1,746 @@
+[
+  {
+    "id": "thu-001",
+    "name": "Susanoo",
+    "title": "RDL + Hip Thrust + Bent Over Row",
+    "day_slot": "thursday",
+    "track": ["hybrid", "strength", "conditioning"],
+    "format": "accessory",
+    "rotation": "posterior_chain",
+    "energy_system": "aerobic",
+    "movement_patterns": ["hinge", "pull"],
+    "equipment": ["barbell", "dumbbells", "bench"],
+    "duration_minutes": 40,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike or Row x 5 min easy",
+          "Bodyweight Deadlifts (hinge pattern) x 10",
+          "Glute Bridges x 15",
+          "Cat-Cow Stretch x 5",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "STRENGTH",
+        "title": "Romanian Deadlift",
+        "description": [
+          "4 sets x 8–10 reps",
+          "Rest 90s between sets",
+          "Moderate weight — focus on hamstring stretch and glute squeeze at top"
+        ]
+      },
+      "C": {
+        "type": "SUPERSET",
+        "title": "Hip Thrust + Bent Over Row",
+        "description": [
+          "3 sets:",
+          "Barbell Hip Thrust x 12",
+          "DB Bent Over Row x 12 each arm",
+          "Rest 60s between supersets"
+        ]
+      },
+      "D": {
+        "type": "FINISHER",
+        "title": "Banded Hamstring Curls",
+        "description": [
+          "3 sets x 15–20 reps",
+          "Band around ankle, prone on bench",
+          "Slow eccentric (3s down)"
+        ],
+        "alternatives": [
+          "Machine Hamstring Curl x 15",
+          "Nordic Curl Negatives x 5"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier RDLs (4×6 at higher weight), add barbell rows instead of DB",
+      "conditioning": "Circuit format: RDL x 8 → Hip Thrust x 12 → Row x 12 → Ham Curl x 15, 4 rounds, 60s rest",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["deadlift"],
+    "notes": "Classic posterior chain day. Supports deadlift progression. Don't go so heavy you're wrecked for Friday."
+  },
+  {
+    "id": "thu-002",
+    "name": "Tsukuyomi",
+    "title": "Good Morning + Glute Bridge + Face Pull",
+    "day_slot": "thursday",
+    "track": ["hybrid", "strength", "conditioning"],
+    "format": "accessory",
+    "rotation": "posterior_chain",
+    "energy_system": "aerobic",
+    "movement_patterns": ["hinge", "pull"],
+    "equipment": ["barbell", "dumbbells", "cable_machine"],
+    "duration_minutes": 40,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Row x 5 min easy",
+          "Cat-Cow Stretch x 5",
+          "Bird Dogs x 8 each side",
+          "Glute Bridges x 15",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "STRENGTH",
+        "title": "Barbell Good Morning",
+        "description": [
+          "4 sets x 8–10 reps",
+          "Light-to-moderate weight — this is an accessory, not a max effort",
+          "Rest 90s"
+        ]
+      },
+      "C": {
+        "type": "SUPERSET",
+        "title": "Single-Leg Glute Bridge + Cable Face Pull",
+        "description": [
+          "3 sets:",
+          "Single-Leg Glute Bridge x 10 each side",
+          "Cable Face Pull x 15",
+          "Rest 60s"
+        ],
+        "alternatives": [
+          "Cable Face Pull → Band Pull-Apart x 20"
+        ]
+      },
+      "D": {
+        "type": "FINISHER",
+        "title": "Back Extension Hold",
+        "description": [
+          "3 sets x 20s hold at top",
+          "Bodyweight or light plate"
+        ],
+        "alternatives": [
+          "Superman Hold x 30s"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier good mornings (4×6), add weighted back extensions",
+      "conditioning": "Circuit: Good Morning x 8 → SL Glute Bridge x 10/side → Face Pull x 15 → Back Ext x 10, 4 rounds minimal rest",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["deadlift"],
+    "notes": "Lighter posterior chain work. Good mornings build the same muscles as deadlifts without the CNS tax."
+  },
+  {
+    "id": "thu-003",
+    "name": "Raijin",
+    "title": "B-Stance RDL + Seated Row + Hamstring Curl",
+    "day_slot": "thursday",
+    "track": ["hybrid", "strength", "conditioning"],
+    "format": "accessory",
+    "rotation": "posterior_chain",
+    "energy_system": "aerobic",
+    "movement_patterns": ["hinge", "pull"],
+    "equipment": ["dumbbells", "cable_machine"],
+    "duration_minutes": 40,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike x 5 min easy",
+          "Bodyweight Deadlifts x 10",
+          "Dead Bugs x 8 each side",
+          "Clamshells x 15 each side",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "STRENGTH",
+        "title": "B-Stance Romanian Deadlift",
+        "description": [
+          "4 sets x 8 each leg",
+          "DB in each hand",
+          "Rest 90s between sets"
+        ]
+      },
+      "C": {
+        "type": "SUPERSET",
+        "title": "Cable Seated Row + Hamstring Curl",
+        "description": [
+          "3 sets:",
+          "Cable Seated Row x 12",
+          "Machine or Banded Hamstring Curl x 12",
+          "Rest 60s"
+        ]
+      },
+      "D": {
+        "type": "CORE",
+        "title": "Anti-Extension",
+        "description": [
+          "3 sets:",
+          "Ab Wheel Rollout x 8–10 (or Plank x 30s)",
+          "Dead Bug x 10 each side"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier B-stance RDL, add barbell rows, 4 sets on everything",
+      "conditioning": "Circuit format, 4 rounds, 45s rest between rounds",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["deadlift"],
+    "notes": "B-stance RDL is a unilateral posterior chain builder. Great for identifying L/R imbalances."
+  },
+  {
+    "id": "thu-004",
+    "name": "Fujin",
+    "title": "KB Swing + Pull-Up + Farmer Carry",
+    "day_slot": "thursday",
+    "track": ["hybrid", "conditioning"],
+    "format": "accessory",
+    "rotation": "posterior_chain",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["hinge", "pull", "carry"],
+    "equipment": ["kettlebells", "pull_up_bar"],
+    "duration_minutes": 35,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike or Row x 5 min easy",
+          "KB Deadlift x 10",
+          "KB Halo x 10 each direction",
+          "Scapular Pull-Ups x 10",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "E2MOM x 6",
+        "title": "KB Swing + Pull-Up",
+        "description": [
+          "Every 2 min for 6 rounds:",
+          "KB Swing x 15 @ 24/16kg",
+          "Pull-Up x 6–8 (band if needed)"
+        ],
+        "alternatives": [
+          "Pull-Ups → Ring Rows"
+        ]
+      },
+      "C": {
+        "type": "FINISHER",
+        "title": "Farmer Carry Accumulation",
+        "description": [
+          "Accumulate 400m Farmer Carry @ 2×24/16kg",
+          "Break as needed, clock runs"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier KB (32/24kg), weighted pull-ups, heavier carry (2×32/24kg)",
+      "conditioning": "As written, push for unbroken carry",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["deadlift"],
+    "notes": "More conditioning-flavored posterior chain work. KB swings + pull-ups are a HYROX-relevant pairing."
+  },
+  {
+    "id": "thu-005",
+    "name": "Amaterasu",
+    "title": "DB Bench + Dips + Tricep Pushdown",
+    "day_slot": "thursday",
+    "track": ["hybrid", "strength", "conditioning"],
+    "format": "accessory",
+    "rotation": "pressing_core",
+    "energy_system": "aerobic",
+    "movement_patterns": ["press", "push"],
+    "equipment": ["dumbbells", "bench", "dip_station", "cable_machine"],
+    "duration_minutes": 40,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike x 5 min easy",
+          "PVC Shoulder Pass-Throughs x 10",
+          "Scapular Push-Ups x 10",
+          "Band Pull-Aparts x 15",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "STRENGTH",
+        "title": "Dumbbell Bench Press",
+        "description": [
+          "4 sets x 10–12 reps",
+          "Moderate weight — hypertrophy focus",
+          "Rest 90s"
+        ]
+      },
+      "C": {
+        "type": "SUPERSET",
+        "title": "Dips + Tricep Pushdown",
+        "description": [
+          "3 sets:",
+          "Dips x 10–15 (band assist if needed)",
+          "Cable Tricep Pushdown x 15",
+          "Rest 60s"
+        ],
+        "alternatives": [
+          "Dips → Bench Dips",
+          "Cable Pushdown → Band Pushdown"
+        ]
+      },
+      "D": {
+        "type": "CORE",
+        "title": "Pressing Core",
+        "description": [
+          "3 sets:",
+          "Plank Hold x 45s",
+          "Pallof Press x 10 each side"
+        ],
+        "alternatives": [
+          "Pallof Press → Band Anti-Rotation Hold x 20s each side"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier DB bench (4×8), weighted dips, 4 sets on everything",
+      "conditioning": "Circuit: DB Bench x 10 → Dips x 15 → Pushdown x 15 → Plank x 30s, 4 rounds, 60s rest",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["heavy_bench"],
+    "notes": "Pressing volume to support bench progression. DB bench builds stabilizers barbell doesn't hit."
+  },
+  {
+    "id": "thu-006",
+    "name": "Izanagi",
+    "title": "DB Z-Press + Push-Ups + Lateral Raise",
+    "day_slot": "thursday",
+    "track": ["hybrid", "strength", "conditioning"],
+    "format": "accessory",
+    "rotation": "pressing_core",
+    "energy_system": "aerobic",
+    "movement_patterns": ["press"],
+    "equipment": ["dumbbells"],
+    "duration_minutes": 35,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Row x 5 min easy",
+          "PVC Shoulder Pass-Throughs x 10",
+          "Y-T-W Raises x 10",
+          "Arm Circles x 10 each way",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "STRENGTH",
+        "title": "DB Z-Press",
+        "description": [
+          "4 sets x 8–10 reps",
+          "Seated on floor, legs extended",
+          "Rest 90s"
+        ]
+      },
+      "C": {
+        "type": "SUPERSET",
+        "title": "Push-Ups + Lateral Raise",
+        "description": [
+          "3 sets:",
+          "Push-Ups x 15–20",
+          "DB Lateral Raise x 12–15",
+          "Rest 60s"
+        ]
+      },
+      "D": {
+        "type": "CORE",
+        "title": "Anti-Rotation",
+        "description": [
+          "3 sets:",
+          "Pallof Press x 10 each side",
+          "Side Plank x 20s each side"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier Z-press (4×6), deficit push-ups, 4 sets",
+      "conditioning": "Circuit format, 4 rounds, minimal rest",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["heavy_press"],
+    "notes": "Z-press forces strict pressing with no leg drive or back arch. Humbling but effective for OHP transfer."
+  },
+  {
+    "id": "thu-007",
+    "name": "Bishamonten",
+    "title": "Incline DB Press + Dips + Skull Crushers",
+    "day_slot": "thursday",
+    "track": ["hybrid", "strength", "conditioning"],
+    "format": "accessory",
+    "rotation": "pressing_core",
+    "energy_system": "aerobic",
+    "movement_patterns": ["press", "push"],
+    "equipment": ["dumbbells", "bench", "dip_station", "ez_bar"],
+    "duration_minutes": 40,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike x 5 min easy",
+          "PVC Shoulder Pass-Throughs x 10",
+          "Scapular Push-Ups x 10",
+          "Inch Worm to Push-Up x 5",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "STRENGTH",
+        "title": "Incline DB Bench Press",
+        "description": [
+          "4 sets x 10–12 reps",
+          "30–45° incline",
+          "Rest 90s"
+        ]
+      },
+      "C": {
+        "type": "SUPERSET",
+        "title": "Dips + Skull Crushers",
+        "description": [
+          "3 sets:",
+          "Ring Dips or Bar Dips x 8–12",
+          "EZ Bar Skull Crushers x 12",
+          "Rest 60s"
+        ],
+        "alternatives": [
+          "Ring Dips → Bench Dips",
+          "Skull Crushers → Overhead DB Tricep Extension"
+        ]
+      },
+      "D": {
+        "type": "CORE",
+        "title": "Loaded Carry + Plank",
+        "description": [
+          "3 rounds:",
+          "Overhead DB Carry x 50m (single arm, switch halfway)",
+          "Plank Hold x 30s"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier incline press (4×8), weighted dips, 4 sets everything",
+      "conditioning": "Circuit: Incline x 10 → Dips x 12 → Skull Crush x 12 → Carry x 50m, 4 rounds, 60s rest",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["heavy_bench"],
+    "notes": "Incline pressing builds upper chest and front delt — transfers directly to overhead press."
+  },
+  {
+    "id": "thu-008",
+    "name": "Inari",
+    "title": "Push-Up Variations + KB Press + Hollow Body",
+    "day_slot": "thursday",
+    "track": ["hybrid", "conditioning"],
+    "format": "accessory",
+    "rotation": "pressing_core",
+    "energy_system": "glycolytic",
+    "movement_patterns": ["press", "push"],
+    "equipment": ["kettlebells"],
+    "duration_minutes": 30,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike x 5 min easy",
+          "Scapular Push-Ups x 10",
+          "Band Pull-Aparts x 15",
+          "Cat-Cow Stretch x 5",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "EMOM 12",
+        "title": "Push-Up Variation + KB Press",
+        "description": [
+          "Min 1: Push-Up Variation x 10 (rotate: standard / diamond / wide / archer)",
+          "Min 2: Single-Arm KB Press x 6 each arm @ 16/12kg",
+          "Min 3: Hollow Body Hold x 30s",
+          "(4 rounds)"
+        ]
+      },
+      "C": {
+        "type": "FINISHER",
+        "title": "Max Push-Ups",
+        "description": [
+          "1 set: Max unbroken push-ups",
+          "Record your number"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier KB (24/16kg), deficit push-ups, 15 min EMOM (5 rounds)",
+      "conditioning": "As written",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["heavy_bench", "heavy_press"],
+    "notes": "Minimal equipment pressing day. Push-up variation rotation hits all angles. Track your max set over time."
+  },
+  {
+    "id": "thu-009",
+    "name": "Ryujin",
+    "title": "90/90 Flow + Pistol Progression + Step-Up",
+    "day_slot": "thursday",
+    "track": ["hybrid", "strength", "conditioning"],
+    "format": "mobility",
+    "rotation": "mobility_single_leg",
+    "energy_system": "aerobic",
+    "movement_patterns": ["squat", "balance"],
+    "equipment": ["box", "dumbbells"],
+    "duration_minutes": 40,
+    "intensity": "low",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike x 5 min easy",
+          "Cat-Cow Stretch x 10",
+          "Supine Knee-to-Chest x 30s each side",
+          "Child's Pose with Lateral Reach x 30s each side",
+          "Supine Figure-Four Stretch x 60s each side"
+        ]
+      },
+      "B": {
+        "type": "MOBILITY",
+        "title": "Hip Flow",
+        "description": [
+          "3 rounds:",
+          "90/90 Hip Switches x 8 each side (slow and controlled)",
+          "Pigeon Pose Hold x 45s each side",
+          "Deep Squat Hold x 30s (hold bottom of squat, push knees out)"
+        ]
+      },
+      "C": {
+        "type": "STRENGTH",
+        "title": "Pistol Squat Progression + Step-Up",
+        "description": [
+          "3 sets:",
+          "Seated Pistol Squat x 6 each leg (to box, lower box as you progress)",
+          "DB Step-Up x 8 each leg @ 20\" box",
+          "Rest 60s"
+        ],
+        "alternatives": [
+          "Pistol → Assisted Pistol with band or TRX",
+          "Step-Up → Box Step-Up bodyweight only"
+        ]
+      },
+      "D": {
+        "type": "COOLDOWN",
+        "title": "Stretch",
+        "description": [
+          "Couch Stretch x 60s each side",
+          "Hamstring Stretch x 60s each side",
+          "Hanging Spinal Decompression x 60s"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier step-ups, lower box for pistols, add weighted vest",
+      "conditioning": "Add Assault Bike x 3 min between each round of section B",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "Mobility focus — 90/90s are a known weak spot. Progressive overload the pistol box height over weeks."
+  },
+  {
+    "id": "thu-010",
+    "name": "Kagutsuchi",
+    "title": "Shoulder Flow + Turkish Get-Up + Balance Work",
+    "day_slot": "thursday",
+    "track": ["hybrid", "strength", "conditioning"],
+    "format": "mobility",
+    "rotation": "mobility_single_leg",
+    "energy_system": "aerobic",
+    "movement_patterns": ["press", "balance"],
+    "equipment": ["kettlebells"],
+    "duration_minutes": 40,
+    "intensity": "low",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Row x 5 min easy",
+          "PVC Shoulder Pass-Throughs x 15",
+          "Y-T-W Raises x 10",
+          "Arm Circles x 15 each way",
+          "Thread the Needle x 8 each side"
+        ]
+      },
+      "B": {
+        "type": "SKILL",
+        "title": "Turkish Get-Up",
+        "description": [
+          "5 per side — take your time",
+          "Light KB (12–16kg / 8–12kg)",
+          "Focus on positions, not speed",
+          "Full range of motion every rep"
+        ]
+      },
+      "C": {
+        "type": "SUPERSET",
+        "title": "Single-Leg Balance + Shoulder Stability",
+        "description": [
+          "3 sets:",
+          "Single-Leg RDL x 8 each side (BW or light DB)",
+          "KB Windmill x 5 each side @ light weight",
+          "Single-Leg Balance Hold x 30s each side (eyes closed if possible)"
+        ]
+      },
+      "D": {
+        "type": "COOLDOWN",
+        "title": "Stretch",
+        "description": [
+          "Doorway Pec Stretch x 45s each side",
+          "Lat Stretch x 45s each side",
+          "Child's Pose x 60s"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier TGU (20–24kg), weighted single-leg RDL",
+      "conditioning": "Add Assault Bike x 2 min between rounds of section C",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "TGU is the ultimate full-body movement quality test. Low weight, high attention. Great for SI/lumbar health."
+  },
+  {
+    "id": "thu-011",
+    "name": "Izanami",
+    "title": "Bulgarian Split Squat + Lateral Work + Hip Flow",
+    "day_slot": "thursday",
+    "track": ["hybrid", "strength", "conditioning"],
+    "format": "accessory",
+    "rotation": "mobility_single_leg",
+    "energy_system": "aerobic",
+    "movement_patterns": ["squat", "balance"],
+    "equipment": ["dumbbells", "bench", "band"],
+    "duration_minutes": 40,
+    "intensity": "moderate",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike x 5 min easy",
+          "Lateral Band Walk x 15 each direction",
+          "Clamshells x 15 each side",
+          "Bodyweight Lunges x 10 each leg",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "STRENGTH",
+        "title": "Bulgarian Split Squat",
+        "description": [
+          "4 sets x 8 each leg",
+          "DB in each hand",
+          "Rear foot on bench",
+          "Rest 90s"
+        ]
+      },
+      "C": {
+        "type": "SUPERSET",
+        "title": "Lateral Lunge + Banded Lateral Walk",
+        "description": [
+          "3 sets:",
+          "DB Lateral Lunge x 8 each side",
+          "Banded Lateral Walk x 15 each direction",
+          "Rest 60s"
+        ]
+      },
+      "D": {
+        "type": "MOBILITY",
+        "title": "Hip Flow",
+        "description": [
+          "2 rounds:",
+          "90/90 Hip Switches x 8 each side",
+          "Pigeon Pose x 45s each side",
+          "Frog Stretch x 45s"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier BSS (4×6), add barbell BSS, 4 sets on superset",
+      "conditioning": "Circuit: BSS x 8/side → Lat Lunge x 8/side → Band Walk x 15/side → 90/90 x 8/side, 4 rounds, 60s rest",
+      "hybrid": "As written"
+    },
+    "avoid_after": ["heavy_squat"],
+    "notes": "BSS is arguably the best single-leg exercise for squat transfer. Lateral work addresses the frontal plane."
+  },
+  {
+    "id": "thu-012",
+    "name": "Benzaiten",
+    "title": "Cossack Squat + Single-Leg Deadlift + Ankle/Hip Flow",
+    "day_slot": "thursday",
+    "track": ["hybrid", "strength", "conditioning"],
+    "format": "mobility",
+    "rotation": "mobility_single_leg",
+    "energy_system": "aerobic",
+    "movement_patterns": ["squat", "hinge", "balance"],
+    "equipment": ["kettlebells"],
+    "duration_minutes": 35,
+    "intensity": "low",
+    "sections": {
+      "A": {
+        "type": "WARM UP",
+        "description": [
+          "Assault Bike x 5 min easy",
+          "Ankle Circles x 10 each direction",
+          "Bodyweight Squats x 10 (slow, 3s down)",
+          "Lateral Lunges x 10 each side",
+          "World's Greatest Stretch x 5 each side"
+        ]
+      },
+      "B": {
+        "type": "STRENGTH",
+        "title": "Cossack Squat + Single-Leg Deadlift",
+        "description": [
+          "3 sets:",
+          "Cossack Squat x 6 each side (KB goblet hold optional)",
+          "Single-Leg Deadlift x 8 each side (KB or DB)",
+          "Rest 60s"
+        ]
+      },
+      "C": {
+        "type": "MOBILITY",
+        "title": "Ankle + Hip Flow",
+        "description": [
+          "2 rounds:",
+          "Wall Ankle Stretch x 30s each side",
+          "Deep Squat Hold x 45s",
+          "90/90 Hip Switches x 8 each side",
+          "Pigeon Pose x 45s each side",
+          "Couch Stretch x 45s each side"
+        ]
+      },
+      "D": {
+        "type": "COOLDOWN",
+        "title": "Decompression",
+        "description": [
+          "Hanging Spinal Decompression x 60s",
+          "Supine Knee-to-Chest x 30s each side"
+        ]
+      }
+    },
+    "scaling": {
+      "strength": "Heavier KB for Cossack and SLDL, 4 sets",
+      "conditioning": "Add 3 min Assault Bike between sections B and C",
+      "hybrid": "As written"
+    },
+    "avoid_after": [],
+    "notes": "Cossack squats build hip mobility under load — directly transfers to squat depth. Lighter day overall."
+  }
+]
