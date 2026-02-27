@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useUser } from '../hooks/useUser'
 import WeekView from './WeekView'
 import FiveThreeOne from './FiveThreeOne'
 import WorkoutLibrary from './WorkoutLibrary'
@@ -14,8 +13,6 @@ const TABS = [
 ]
 
 export default function Layout() {
-  const { currentUser, users, setCurrentUser } = useUser()
-
   const [activeTab, setActiveTab] = useState(() => {
     const params = new URLSearchParams(window.location.search)
     return params.get('tab') || 'week'
@@ -32,22 +29,10 @@ export default function Layout() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="flex items-center justify-between px-4 py-3 border-b border-border">
+      <header className="flex items-center px-4 py-3 border-b border-border">
         <h1 className="text-lg tracking-widest uppercase font-medium text-magenta">
           Thrive
         </h1>
-        <select
-          value={currentUser.id}
-          onChange={e => {
-            const user = users.find(u => u.id === e.target.value)
-            if (user) setCurrentUser(user)
-          }}
-          className="bg-input-bg border border-border rounded-md px-2 py-1 text-sm font-mono"
-        >
-          {users.map(u => (
-            <option key={u.id} value={u.id}>{u.name}</option>
-          ))}
-        </select>
       </header>
 
       {/* Tab bar */}
@@ -69,7 +54,7 @@ export default function Layout() {
 
       {/* Content */}
       <main className="flex-1 p-4">
-        {activeTab === 'week' && <WeekView />}
+        {activeTab === 'week' && <WeekView onNavigate={setActiveTab} />}
         {activeTab === '531' && <FiveThreeOne />}
         {activeTab === 'library' && <WorkoutLibrary />}
         {activeTab === 'roulette' && <Roulette />}
