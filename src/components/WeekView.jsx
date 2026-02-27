@@ -1,6 +1,10 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useUser } from '../hooks/useUser'
 import { filterWorkouts, getWorkoutById } from '../data/workouts'
+import {
+  LIFTS, WEEK_LABELS, COLOR_MAP,
+  calcWeight, get531WeekIndex, getWeekSets,
+} from '../utils/fiveThreeOne'
 
 const DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 const DAY_LABELS = {
@@ -83,6 +87,9 @@ export default function WeekView({ onNavigate }) {
 
   const [assignments, setAssignments] = useState(() => getUserData(storageKey) || {})
 
+  // Load 531 config for auto-populating lift details
+  const fiveThreeOneData = useMemo(() => getUserData('531'), [getUserData])
+
   useEffect(() => {
     setAssignments(getUserData(storageKey) || {})
     setExpandedDay(null)
@@ -95,10 +102,47 @@ export default function WeekView({ onNavigate }) {
     return pool[weekNum % pool.length]
   }
 
+  function get531Assignment(day) {
+    if (!fiveThreeOneData?.startDate || !fiveThreeOneData?.dayAssignments) {
+      return { type: '531' }
+    }
+
+    const assignedLiftKeys = Object.entries(fiveThreeOneData.dayAssignments)
+      .filter(([, assignedDay]) => assignedDay === day)
+      .map(([liftKey]) => liftKey)
+
+    if (assignedLiftKeys.length === 0) return { type: '531' }
+
+    const weekIndex = get531WeekIndex(fiveThreeOneData.startDate, weekStart, fiveThreeOneData.useDeload)
+    const sets = getWeekSets(weekIndex, fiveThreeOneData.useDeload)
+    const cycleLength = fiveThreeOneData.useDeload ? 4 : 3
+
+    const lifts = assignedLiftKeys
+      .map(key => LIFTS.find(l => l.key === key))
+      .filter(Boolean)
+      .map(lift => ({
+        ...lift,
+        weight: fiveThreeOneData.weights?.[lift.key],
+      }))
+
+    return {
+      type: '531',
+      configured: true,
+      weekIndex,
+      weekLabel: WEEK_LABELS[weekIndex],
+      cycleLength,
+      sets,
+      lifts,
+      mode: fiveThreeOneData.mode,
+      useRounding: fiveThreeOneData.useRounding,
+      useBBB: fiveThreeOneData.useBBB,
+    }
+  }
+
   function getAssignment(day) {
     const type = schedule[day]
     if (type === 'rest') return { type: 'rest' }
-    if (type === '531') return { type: '531' }
+    if (type === '531') return get531Assignment(day)
 
     if (assignments[day]) {
       const workout = getWorkoutById(assignments[day])
@@ -159,6 +203,7 @@ export default function WeekView({ onNavigate }) {
           const isExpanded = expandedDay === day
           const isSwapping = swappingDay === day
           const isToday = dayIdx === todayIndex
+          const is531Configured = assignment.type === '531' && assignment.configured
 
           return (
             <div
@@ -170,10 +215,10 @@ export default function WeekView({ onNavigate }) {
               {/* Day header */}
               <div
                 className={`flex items-center justify-between px-4 py-3 ${
-                  assignment.type === 'workout' ? 'cursor-pointer' : ''
+                  assignment.type === 'workout' || is531Configured ? 'cursor-pointer' : ''
                 }`}
                 onClick={() => {
-                  if (assignment.type === 'workout') {
+                  if (assignment.type === 'workout' || is531Configured) {
                     setExpandedDay(isExpanded ? null : day)
                     setSwappingDay(null)
                   }
@@ -193,7 +238,23 @@ export default function WeekView({ onNavigate }) {
                     </div>
                   )}
 
-                  {assignment.type === '531' && (
+                  {assignment.type === '531' && is531Configured && (
+                    <div className="min-w-0">
+                      <span className="text-sm font-semibold">
+                        {assignment.lifts.map((l, i) => (
+                          <span key={l.key}>
+                            {i > 0 && <span className="opacity-30"> · </span>}
+                            <span style={{ color: COLOR_MAP[l.color] }}>{l.key.toUpperCase()}</span>
+                          </span>
+                        ))}
+                      </span>
+                      <p className="text-xs opacity-50 truncate">
+                        Wk {assignment.weekIndex + 1}/{assignment.cycleLength} — {assignment.weekLabel}
+                      </p>
+                    </div>
+                  )}
+
+                  {assignment.type === '531' && !is531Configured && (
                     <button
                       onClick={(e) => {
                         e.stopPropagation()
@@ -222,6 +283,12 @@ export default function WeekView({ onNavigate }) {
                     >
                       Swap
                     </button>
+                    <span className="text-xs opacity-30">{isExpanded ? '\u25B2' : '\u25BC'}</span>
+                  </div>
+                )}
+
+                {is531Configured && (
+                  <div className="flex items-center gap-3 shrink-0 ml-2">
                     <span className="text-xs opacity-30">{isExpanded ? '\u25B2' : '\u25BC'}</span>
                   </div>
                 )}
@@ -254,6 +321,60 @@ export default function WeekView({ onNavigate }) {
                         Reset to auto
                       </button>
                     )}
+                  </div>
+                </div>
+              )}
+
+              {/* Expanded 5/3/1 details */}
+              {isExpanded && is531Configured && (
+                <div className="px-4 pb-4 border-t border-border">
+                  <div className="mt-3 flex flex-col gap-3">
+                    {assignment.lifts.map(lift => {
+                      const baseColor = COLOR_MAP[lift.color]
+                      const hasWeight = parseFloat(lift.weight) > 0
+                      return (
+                        <div key={lift.key} className="flex flex-col gap-1">
+                          <p className="text-xs uppercase tracking-wider font-bold" style={{ color: baseColor }}>
+                            {lift.key.toUpperCase()}
+                          </p>
+                          <ul
+                            className="list-none pl-4"
+                            style={{ borderLeft: `2px solid ${baseColor}` }}
+                          >
+                            {assignment.sets.map((s, idx) => {
+                              const wgt = hasWeight
+                                ? calcWeight(lift.weight, s.p, assignment.mode, assignment.useRounding)
+                                : null
+                              return (
+                                <li key={idx} className="mb-1 text-xs flex justify-between max-w-[250px]">
+                                  <span>{s.r} reps @ {s.p}%</span>
+                                  {wgt && <span className="font-bold text-sm">{wgt}</span>}
+                                </li>
+                              )
+                            })}
+                            {assignment.useBBB && (
+                              <li className="mb-1 text-xs flex justify-between max-w-[250px] opacity-60">
+                                <span>5x10 @ 50%</span>
+                                {hasWeight && (
+                                  <span className="font-bold text-sm">
+                                    {calcWeight(lift.weight, 50, assignment.mode, assignment.useRounding)}
+                                  </span>
+                                )}
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+                      )
+                    })}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        onNavigate?.('531')
+                      }}
+                      className="text-xs text-cyan hover:underline text-left mt-1"
+                    >
+                      Edit in 5/3/1 →
+                    </button>
                   </div>
                 </div>
               )}
