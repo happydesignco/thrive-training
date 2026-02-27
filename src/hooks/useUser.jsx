@@ -1,41 +1,18 @@
-import { createContext, useContext, useState, useCallback } from 'react'
+import { createContext, useContext, useCallback } from 'react'
 import { DEFAULT_SCHEDULES } from '../data/schedules'
+import { useAuth } from './useAuth'
+import { pushUserData, deleteUserData } from '../lib/sync'
 
 const UserContext = createContext()
-
-const DEFAULT_USERS = [
-  { id: 'adam', name: 'Adam', scheduleId: 'hybrid' },
-]
 
 function storageKey(userId, key) {
   return `thrive:user:${userId}:${key}`
 }
 
 export function UserProvider({ children }) {
-  const [users, setUsers] = useState(() => {
-    const saved = localStorage.getItem('thrive:users')
-    return saved ? JSON.parse(saved) : DEFAULT_USERS
-  })
+  const { username, userId: supabaseUserId } = useAuth()
 
-  const [currentUser, setCurrentUserState] = useState(() => {
-    const savedId = localStorage.getItem('thrive:currentUser')
-    const list = localStorage.getItem('thrive:users')
-    const userList = list ? JSON.parse(list) : DEFAULT_USERS
-    return userList.find(u => u.id === savedId) || userList[0]
-  })
-
-  const setCurrentUser = useCallback((user) => {
-    setCurrentUserState(user)
-    localStorage.setItem('thrive:currentUser', user.id)
-  }, [])
-
-  const addUser = useCallback((user) => {
-    setUsers(prev => {
-      const next = [...prev, user]
-      localStorage.setItem('thrive:users', JSON.stringify(next))
-      return next
-    })
-  }, [])
+  const currentUser = { id: username, name: username, scheduleId: 'hybrid' }
 
   const getUserData = useCallback((key) => {
     const raw = localStorage.getItem(storageKey(currentUser.id, key))
@@ -45,22 +22,23 @@ export function UserProvider({ children }) {
 
   const setUserData = useCallback((key, value) => {
     localStorage.setItem(storageKey(currentUser.id, key), JSON.stringify(value))
-  }, [currentUser.id])
+    pushUserData(supabaseUserId, key, value)
+  }, [currentUser.id, supabaseUserId])
 
   const removeUserData = useCallback((key) => {
     localStorage.removeItem(storageKey(currentUser.id, key))
-  }, [currentUser.id])
+    deleteUserData(supabaseUserId, key)
+  }, [currentUser.id, supabaseUserId])
 
   const getSchedule = useCallback(() => {
     const custom = getUserData('schedule')
     if (custom) return custom
-    const id = currentUser.scheduleId || currentUser.track || 'hybrid'
-    return DEFAULT_SCHEDULES[id] || DEFAULT_SCHEDULES.hybrid
-  }, [currentUser.scheduleId, currentUser.track, getUserData])
+    return DEFAULT_SCHEDULES[currentUser.scheduleId] || DEFAULT_SCHEDULES.hybrid
+  }, [currentUser.scheduleId, getUserData])
 
   return (
     <UserContext.Provider value={{
-      currentUser, users, setCurrentUser, addUser,
+      currentUser,
       getUserData, setUserData, removeUserData, getSchedule,
     }}>
       {children}
