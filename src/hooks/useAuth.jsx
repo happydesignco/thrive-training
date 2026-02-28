@@ -3,6 +3,10 @@ import { supabase } from '../lib/supabase'
 
 const AuthContext = createContext()
 
+const ADMIN_EMAILS = new Set(
+  (import.meta.env.VITE_ADMIN_EMAILS || '').split(',').map(e => e.trim()).filter(Boolean)
+)
+
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null)
   const [username, setUsername] = useState(null)
@@ -72,12 +76,15 @@ export function AuthProvider({ children }) {
     setUsername(null)
   }, [])
 
+  const isAdmin = ADMIN_EMAILS.has(session?.user?.email)
+
   const value = {
     session,
     username,
     userId: session?.user?.id ?? null,
     loading,
     isAuthenticated: !!session,
+    isAdmin,
     signUp,
     signIn,
     signOut,

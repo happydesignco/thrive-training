@@ -7,8 +7,9 @@ import Roulette from './Roulette'
 import InstallPrompt from './InstallPrompt'
 import ScheduleEditor from './ScheduleEditor'
 import PlateCalculator, { PlateCalculatorButton } from './PlateCalculator'
+import AdminDashboard from './AdminDashboard'
 
-const TABS = [
+const BASE_TABS = [
   { id: 'week', label: 'My Week' },
   { id: '531', label: '5/3/1' },
   { id: 'library', label: 'Library' },
@@ -16,7 +17,8 @@ const TABS = [
 ]
 
 export default function Layout() {
-  const { username, signOut } = useAuth()
+  const { username, signOut, isAdmin } = useAuth()
+  const tabs = isAdmin ? [...BASE_TABS, { id: 'admin', label: 'Admin' }] : BASE_TABS
   const [activeTab, setActiveTab] = useState(() => {
     const params = new URLSearchParams(window.location.search)
     return params.get('tab') || 'week'
@@ -76,7 +78,7 @@ export default function Layout() {
 
       {/* Tab bar */}
       <nav className="flex border-b border-border">
-        {TABS.map(tab => (
+        {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
@@ -97,6 +99,7 @@ export default function Layout() {
         {activeTab === '531' && <FiveThreeOne />}
         {activeTab === 'library' && <WorkoutLibrary />}
         {activeTab === 'roulette' && <Roulette />}
+        {activeTab === 'admin' && isAdmin && <AdminDashboard />}
       </main>
 
       <InstallPrompt />
