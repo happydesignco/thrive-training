@@ -3,14 +3,6 @@ import { supabase } from '../lib/supabase'
 
 const AuthContext = createContext()
 
-function toEmail(username) {
-  return `${username.toLowerCase()}@thriveapp.io`
-}
-
-function toPassword(pin) {
-  return `tv${pin}`
-}
-
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null)
   const [username, setUsername] = useState(null)
@@ -39,40 +31,38 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe()
   }, [])
 
-  const signUp = useCallback(async (name, pin) => {
+  const signUp = useCallback(async (email, password) => {
     if (!supabase) throw new Error('Supabase not configured')
-    const nameLower = name.toLowerCase()
 
     const { data, error } = await supabase.auth.signUp({
-      email: toEmail(nameLower),
-      password: toPassword(pin),
+      email,
+      password,
     })
-    if (error) {
-      // Duplicate email means username is taken
-      if (error.message?.includes('already registered')) {
-        throw new Error('Username already taken')
-      }
-      throw error
-    }
+    if (error) throw error
 
-    setUsername(nameLower)
+    setUsername(email.split('@')[0])
     setSession(data.session)
     return data
   }, [])
 
-  const signIn = useCallback(async (name, pin) => {
+  const signIn = useCallback(async (email, password) => {
     if (!supabase) throw new Error('Supabase not configured')
-    const nameLower = name.toLowerCase()
 
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: toEmail(nameLower),
-      password: toPassword(pin),
+      email,
+      password,
     })
     if (error) throw error
 
-    setUsername(nameLower)
+    setUsername(email.split('@')[0])
     setSession(data.session)
     return data
+  }, [])
+
+  const resetPassword = useCallback(async (email) => {
+    if (!supabase) throw new Error('Supabase not configured')
+    const { error } = await supabase.auth.signInWithOtp({ email })
+    if (error) throw error
   }, [])
 
   const signOut = useCallback(async () => {
@@ -91,6 +81,7 @@ export function AuthProvider({ children }) {
     signUp,
     signIn,
     signOut,
+    resetPassword,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
