@@ -60,6 +60,8 @@ export default function WeekView({ onNavigate }) {
   const [expandedDay, setExpandedDay] = useState(null)
   const [swappingDay, setSwappingDay] = useState(null)
   const [plateCalcWeight, setPlateCalcWeight] = useState(null)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [customText, setCustomText] = useState('')
 
   const weekStart = useMemo(() => {
     const m = getMonday(new Date())
@@ -130,15 +132,21 @@ export default function WeekView({ onNavigate }) {
 
   function getAssignment(day) {
     const slotType = schedule.days[day]
+
+    // Check overrides first — works for any day including rest and 531
+    if (assignments[day]) {
+      const val = assignments[day]
+      if (typeof val === 'object' && val.custom) {
+        return { type: 'custom', text: val.custom, overridden: true }
+      }
+      const workout = getWorkoutById(val)
+      if (workout) return { type: 'workout', workout, category: workout.category, overridden: true }
+    }
+
     if (slotType === 'rest') return { type: 'rest' }
     if (slotType === '531') return get531Assignment(day)
 
-    // It's a workout category (conditioning, metcon, accessory)
-    if (assignments[day]) {
-      const workout = getWorkoutById(assignments[day])
-      if (workout) return { type: 'workout', workout, category: slotType }
-    }
-
+    // It's a workout category — check publisher data, then auto
     if (publisherWeekData[day]) {
       const workout = getWorkoutById(publisherWeekData[day])
       if (workout) return { type: 'workout', workout, category: slotType }
@@ -220,10 +228,13 @@ export default function WeekView({ onNavigate }) {
                 }}
               >
                 <div className="flex items-center gap-3 min-w-0">
-                  <span className={`text-xs uppercase tracking-wider w-8 shrink-0 ${
+                  <span className={`text-xs uppercase tracking-wider w-8 shrink-0 relative ${
                     isToday ? 'text-magenta font-bold' : 'opacity-50'
                   }`}>
                     {DAY_LABELS[day]}
+                    {assignment.overridden && (
+                      <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-magenta" />
+                    )}
                   </span>
 
                   {assignment.type === 'workout' && (
@@ -241,6 +252,23 @@ export default function WeekView({ onNavigate }) {
                         </span>
                       </div>
                       <p className="text-xs opacity-50 truncate">{assignment.workout.excerpt || assignment.workout.title}</p>
+                    </div>
+                  )}
+
+                  {assignment.type === 'custom' && (
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold">{assignment.text}</span>
+                        <span
+                          className="text-[9px] uppercase tracking-wider font-bold px-1.5 py-0.5 rounded shrink-0"
+                          style={{
+                            color: 'var(--color-orange)',
+                            border: '1px solid var(--color-orange)',
+                          }}
+                        >
+                          Custom
+                        </span>
+                      </div>
                     </div>
                   )}
 
@@ -273,7 +301,21 @@ export default function WeekView({ onNavigate }) {
                   )}
 
                   {assignment.type === 'rest' && (
-                    <span className="text-sm opacity-30">Rest</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm opacity-30">Rest</span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setSwappingDay(isSwapping ? null : day)
+                          setExpandedDay(null)
+                          setSearchQuery('')
+                          setCustomText('')
+                        }}
+                        className="w-5 h-5 flex items-center justify-center text-xs border border-border rounded-full opacity-30 hover:opacity-100 hover:border-magenta hover:text-magenta transition-all"
+                      >
+                        +
+                      </button>
+                    </div>
                   )}
                 </div>
 
@@ -284,6 +326,63 @@ export default function WeekView({ onNavigate }) {
                         e.stopPropagation()
                         setSwappingDay(isSwapping ? null : day)
                         setExpandedDay(null)
+                        setSearchQuery('')
+                        setCustomText('')
+                      }}
+                      className="text-xs text-magenta hover:underline"
+                    >
+                      Swap
+                    </button>
+                    {assignment.overridden && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleReset(day)
+                        }}
+                        className="text-xs text-orange hover:underline"
+                      >
+                        Reset
+                      </button>
+                    )}
+                    <span className="text-xs opacity-30">{isExpanded ? '\u25B2' : '\u25BC'}</span>
+                  </div>
+                )}
+
+                {assignment.type === 'custom' && (
+                  <div className="flex items-center gap-3 shrink-0 ml-2">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setSwappingDay(isSwapping ? null : day)
+                        setExpandedDay(null)
+                        setSearchQuery('')
+                        setCustomText('')
+                      }}
+                      className="text-xs text-magenta hover:underline"
+                    >
+                      Swap
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleReset(day)
+                      }}
+                      className="text-xs text-orange hover:underline"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                )}
+
+                {is531Configured && (
+                  <div className="flex items-center gap-3 shrink-0 ml-2">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setSwappingDay(isSwapping ? null : day)
+                        setExpandedDay(null)
+                        setSearchQuery('')
+                        setCustomText('')
                       }}
                       className="text-xs text-magenta hover:underline"
                     >
@@ -292,42 +391,85 @@ export default function WeekView({ onNavigate }) {
                     <span className="text-xs opacity-30">{isExpanded ? '\u25B2' : '\u25BC'}</span>
                   </div>
                 )}
-
-                {is531Configured && (
-                  <div className="flex items-center gap-3 shrink-0 ml-2">
-                    <span className="text-xs opacity-30">{isExpanded ? '\u25B2' : '\u25BC'}</span>
-                  </div>
-                )}
               </div>
 
               {/* Swap picker */}
               {isSwapping && (
                 <div className="px-4 pb-3 border-t border-border">
-                  <p className="text-xs opacity-50 uppercase tracking-wider mt-3 mb-2">
-                    Choose a workout
-                  </p>
-                  <div className="flex flex-col gap-1">
-                    {filterWorkouts({ category: assignment.category }).map(w => (
-                      <button
-                        key={w.id}
-                        onClick={() => handleSwap(day, w.id)}
-                        className={`text-left text-xs px-2 py-2 hover:bg-black transition-colors ${
-                          assignment.workout?.id === w.id ? 'text-magenta' : ''
-                        }`}
-                      >
-                        <span className="font-semibold">{w.name}</span>
-                        <span className="opacity-50 ml-2">{w.title}</span>
-                      </button>
-                    ))}
-                    {assignments[day] && (
-                      <button
-                        onClick={() => handleReset(day)}
-                        className="text-left text-xs px-2 py-2 text-orange hover:bg-black transition-colors mt-1 border-t border-border pt-2"
-                      >
-                        Reset to auto
-                      </button>
-                    )}
+                  <input
+                    type="text"
+                    placeholder="Search workouts..."
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    className="w-full mt-3 mb-2 px-2 py-1.5 text-xs bg-black border border-border rounded font-mono focus:border-magenta focus:outline-none"
+                  />
+
+                  <div className="max-h-64 overflow-y-auto">
+                    {['conditioning', 'metcon', 'accessory'].map(cat => {
+                      const workouts = filterWorkouts({ category: cat, search: searchQuery })
+                      if (workouts.length === 0) return null
+                      return (
+                        <div key={cat}>
+                          <p
+                            className="text-[9px] uppercase tracking-wider font-bold mt-2 mb-1 px-2"
+                            style={{ color: CATEGORY_COLORS[cat] }}
+                          >
+                            {CATEGORY_LABELS[cat]}
+                          </p>
+                          {workouts.map(w => (
+                            <button
+                              key={w.id}
+                              onClick={() => handleSwap(day, w.id)}
+                              className={`text-left text-xs px-2 py-2 hover:bg-black transition-colors w-full ${
+                                assignment.workout?.id === w.id ? 'text-magenta' : ''
+                              }`}
+                            >
+                              <span className="font-semibold">{w.name}</span>
+                              <span className="opacity-50 ml-2">{w.title}</span>
+                            </button>
+                          ))}
+                        </div>
+                      )
+                    })}
                   </div>
+
+                  <div className="border-t border-border mt-2 pt-2">
+                    <p className="text-xs opacity-50 mb-1">Or add a custom activity</p>
+                    <form
+                      onSubmit={e => {
+                        e.preventDefault()
+                        if (customText.trim()) {
+                          handleSwap(day, { custom: customText.trim() })
+                          setCustomText('')
+                        }
+                      }}
+                      className="flex gap-2"
+                    >
+                      <input
+                        type="text"
+                        placeholder="e.g. Long Run"
+                        value={customText}
+                        onChange={e => setCustomText(e.target.value)}
+                        className="flex-1 px-2 py-1.5 text-xs bg-black border border-border rounded font-mono focus:border-magenta focus:outline-none"
+                      />
+                      <button
+                        type="submit"
+                        disabled={!customText.trim()}
+                        className="px-3 py-1.5 text-xs bg-magenta text-black rounded font-bold disabled:opacity-30"
+                      >
+                        Add
+                      </button>
+                    </form>
+                  </div>
+
+                  {assignments[day] && (
+                    <button
+                      onClick={() => handleReset(day)}
+                      className="text-left text-xs px-2 py-2 text-orange hover:bg-black transition-colors mt-1 border-t border-border pt-2 w-full"
+                    >
+                      Reset to auto
+                    </button>
+                  )}
                 </div>
               )}
 
