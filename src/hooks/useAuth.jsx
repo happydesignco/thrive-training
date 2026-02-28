@@ -37,6 +37,16 @@ export function AuthProvider({ children }) {
       }
     }
 
+    // Initial session load
+    supabase.auth.getSession().then(async ({ data: { session: s } }) => {
+      setSession(s)
+      if (s) {
+        await fetchUsername(s.user.id)
+      }
+      setLoading(false)
+    })
+
+    // Listen for subsequent auth changes (sign in/out, token refresh)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (_event, s) => {
         setSession(s)
@@ -45,7 +55,6 @@ export function AuthProvider({ children }) {
         } else {
           setUsername(null)
         }
-        setLoading(false)
       }
     )
 
