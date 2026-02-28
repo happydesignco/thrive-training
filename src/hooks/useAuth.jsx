@@ -42,6 +42,7 @@ export function AuthProvider({ children }) {
     // getSession() can return stale tokens that then get invalidated.
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, s) => {
+        console.log('[auth] event:', event, 'session:', s ? 'yes' : 'null')
         setSession(s)
         if (event === 'INITIAL_SESSION') {
           if (s) await fetchUsername(s.user.id)
@@ -49,8 +50,6 @@ export function AuthProvider({ children }) {
         } else if (event === 'SIGNED_OUT') {
           setUsername(null)
         }
-        // SIGNED_IN: signIn/signUp set username directly
-        // TOKEN_REFRESHED: session updated above, username unchanged
       }
     )
 

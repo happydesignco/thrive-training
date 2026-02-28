@@ -22,7 +22,10 @@ export default function ScheduleEditor({ onClose }) {
   const { userId, username } = useAuth()
   const scheduleId = currentUser.scheduleId || currentUser.track || 'hybrid'
 
-  const [presetId, setPresetId] = useState(scheduleId)
+  const [presetId, setPresetId] = useState(() => {
+    const saved = getUserData('schedule')
+    return saved?.id || scheduleId
+  })
   const [days, setDays] = useState(() => {
     const schedule = getSchedule()
     return { ...schedule.days }
