@@ -15,7 +15,7 @@ const PLATE_COLORS = {
 
 const BUMPER_PLATES = new Set([45, 25, 15, 10])
 
-const PLATE_WIDTHS = { 45: 14, 25: 12, 15: 10, 10: 8, 5: 8, 2.5: 6 }
+const PLATE_WIDTHS = { 45: 14, 25: 12, 15: 10, 10: 8, 5: 8, 2.5: 8 }
 
 function calcPlates(targetWeight, barWeight) {
   if (targetWeight < barWeight) return null
@@ -103,7 +103,25 @@ function BarDiagram({ plates, barWeight }) {
       {plateRects.map(r => {
         const isChange = !BUMPER_PLATES.has(r.weight)
         const labelY = isChange ? barY + changeHeight / 2 + 10 : barY + bumperHeight / 2 + 12
-        const labelSize = r.weight === 2.5 ? '7' : '9'
+        const cx = r.x + r.width / 2
+        if (r.weight === 2.5) {
+          return (
+            <g key={r.key}>
+              <rect
+                x={r.x} y={r.y} width={r.width} height={r.height}
+                rx={2} fill={r.color}
+              />
+              <text
+                x={cx} y={labelY}
+                textAnchor="middle" fontSize="7" fill="#ccc" fontFamily="monospace"
+                letterSpacing="-0.5"
+                transform={`rotate(90 ${cx} ${labelY})`}
+              >
+                {r.weight}
+              </text>
+            </g>
+          )
+        }
         return (
           <g key={r.key}>
             <rect
@@ -111,8 +129,8 @@ function BarDiagram({ plates, barWeight }) {
               rx={2} fill={r.color}
             />
             <text
-              x={r.x + r.width / 2} y={labelY}
-              textAnchor="middle" fontSize={labelSize} fill="#ccc" fontFamily="monospace"
+              x={cx} y={labelY}
+              textAnchor="middle" fontSize="9" fill="#ccc" fontFamily="monospace"
             >
               {r.weight}
             </text>
