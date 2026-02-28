@@ -56,26 +56,17 @@ export function AuthProvider({ children }) {
     if (!supabase) throw new Error('Supabase not configured')
     const nameLower = name.toLowerCase()
 
-    // Check username uniqueness
-    const { data: existing } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('username', nameLower)
-      .maybeSingle()
-    if (existing) throw new Error('Username already taken')
-
     const { data, error } = await supabase.auth.signUp({
       email: toEmail(nameLower),
       password: toPassword(pin),
     })
-    if (error) throw error
-
-    // Create profile row
-    const { error: profileErr } = await supabase.from('profiles').insert({
-      id: data.user.id,
-      username: nameLower,
-    })
-    if (profileErr) throw profileErr
+    if (error) {
+      // Duplicate email means username is taken
+      if (error.message?.includes('already registered')) {
+        throw new Error('Username already taken')
+      }
+      throw error
+    }
 
     setUsername(nameLower)
     setSession(data.session)
