@@ -22,33 +22,16 @@ export function AuthProvider({ children }) {
       return
     }
 
-    async function fetchUsername(userId) {
-      try {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('username')
-          .eq('id', userId)
-          .single()
-        if (error) throw error
-        setUsername(data?.username ?? null)
-      } catch (err) {
-        console.warn('[auth] Failed to fetch profile:', err)
-        setUsername(null)
-      }
+    function usernameFromSession(s) {
+      return s?.user?.email?.split('@')[0] || null
     }
 
-    // onAuthStateChange is the single source of truth.
-    // INITIAL_SESSION fires once on subscribe with the refreshed session.
-    // getSession() can return stale tokens that then get invalidated.
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, s) => {
-        console.log('[auth] event:', event, 'session:', s ? 'yes' : 'null')
+      (event, s) => {
         setSession(s)
+        setUsername(usernameFromSession(s))
         if (event === 'INITIAL_SESSION') {
-          if (s) await fetchUsername(s.user.id)
           setLoading(false)
-        } else if (event === 'SIGNED_OUT') {
-          setUsername(null)
         }
       }
     )
