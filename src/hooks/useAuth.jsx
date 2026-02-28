@@ -37,24 +37,22 @@ export function AuthProvider({ children }) {
       }
     }
 
-    // Initial session load — never block loading on profile fetch
+    // Initial session load
     supabase.auth.getSession().then(({ data: { session: s } }) => {
       setSession(s)
-      setLoading(false)
       if (s) fetchUsername(s.user.id)
-    }).catch(() => {
+    }).catch(err => {
+      console.warn('[auth] getSession failed:', err)
+    }).finally(() => {
       setLoading(false)
     })
 
-    // Listen for subsequent auth changes (sign in/out, token refresh)
+    // Only sync session + clear state on sign out.
+    // signIn/signUp already set username directly.
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event, s) => {
         setSession(s)
-        if (s) {
-          fetchUsername(s.user.id)
-        } else {
-          setUsername(null)
-        }
+        if (!s) setUsername(null)
       }
     )
 
