@@ -48,6 +48,32 @@ export default function LoginScreen() {
         Thrive
       </h1>
 
+      {/* Mode toggle */}
+      <div className="flex w-full max-w-xs mb-6 border border-border rounded overflow-hidden">
+        <button
+          type="button"
+          onClick={() => { setMode('login'); setError(null) }}
+          className={`flex-1 py-2 text-xs uppercase tracking-wider transition-colors ${
+            mode === 'login'
+              ? 'bg-magenta text-black font-medium'
+              : 'bg-input-bg text-white/50'
+          }`}
+        >
+          Log In
+        </button>
+        <button
+          type="button"
+          onClick={() => { setMode('signup'); setError(null) }}
+          className={`flex-1 py-2 text-xs uppercase tracking-wider transition-colors ${
+            mode === 'signup'
+              ? 'bg-magenta text-black font-medium'
+              : 'bg-input-bg text-white/50'
+          }`}
+        >
+          Sign Up
+        </button>
+      </div>
+
       <form onSubmit={handleSubmit} className="w-full max-w-xs space-y-4">
         <div>
           <label className="block text-xs uppercase tracking-wider text-white/50 mb-1">
@@ -85,34 +111,13 @@ export default function LoginScreen() {
           disabled={busy}
           className="w-full bg-magenta text-black font-medium py-2 rounded uppercase tracking-wider text-sm hover:opacity-90 disabled:opacity-50 transition-opacity"
         >
-          {busy ? '...' : mode === 'signup' ? 'Sign Up' : 'Log In'}
+          {busy
+            ? '...'
+            : mode === 'signup'
+              ? 'Create Account'
+              : 'Log In'
+          }
         </button>
-
-        <p className="text-center text-xs text-white/50">
-          {mode === 'login' ? (
-            <>
-              No account?{' '}
-              <button
-                type="button"
-                onClick={() => { setMode('signup'); setError(null) }}
-                className="text-magenta hover:underline"
-              >
-                Sign up
-              </button>
-            </>
-          ) : (
-            <>
-              Have an account?{' '}
-              <button
-                type="button"
-                onClick={() => { setMode('login'); setError(null) }}
-                className="text-magenta hover:underline"
-              >
-                Log in
-              </button>
-            </>
-          )}
-        </p>
       </form>
     </div>
   )

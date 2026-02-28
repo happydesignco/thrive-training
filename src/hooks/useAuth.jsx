@@ -22,30 +22,30 @@ export function AuthProvider({ children }) {
       return
     }
 
-    supabase.auth.getSession().then(({ data: { session: s } }) => {
-      setSession(s)
-      if (s) {
-        // Fetch username from profiles
-        supabase
+    async function fetchUsername(userId) {
+      try {
+        const { data, error } = await supabase
           .from('profiles')
           .select('username')
-          .eq('id', s.user.id)
+          .eq('id', userId)
           .single()
-          .then(({ data }) => {
-            setUsername(data?.username ?? null)
-            setLoading(false)
-          })
-      } else {
-        setLoading(false)
+        if (error) throw error
+        setUsername(data?.username ?? null)
+      } catch (err) {
+        console.warn('[auth] Failed to fetch profile:', err)
+        setUsername(null)
       }
-    })
+    }
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, s) => {
+      async (_event, s) => {
         setSession(s)
-        if (!s) {
+        if (s) {
+          await fetchUsername(s.user.id)
+        } else {
           setUsername(null)
         }
+        setLoading(false)
       }
     )
 

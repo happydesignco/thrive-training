@@ -1,7 +1,8 @@
-import { createContext, useContext, useCallback } from 'react'
+import { createContext, useContext, useCallback, useState, useEffect } from 'react'
 import { DEFAULT_SCHEDULES } from '../data/schedules'
 import { useAuth } from './useAuth'
 import { pushUserData, deleteUserData } from '../lib/sync'
+import { fetchPublishedSchedules } from '../lib/publishedSchedules'
 
 const UserContext = createContext()
 
@@ -11,6 +12,16 @@ function storageKey(userId, key) {
 
 export function UserProvider({ children }) {
   const { username, userId: supabaseUserId } = useAuth()
+  const [publishedSchedules, setPublishedSchedules] = useState([])
+
+  useEffect(() => {
+    fetchPublishedSchedules().then(setPublishedSchedules)
+  }, [])
+
+  const refreshPublishedSchedules = useCallback(async () => {
+    const schedules = await fetchPublishedSchedules()
+    setPublishedSchedules(schedules)
+  }, [])
 
   const currentUser = { id: username, name: username, scheduleId: 'hybrid' }
 
@@ -40,6 +51,7 @@ export function UserProvider({ children }) {
     <UserContext.Provider value={{
       currentUser,
       getUserData, setUserData, removeUserData, getSchedule,
+      publishedSchedules, refreshPublishedSchedules,
     }}>
       {children}
     </UserContext.Provider>

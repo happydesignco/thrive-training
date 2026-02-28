@@ -133,6 +133,11 @@ export default function WeekView({ onNavigate }) {
       if (workout) return { type: 'workout', workout, category: slotType }
     }
 
+    if (schedule.defaultWorkouts?.[day]) {
+      const workout = getWorkoutById(schedule.defaultWorkouts[day])
+      if (workout) return { type: 'workout', workout, category: slotType }
+    }
+
     const workout = getAutoWorkout(slotType)
     return workout ? { type: 'workout', workout, category: slotType } : { type: 'rest' }
   }

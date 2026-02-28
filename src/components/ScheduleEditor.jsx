@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useUser } from '../hooks/useUser'
+import { useAuth } from '../hooks/useAuth'
 import { DEFAULT_SCHEDULES, SLOT_TYPES } from '../data/schedules'
 import { CATEGORY_LABELS } from '../data/workouts'
+import { publishSchedule, unpublishSchedule } from '../lib/publishedSchedules'
 
 const DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 const DAY_LABELS = {
@@ -16,7 +18,8 @@ const SLOT_LABELS = {
 }
 
 export default function ScheduleEditor({ onClose }) {
-  const { currentUser, getSchedule, getUserData, setUserData, removeUserData } = useUser()
+  const { currentUser, getSchedule, getUserData, setUserData, removeUserData, publishedSchedules, refreshPublishedSchedules } = useUser()
+  const { userId, username } = useAuth()
   const scheduleId = currentUser.scheduleId || currentUser.track || 'hybrid'
 
   const [presetId, setPresetId] = useState(scheduleId)
@@ -25,12 +28,24 @@ export default function ScheduleEditor({ onClose }) {
     return { ...schedule.days }
   })
   const [hasCustom, setHasCustom] = useState(() => !!getUserData('schedule'))
+  const [publishOpen, setPublishOpen] = useState(false)
+  const [pubName, setPubName] = useState('')
+  const [pubDesc, setPubDesc] = useState('')
+  const [publishing, setPublishing] = useState(false)
+  const [pubError, setPubError] = useState(null)
+
+  const myPublished = publishedSchedules.find(s => s.username === username)
 
   function handlePresetChange(id) {
     setPresetId(id)
     const preset = DEFAULT_SCHEDULES[id]
     if (preset) {
       setDays({ ...preset.days })
+    } else {
+      const pub = publishedSchedules.find(s => s.id === id)
+      if (pub) {
+        setDays({ ...pub.days })
+      }
     }
   }
 
@@ -40,9 +55,19 @@ export default function ScheduleEditor({ onClose }) {
 
   function handleSave() {
     const preset = DEFAULT_SCHEDULES[presetId]
+    const pub = publishedSchedules.find(s => s.id === presetId)
     const isCustom = preset && JSON.stringify(days) !== JSON.stringify(preset.days)
 
-    if (isCustom || !preset) {
+    if (pub) {
+      setUserData('schedule', {
+        id: pub.id,
+        name: pub.name,
+        description: pub.description,
+        days,
+        defaultWorkouts: pub.defaultWorkouts,
+      })
+      setHasCustom(true)
+    } else if (isCustom || !preset) {
       setUserData('schedule', {
         id: 'custom',
         name: 'Custom',
@@ -91,6 +116,15 @@ export default function ScheduleEditor({ onClose }) {
           {Object.values(DEFAULT_SCHEDULES).map(s => (
             <option key={s.id} value={s.id}>{s.name} — {s.description}</option>
           ))}
+          {publishedSchedules.length > 0 && (
+            <optgroup label="Community">
+              {publishedSchedules.map(s => (
+                <option key={s.id} value={s.id}>
+                  {s.name} by @{s.username}
+                </option>
+              ))}
+            </optgroup>
+          )}
         </select>
       </label>
 
@@ -138,6 +172,113 @@ export default function ScheduleEditor({ onClose }) {
           >
             Reset to Preset
           </button>
+        )}
+      </div>
+
+      {/* Publish section */}
+      <div className="mt-6 pt-4 border-t border-border">
+        <span className="text-xs uppercase tracking-wider opacity-50 block mb-3">Publish</span>
+
+        {myPublished ? (
+          <div className="flex flex-col gap-2">
+            <p className="text-xs opacity-70">
+              Your schedule "{myPublished.name}" is published.
+            </p>
+            <button
+              onClick={async () => {
+                try {
+                  await unpublishSchedule(userId)
+                  await refreshPublishedSchedules()
+                } catch (err) {
+                  setPubError(err.message)
+                }
+              }}
+              className="border uppercase tracking-wider font-mono py-2 px-4 cursor-pointer transition-colors bg-black text-xs"
+              style={{
+                color: 'color-mix(in srgb, var(--color-orange) 40%, white)',
+                borderColor: 'color-mix(in srgb, var(--color-orange) 40%, white)',
+              }}
+            >
+              Unpublish
+            </button>
+          </div>
+        ) : !publishOpen ? (
+          <button
+            onClick={() => setPublishOpen(true)}
+            className="border uppercase tracking-wider font-mono py-2 px-4 cursor-pointer transition-colors bg-black text-xs"
+            style={{
+              color: 'color-mix(in srgb, var(--color-cyan) 40%, white)',
+              borderColor: 'color-mix(in srgb, var(--color-cyan) 40%, white)',
+            }}
+          >
+            Publish My Schedule
+          </button>
+        ) : (
+          <div className="flex flex-col gap-3">
+            <input
+              type="text"
+              placeholder="Schedule name"
+              value={pubName}
+              onChange={e => setPubName(e.target.value)}
+              className="w-full p-2 border border-border rounded-md bg-input-bg font-mono text-xs"
+            />
+            <input
+              type="text"
+              placeholder="Description (optional)"
+              value={pubDesc}
+              onChange={e => setPubDesc(e.target.value)}
+              className="w-full p-2 border border-border rounded-md bg-input-bg font-mono text-xs"
+            />
+            {pubError && <p className="text-orange text-xs">{pubError}</p>}
+            <div className="flex gap-2">
+              <button
+                disabled={publishing || !pubName.trim()}
+                onClick={async () => {
+                  setPubError(null)
+                  setPublishing(true)
+                  try {
+                    // Grab current week's swap assignments as defaultWorkouts
+                    const weekKey = Object.keys(localStorage)
+                      .filter(k => k.startsWith(`thrive:user:${username}:week:`))
+                      .sort()
+                      .pop()
+                    let defaultWorkouts = {}
+                    if (weekKey) {
+                      try { defaultWorkouts = JSON.parse(localStorage.getItem(weekKey)) || {} } catch {}
+                    }
+                    await publishSchedule(userId, username, {
+                      name: pubName.trim(),
+                      description: pubDesc.trim(),
+                      days,
+                      defaultWorkouts,
+                    })
+                    await refreshPublishedSchedules()
+                    setPublishOpen(false)
+                    setPubName('')
+                    setPubDesc('')
+                  } catch (err) {
+                    setPubError(err.message)
+                  } finally {
+                    setPublishing(false)
+                  }
+                }}
+                className="flex-1 border uppercase tracking-wider font-mono py-2 px-4 cursor-pointer transition-colors bg-black text-xs disabled:opacity-50"
+                style={{
+                  color: 'color-mix(in srgb, var(--color-cyan) 40%, white)',
+                  borderColor: 'color-mix(in srgb, var(--color-cyan) 40%, white)',
+                }}
+              >
+                {publishing ? '...' : 'Publish'}
+              </button>
+              <button
+                onClick={() => { setPublishOpen(false); setPubError(null) }}
+                className="border uppercase tracking-wider font-mono py-2 px-4 cursor-pointer transition-colors bg-black text-xs opacity-50 hover:opacity-100"
+                style={{ borderColor: 'var(--color-border)' }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         )}
       </div>
     </div>
