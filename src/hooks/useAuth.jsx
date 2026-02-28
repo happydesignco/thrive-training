@@ -43,6 +43,9 @@ export function AuthProvider({ children }) {
       if (s) {
         await fetchUsername(s.user.id)
       }
+    }).catch(err => {
+      console.warn('[auth] getSession failed:', err)
+    }).finally(() => {
       setLoading(false)
     })
 
