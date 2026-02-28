@@ -4,7 +4,11 @@ import { supabase } from '../lib/supabase'
 const AuthContext = createContext()
 
 function toEmail(username) {
-  return `${username.toLowerCase()}@thrive.local`
+  return `${username.toLowerCase()}@thriveapp.io`
+}
+
+function toPassword(pin) {
+  return `tv${pin}`
 }
 
 export function AuthProvider({ children }) {
@@ -62,7 +66,7 @@ export function AuthProvider({ children }) {
 
     const { data, error } = await supabase.auth.signUp({
       email: toEmail(nameLower),
-      password: pin,
+      password: toPassword(pin),
     })
     if (error) throw error
 
@@ -84,7 +88,7 @@ export function AuthProvider({ children }) {
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email: toEmail(nameLower),
-      password: pin,
+      password: toPassword(pin),
     })
     if (error) throw error
 
