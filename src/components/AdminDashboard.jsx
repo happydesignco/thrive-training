@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { fetchUsers, fetchAllUserData } from '../lib/admin'
+import { fetchUsers, fetchAllUserData, deleteUser } from '../lib/admin'
 import { fetchPublishedSchedules } from '../lib/publishedSchedules'
 
 function StatCard({ label, value }) {
@@ -11,10 +11,24 @@ function StatCard({ label, value }) {
   )
 }
 
-function UserDrillDown({ userData }) {
+function UserDrillDown({ userData, user, onDelete }) {
+  const [confirming, setConfirming] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const schedule = userData.find(d => d.key === 'schedule')
   const config531 = userData.find(d => d.key === '531')
   const weeks = userData.filter(d => d.key.startsWith('week:')).sort((a, b) => b.key.localeCompare(a.key))
+
+  async function handleDelete() {
+    setDeleting(true)
+    try {
+      await deleteUser(user.id)
+      onDelete(user.id)
+    } catch (err) {
+      alert('Delete failed: ' + err.message)
+      setDeleting(false)
+      setConfirming(false)
+    }
+  }
 
   return (
     <div className="px-4 py-3 border-t border-border/50 bg-black/20 space-y-3 text-xs">
@@ -80,6 +94,35 @@ function UserDrillDown({ userData }) {
           <div className="text-white/30 italic">No week data</div>
         )}
       </div>
+
+      {/* Delete User */}
+      <div className="pt-2 border-t border-border/50">
+        {!confirming ? (
+          <button
+            onClick={() => setConfirming(true)}
+            className="text-red-400/60 hover:text-red-400 text-xs uppercase tracking-wider transition-colors"
+          >
+            Delete User
+          </button>
+        ) : (
+          <div className="flex items-center gap-3">
+            <span className="text-red-400 text-xs">Delete {user.email}?</span>
+            <button
+              onClick={handleDelete}
+              disabled={deleting}
+              className="bg-red-500/20 text-red-400 border border-red-500/30 rounded px-2 py-1 text-xs uppercase tracking-wider hover:bg-red-500/30 transition-colors disabled:opacity-50"
+            >
+              {deleting ? 'Deleting...' : 'Confirm'}
+            </button>
+            <button
+              onClick={() => setConfirming(false)}
+              className="text-white/40 hover:text-white/60 text-xs transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
@@ -91,6 +134,13 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [expandedUser, setExpandedUser] = useState(null)
+
+  function handleDeleteUser(userId) {
+    setUsers(prev => prev.filter(u => u.id !== userId))
+    setAllUserData(prev => prev.filter(d => d.user_id !== userId))
+    setSchedules(prev => prev.filter(s => s.publisherUserId !== userId))
+    setExpandedUser(null)
+  }
 
   useEffect(() => {
     let cancelled = false
@@ -202,7 +252,7 @@ export default function AdminDashboard() {
                     <polyline points="9 18 15 12 9 6" />
                   </svg>
                 </button>
-                {isExpanded && <UserDrillDown userData={ud} />}
+                {isExpanded && <UserDrillDown userData={ud} user={user} onDelete={handleDeleteUser} />}
               </div>
             )
           })}

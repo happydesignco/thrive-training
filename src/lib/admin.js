@@ -13,3 +13,9 @@ export async function fetchAllUserData() {
   if (error) throw error
   return data || []
 }
+
+export async function deleteUser(userId) {
+  if (!supabase) throw new Error('Supabase not configured')
+  const { error } = await supabase.rpc('admin_delete_user', { target_user_id: userId })
+  if (error) throw error
+}
