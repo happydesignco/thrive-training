@@ -67,7 +67,7 @@ export default function ScheduleEditor({ onClose }) {
         name: pub.name,
         description: pub.description,
         days,
-        defaultWorkouts: pub.defaultWorkouts,
+        publisherUserId: pub.publisherUserId,
       })
       setHasCustom(true)
     } else if (isCustom || !preset) {
@@ -240,20 +240,10 @@ export default function ScheduleEditor({ onClose }) {
                   setPubError(null)
                   setPublishing(true)
                   try {
-                    // Grab current week's swap assignments as defaultWorkouts
-                    const weekKey = Object.keys(localStorage)
-                      .filter(k => k.startsWith(`thrive:user:${username}:week:`))
-                      .sort()
-                      .pop()
-                    let defaultWorkouts = {}
-                    if (weekKey) {
-                      try { defaultWorkouts = JSON.parse(localStorage.getItem(weekKey)) || {} } catch {}
-                    }
                     await publishSchedule(userId, username, {
                       name: pubName.trim(),
                       description: pubDesc.trim(),
                       days,
-                      defaultWorkouts,
                     })
                     await refreshPublishedSchedules()
                     setPublishOpen(false)

@@ -10,11 +10,11 @@ export async function fetchPublishedSchedules() {
     if (error) throw error
     return (data || []).map(row => ({
       id: `published:${row.id}`,
+      publisherUserId: row.user_id,
       username: row.username,
       name: row.name,
       description: row.description,
       days: row.days,
-      defaultWorkouts: row.default_workouts || {},
       isPublished: true,
     }))
   } catch (err) {
@@ -23,7 +23,24 @@ export async function fetchPublishedSchedules() {
   }
 }
 
-export async function publishSchedule(userId, username, { name, description, days, defaultWorkouts }) {
+export async function fetchPublisherWeekData(userId, weekStart) {
+  if (!supabase) return {}
+  try {
+    const { data, error } = await supabase
+      .from('user_data')
+      .select('value')
+      .eq('user_id', userId)
+      .eq('key', `week:${weekStart}`)
+      .maybeSingle()
+    if (error) throw error
+    return data?.value || {}
+  } catch (err) {
+    console.warn('[publishedSchedules] fetchPublisherWeekData failed:', err)
+    return {}
+  }
+}
+
+export async function publishSchedule(userId, username, { name, description, days }) {
   if (!supabase) throw new Error('Supabase not configured')
   const { error } = await supabase
     .from('published_schedules')
@@ -34,7 +51,6 @@ export async function publishSchedule(userId, username, { name, description, day
         name,
         description: description || '',
         days,
-        default_workouts: defaultWorkouts || {},
         updated_at: new Date().toISOString(),
       },
       { onConflict: 'user_id' }

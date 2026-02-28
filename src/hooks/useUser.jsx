@@ -2,7 +2,7 @@ import { createContext, useContext, useCallback, useState, useEffect } from 'rea
 import { DEFAULT_SCHEDULES } from '../data/schedules'
 import { useAuth } from './useAuth'
 import { pushUserData, deleteUserData } from '../lib/sync'
-import { fetchPublishedSchedules } from '../lib/publishedSchedules'
+import { fetchPublishedSchedules, fetchPublisherWeekData } from '../lib/publishedSchedules'
 
 const UserContext = createContext()
 
@@ -13,6 +13,8 @@ function storageKey(userId, key) {
 export function UserProvider({ children }) {
   const { username, userId: supabaseUserId } = useAuth()
   const [publishedSchedules, setPublishedSchedules] = useState([])
+  const [publisherWeekData, setPublisherWeekData] = useState({})
+  const [activeWeekStart, setActiveWeekStart] = useState(null)
 
   useEffect(() => {
     fetchPublishedSchedules().then(setPublishedSchedules)
@@ -43,15 +45,50 @@ export function UserProvider({ children }) {
 
   const getSchedule = useCallback(() => {
     const custom = getUserData('schedule')
-    if (custom) return custom
+    if (custom) {
+      if (custom.publisherUserId) {
+        const live = publishedSchedules.find(s => s.publisherUserId === custom.publisherUserId)
+        if (live) return { ...custom, days: live.days }
+      }
+      return custom
+    }
     return DEFAULT_SCHEDULES[currentUser.scheduleId] || DEFAULT_SCHEDULES.hybrid
-  }, [currentUser.scheduleId, getUserData])
+  }, [currentUser.scheduleId, getUserData, publishedSchedules])
+
+  // Derive publisherUserId from the active schedule
+  const schedule = getSchedule()
+  const activePublisherUserId = schedule?.publisherUserId || null
+
+  // Fetch publisher's week data when viewing a subscribed schedule
+  useEffect(() => {
+    if (!activePublisherUserId || !activeWeekStart) {
+      setPublisherWeekData({})
+      return
+    }
+
+    let cancelled = false
+
+    fetchPublisherWeekData(activePublisherUserId, activeWeekStart)
+      .then(data => { if (!cancelled) setPublisherWeekData(data) })
+
+    const handleFocus = () => {
+      fetchPublisherWeekData(activePublisherUserId, activeWeekStart)
+        .then(data => { if (!cancelled) setPublisherWeekData(data) })
+    }
+    window.addEventListener('focus', handleFocus)
+
+    return () => {
+      cancelled = true
+      window.removeEventListener('focus', handleFocus)
+    }
+  }, [activePublisherUserId, activeWeekStart])
 
   return (
     <UserContext.Provider value={{
       currentUser,
       getUserData, setUserData, removeUserData, getSchedule,
       publishedSchedules, refreshPublishedSchedules,
+      publisherWeekData, setActiveWeekStart,
     }}>
       {children}
     </UserContext.Provider>

@@ -52,7 +52,7 @@ function getTodayIndex(mondayStr) {
 }
 
 export default function WeekView({ onNavigate }) {
-  const { getUserData, setUserData, getSchedule } = useUser()
+  const { getUserData, setUserData, getSchedule, publisherWeekData, setActiveWeekStart } = useUser()
   const schedule = getSchedule()
 
   const [weekOffset, setWeekOffset] = useState(0)
@@ -70,6 +70,10 @@ export default function WeekView({ onNavigate }) {
   const todayIndex = getTodayIndex(weekStart)
 
   const [assignments, setAssignments] = useState(() => getUserData(storageKey) || {})
+
+  useEffect(() => {
+    setActiveWeekStart(weekStart)
+  }, [weekStart, setActiveWeekStart])
 
   const fiveThreeOneData = useMemo(() => getUserData('531'), [getUserData])
 
@@ -133,8 +137,8 @@ export default function WeekView({ onNavigate }) {
       if (workout) return { type: 'workout', workout, category: slotType }
     }
 
-    if (schedule.defaultWorkouts?.[day]) {
-      const workout = getWorkoutById(schedule.defaultWorkouts[day])
+    if (publisherWeekData[day]) {
+      const workout = getWorkoutById(publisherWeekData[day])
       if (workout) return { type: 'workout', workout, category: slotType }
     }
 
