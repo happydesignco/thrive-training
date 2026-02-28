@@ -37,13 +37,12 @@ export function AuthProvider({ children }) {
       }
     }
 
-    // Initial session load
-    supabase.auth.getSession().then(({ data: { session: s } }) => {
+    // Initial session load — must await username before unblocking
+    supabase.auth.getSession().then(async ({ data: { session: s } }) => {
       setSession(s)
-      if (s) fetchUsername(s.user.id)
-    }).catch(err => {
-      console.warn('[auth] getSession failed:', err)
-    }).finally(() => {
+      if (s) await fetchUsername(s.user.id)
+      setLoading(false)
+    }).catch(() => {
       setLoading(false)
     })
 
