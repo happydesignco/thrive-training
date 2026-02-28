@@ -14,6 +14,12 @@ export const CATEGORY_LABELS = {
   accessory: 'Accessory',
 }
 
+export const CATEGORY_COLORS = {
+  conditioning: 'var(--color-cyan)',
+  metcon: 'var(--color-magenta)',
+  accessory: 'var(--color-neon-green)',
+}
+
 export const formats = [...new Set(allWorkouts.map(w => w.format))].sort()
 
 export const tracks = [...new Set(allWorkouts.flatMap(w => w.track))].sort()

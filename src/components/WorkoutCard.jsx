@@ -6,6 +6,8 @@ const SECTION_COLORS = [
   'var(--color-orange)',
 ]
 
+import { CATEGORY_LABELS, CATEGORY_COLORS } from '../data/workouts'
+
 export default function WorkoutCard({ workout }) {
   const sections = Object.entries(workout.sections)
 
@@ -17,9 +19,20 @@ export default function WorkoutCard({ workout }) {
   return (
     <div className="bg-card-bg p-4 flex flex-col gap-4 border border-black hover:border-white hover:bg-black transition-all">
       <div>
-        <span className="text-xs opacity-50 uppercase tracking-wider">
-          #{workout.workout_number || workout.id}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="text-xs opacity-50 uppercase tracking-wider">
+            #{workout.workout_number || workout.id}
+          </span>
+          <span
+            className="text-[9px] uppercase tracking-wider font-bold px-1.5 py-0.5 rounded"
+            style={{
+              color: CATEGORY_COLORS[workout.category],
+              border: `1px solid ${CATEGORY_COLORS[workout.category]}`,
+            }}
+          >
+            {CATEGORY_LABELS[workout.category] || workout.category}
+          </span>
+        </div>
         <h3 className="text-base font-semibold">{workout.name}</h3>
         {workout.excerpt && (
           <p className="text-xs opacity-60 mt-1 italic">{workout.excerpt}</p>

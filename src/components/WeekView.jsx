@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useUser } from '../hooks/useUser'
-import { filterWorkouts, getWorkoutById } from '../data/workouts'
+import { filterWorkouts, getWorkoutById, CATEGORY_LABELS, CATEGORY_COLORS } from '../data/workouts'
 import {
   LIFTS, WEEK_LABELS, COLOR_MAP,
   calcWeight, get531WeekIndex, getWeekSets,
@@ -226,7 +226,18 @@ export default function WeekView({ onNavigate }) {
 
                   {assignment.type === 'workout' && (
                     <div className="min-w-0">
-                      <span className="text-sm font-semibold">{assignment.workout.name}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold">{assignment.workout.name}</span>
+                        <span
+                          className="text-[9px] uppercase tracking-wider font-bold px-1.5 py-0.5 rounded shrink-0"
+                          style={{
+                            color: CATEGORY_COLORS[assignment.category],
+                            border: `1px solid ${CATEGORY_COLORS[assignment.category]}`,
+                          }}
+                        >
+                          {CATEGORY_LABELS[assignment.category] || assignment.category}
+                        </span>
+                      </div>
                       <p className="text-xs opacity-50 truncate">{assignment.workout.excerpt || assignment.workout.title}</p>
                     </div>
                   )}
