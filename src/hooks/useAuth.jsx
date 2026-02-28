@@ -37,21 +37,20 @@ export function AuthProvider({ children }) {
       }
     }
 
-    // Initial session load — must await username before unblocking
-    supabase.auth.getSession().then(async ({ data: { session: s } }) => {
-      setSession(s)
-      if (s) await fetchUsername(s.user.id)
-      setLoading(false)
-    }).catch(() => {
-      setLoading(false)
-    })
-
-    // Only sync session + clear state on sign out.
-    // signIn/signUp already set username directly.
+    // onAuthStateChange is the single source of truth.
+    // INITIAL_SESSION fires once on subscribe with the refreshed session.
+    // getSession() can return stale tokens that then get invalidated.
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, s) => {
+      async (event, s) => {
         setSession(s)
-        if (!s) setUsername(null)
+        if (event === 'INITIAL_SESSION') {
+          if (s) await fetchUsername(s.user.id)
+          setLoading(false)
+        } else if (event === 'SIGNED_OUT') {
+          setUsername(null)
+        }
+        // SIGNED_IN: signIn/signUp set username directly
+        // TOKEN_REFRESHED: session updated above, username unchanged
       }
     )
 
