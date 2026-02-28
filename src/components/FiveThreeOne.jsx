@@ -4,6 +4,7 @@ import {
   LIFTS, WEEK_SETS, DELOAD_SETS, WEEK_LABELS, COLOR_MAP,
   calcWeight as calcWeightUtil, get531WeekIndex,
 } from '../utils/fiveThreeOne'
+import PlateCalculator from './PlateCalculator'
 
 const DAY_LABELS = {
   monday: 'Monday', tuesday: 'Tuesday', wednesday: 'Wednesday',
@@ -34,6 +35,7 @@ export default function FiveThreeOne() {
   const [startDate, setStartDate] = useState('')
   const [useDeload, setUseDeload] = useState(false)
   const [dayAssignments, setDayAssignments] = useState({})
+  const [plateCalcWeight, setPlateCalcWeight] = useState(null)
   const outputRef = useRef(null)
 
   // Load saved data on mount
@@ -297,15 +299,20 @@ export default function FiveThreeOne() {
               useBBB={useBBB}
               calcWeight={calcWeight}
               isCurrent={isCurrent}
+              onWeightTap={setPlateCalcWeight}
             />
           )
         })}
       </div>
+
+      {plateCalcWeight !== null && (
+        <PlateCalculator weight={plateCalcWeight} onClose={() => setPlateCalcWeight(null)} />
+      )}
     </div>
   )
 }
 
-function WeekTable({ weekNum, weekLabel, sets, weights, useBBB, calcWeight, isCurrent }) {
+function WeekTable({ weekNum, weekLabel, sets, weights, useBBB, calcWeight, isCurrent, onWeightTap }) {
   const activeLiftCount = LIFTS.filter(l => parseFloat(weights[l.key]) > 0).length
   if (!activeLiftCount) return null
 
@@ -351,7 +358,10 @@ function WeekTable({ weekNum, weekLabel, sets, weights, useBBB, calcWeight, isCu
                   {idx === 0 ? lift.key.toUpperCase() : ''}
                 </td>
                 <td className="py-1 px-1">{s.r} reps @ {s.p}%</td>
-                <td className="py-1 px-1 font-bold text-base">{wgt}</td>
+                <td
+                  className="py-1 px-1 font-bold text-base underline cursor-pointer"
+                  onClick={() => onWeightTap?.(Number(wgt))}
+                >{wgt}</td>
               </tr>
             )
           })
@@ -368,7 +378,10 @@ function WeekTable({ weekNum, weekLabel, sets, weights, useBBB, calcWeight, isCu
               >
                 <td className="py-1 px-1"></td>
                 <td className="py-1 px-1">5x10 @ 50%</td>
-                <td className="py-1 px-1 font-bold text-base">{bbbWgt}</td>
+                <td
+                  className="py-1 px-1 font-bold text-base underline cursor-pointer"
+                  onClick={() => onWeightTap?.(Number(bbbWgt))}
+                >{bbbWgt}</td>
               </tr>
             )
           }

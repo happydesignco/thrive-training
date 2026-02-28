@@ -5,6 +5,7 @@ import {
   LIFTS, WEEK_LABELS, COLOR_MAP,
   calcWeight, get531WeekIndex, getWeekSets,
 } from '../utils/fiveThreeOne'
+import PlateCalculator from './PlateCalculator'
 
 const DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 const DAY_LABELS = {
@@ -58,6 +59,7 @@ export default function WeekView({ onNavigate }) {
   const [weekOffset, setWeekOffset] = useState(0)
   const [expandedDay, setExpandedDay] = useState(null)
   const [swappingDay, setSwappingDay] = useState(null)
+  const [plateCalcWeight, setPlateCalcWeight] = useState(null)
 
   const weekStart = useMemo(() => {
     const m = getMonday(new Date())
@@ -352,18 +354,27 @@ export default function WeekView({ onNavigate }) {
                               return (
                                 <li key={idx} className="mb-1 text-xs flex justify-between max-w-[250px]">
                                   <span>{s.r} reps @ {s.p}%</span>
-                                  {wgt && <span className="font-bold text-sm">{wgt}</span>}
+                                  {wgt && (
+                                    <span
+                                      className="font-bold text-sm underline cursor-pointer"
+                                      onClick={(e) => { e.stopPropagation(); setPlateCalcWeight(Number(wgt)) }}
+                                    >{wgt}</span>
+                                  )}
                                 </li>
                               )
                             })}
                             {assignment.useBBB && (
                               <li className="mb-1 text-xs flex justify-between max-w-[250px] opacity-60">
                                 <span>5x10 @ 50%</span>
-                                {hasWeight && (
-                                  <span className="font-bold text-sm">
-                                    {calcWeight(lift.weight, 50, assignment.mode, assignment.useRounding)}
-                                  </span>
-                                )}
+                                {hasWeight && (() => {
+                                  const bbbWgt = calcWeight(lift.weight, 50, assignment.mode, assignment.useRounding)
+                                  return (
+                                    <span
+                                      className="font-bold text-sm underline cursor-pointer"
+                                      onClick={(e) => { e.stopPropagation(); setPlateCalcWeight(Number(bbbWgt)) }}
+                                    >{bbbWgt}</span>
+                                  )
+                                })()}
                               </li>
                             )}
                           </ul>
@@ -424,6 +435,10 @@ export default function WeekView({ onNavigate }) {
           )
         })}
       </div>
+
+      {plateCalcWeight !== null && (
+        <PlateCalculator weight={plateCalcWeight} onClose={() => setPlateCalcWeight(null)} />
+      )}
     </div>
   )
 }
