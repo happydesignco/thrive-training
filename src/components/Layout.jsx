@@ -6,6 +6,7 @@ import WorkoutLibrary from './WorkoutLibrary'
 import Roulette from './Roulette'
 import InstallPrompt from './InstallPrompt'
 import ScheduleEditor from './ScheduleEditor'
+import PlateCalculator, { PlateCalculatorButton } from './PlateCalculator'
 
 const TABS = [
   { id: 'week', label: 'My Week' },
@@ -21,6 +22,7 @@ export default function Layout() {
     return params.get('tab') || 'week'
   })
   const [showScheduleEditor, setShowScheduleEditor] = useState(false)
+  const [showPlateCalc, setShowPlateCalc] = useState(false)
 
   // Sync tab changes to URL
   useEffect(() => {
@@ -98,6 +100,10 @@ export default function Layout() {
       </main>
 
       <InstallPrompt />
+      <PlateCalculatorButton onClick={() => setShowPlateCalc(true)} />
+      {showPlateCalc && (
+        <PlateCalculator weight={null} onClose={() => setShowPlateCalc(false)} />
+      )}
     </div>
   )
 }

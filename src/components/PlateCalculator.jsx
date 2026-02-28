@@ -7,13 +7,15 @@ const STORAGE_KEY = 'thrive:bar-weight'
 const PLATE_COLORS = {
   45: '#3B82F6',  // blue
   25: '#22C55E',  // green
-  15: '#EAB308',  // yellow
-  10: '#EF4444',  // red
+  15: '#555555',  // dark gray (Rogue bumper)
+  10: '#444444',  // darker gray (Rogue bumper)
   5: '#9CA3AF',   // gray
   2.5: '#6B7280', // darker gray
 }
 
 const BUMPER_PLATES = new Set([45, 25, 15, 10])
+
+const PLATE_WIDTHS = { 45: 14, 25: 12, 15: 10, 10: 8, 5: 8, 2.5: 6 }
 
 function calcPlates(targetWeight, barWeight) {
   if (targetWeight < barWeight) return null
@@ -31,6 +33,14 @@ function calcPlates(targetWeight, barWeight) {
 
   if (perSide > 0.01) return null
   return result
+}
+
+function roundToPlateWeight(rawWeight, barWeight) {
+  // Smallest plate increment per side is 2.5, so total increments of 5
+  if (rawWeight <= barWeight) return barWeight
+  const above = rawWeight - barWeight
+  const rounded = Math.round(above / 5) * 5
+  return barWeight + rounded
 }
 
 function formatPlateList(plates) {
@@ -60,7 +70,7 @@ function BarDiagram({ plates, barWeight }) {
   const plateRects = plates.map((weight, i) => {
     const isBumper = BUMPER_PLATES.has(weight)
     const h = isBumper ? bumperHeight : changeHeight
-    const w = isBumper ? 14 : 10
+    const w = PLATE_WIDTHS[weight] || 10
     const rect = {
       x, y: barY - h / 2, width: w, height: h,
       color: PLATE_COLORS[weight], weight, key: i,
@@ -90,20 +100,25 @@ function BarDiagram({ plates, barWeight }) {
         rx={1} fill="#A1A1AA"
       />
       {/* Plates */}
-      {plateRects.map(r => (
-        <g key={r.key}>
-          <rect
-            x={r.x} y={r.y} width={r.width} height={r.height}
-            rx={2} fill={r.color}
-          />
-          <text
-            x={r.x + r.width / 2} y={barY + r.height / 2 + 12}
-            textAnchor="middle" fontSize="9" fill="#ccc" fontFamily="monospace"
-          >
-            {r.weight}
-          </text>
-        </g>
-      ))}
+      {plateRects.map(r => {
+        const isChange = !BUMPER_PLATES.has(r.weight)
+        const labelY = isChange ? barY + changeHeight / 2 + 10 : barY + bumperHeight / 2 + 12
+        const labelSize = r.weight === 2.5 ? '7' : '9'
+        return (
+          <g key={r.key}>
+            <rect
+              x={r.x} y={r.y} width={r.width} height={r.height}
+              rx={2} fill={r.color}
+            />
+            <text
+              x={r.x + r.width / 2} y={labelY}
+              textAnchor="middle" fontSize={labelSize} fill="#ccc" fontFamily="monospace"
+            >
+              {r.weight}
+            </text>
+          </g>
+        )
+      })}
       {/* Bar weight label */}
       <text
         x={barStartX + 30} y={barY - barHeight / 2 - 6}
@@ -114,7 +129,7 @@ function BarDiagram({ plates, barWeight }) {
       {/* "each side" label */}
       {plates.length > 0 && (
         <text
-          x={x + 4} y={barY + 4}
+          x={x + 24} y={barY + 4}
           fontSize="9" fill="#666" fontFamily="monospace"
         >
           each side
@@ -131,7 +146,7 @@ export default function PlateCalculator({ weight, onClose }) {
   })
 
   const [quickWeight, setQuickWeight] = useState('')
-  const [quickPct, setQuickPct] = useState('')
+  const [quickPct, setQuickPct] = useState('100')
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -148,12 +163,15 @@ export default function PlateCalculator({ weight, onClose }) {
     setTimeout(onClose, 200)
   }
 
-  const quickResult = quickWeight && quickPct
-    ? Math.round(parseFloat(quickWeight) * parseFloat(quickPct) / 100)
+  const quickExact = quickWeight && quickPct
+    ? parseFloat(quickWeight) * parseFloat(quickPct) / 100
     : null
+  const quickRounded = quickExact !== null
+    ? roundToPlateWeight(Math.round(quickExact), barWeight)
+    : null
+  const quickShowsBoth = quickExact !== null && quickRounded !== Math.round(quickExact)
 
-  const displayWeight = quickResult || weight
-  const plates = displayWeight ? calcPlates(Number(displayWeight), barWeight) : null
+  const plates = weight ? calcPlates(Number(weight), barWeight) : null
 
   return (
     <div
@@ -270,18 +288,21 @@ export default function PlateCalculator({ weight, onClose }) {
               <div className="flex-1">
                 <span className="text-[10px] opacity-50 uppercase block mb-1">Result</span>
                 <div className="p-2 border border-border rounded-md bg-input-bg font-mono text-sm font-bold" style={{ minHeight: '38px' }}>
-                  {quickResult ?? '—'}
+                  {quickRounded ?? '—'}
+                  {quickShowsBoth && (
+                    <span className="text-[10px] opacity-40 font-normal ml-1">({Math.round(quickExact)})</span>
+                  )}
                 </div>
               </div>
             </div>
 
             {/* Quick calc plate diagram */}
-            {quickResult && (() => {
-              const qPlates = calcPlates(quickResult, barWeight)
+            {quickRounded && (() => {
+              const qPlates = calcPlates(quickRounded, barWeight)
               if (qPlates === null) {
                 return (
                   <p className="text-xs opacity-50 mt-3 text-center">
-                    {quickResult < barWeight
+                    {quickRounded < barWeight
                       ? `Result is less than the ${barWeight} lb bar`
                       : 'Cannot be made with standard plates'}
                   </p>
@@ -305,5 +326,20 @@ export default function PlateCalculator({ weight, onClose }) {
         </div>
       </div>
     </div>
+  )
+}
+
+export function PlateCalculatorButton({ onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="fixed bottom-4 right-4 z-40 text-xs font-mono px-3 py-2 border rounded-full bg-card-bg transition-colors"
+      style={{
+        borderColor: 'var(--color-border)',
+        color: 'var(--color-magenta)',
+      }}
+    >
+      Plates
+    </button>
   )
 }
