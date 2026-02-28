@@ -37,24 +37,21 @@ export function AuthProvider({ children }) {
       }
     }
 
-    // Initial session load
-    supabase.auth.getSession().then(async ({ data: { session: s } }) => {
+    // Initial session load — never block loading on profile fetch
+    supabase.auth.getSession().then(({ data: { session: s } }) => {
       setSession(s)
-      if (s) {
-        await fetchUsername(s.user.id)
-      }
-    }).catch(err => {
-      console.warn('[auth] getSession failed:', err)
-    }).finally(() => {
+      setLoading(false)
+      if (s) fetchUsername(s.user.id)
+    }).catch(() => {
       setLoading(false)
     })
 
     // Listen for subsequent auth changes (sign in/out, token refresh)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, s) => {
+      (_event, s) => {
         setSession(s)
         if (s) {
-          await fetchUsername(s.user.id)
+          fetchUsername(s.user.id)
         } else {
           setUsername(null)
         }
