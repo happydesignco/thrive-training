@@ -83,10 +83,12 @@ export function UserProvider({ children }) {
     }
   }, [activePublisherUserId, activeWeekStart])
 
-  const needsOnboarding = !getUserData('onboarded')
+  const [onboarded, setOnboarded] = useState(() => !!getUserData('onboarded'))
+  const needsOnboarding = !onboarded
 
   const completeOnboarding = useCallback(() => {
     setUserData('onboarded', true)
+    setOnboarded(true)
   }, [setUserData])
 
   return (
