@@ -83,12 +83,19 @@ export function UserProvider({ children }) {
     }
   }, [activePublisherUserId, activeWeekStart])
 
+  const needsOnboarding = !getUserData('onboarded')
+
+  const completeOnboarding = useCallback(() => {
+    setUserData('onboarded', true)
+  }, [setUserData])
+
   return (
     <UserContext.Provider value={{
       currentUser,
       getUserData, setUserData, removeUserData, getSchedule,
       publishedSchedules, refreshPublishedSchedules,
       publisherWeekData, setActiveWeekStart,
+      needsOnboarding, completeOnboarding,
     }}>
       {children}
     </UserContext.Provider>

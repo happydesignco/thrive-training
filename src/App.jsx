@@ -1,7 +1,14 @@
 import { AuthProvider, useAuth } from './hooks/useAuth'
-import { UserProvider } from './hooks/useUser'
+import { UserProvider, useUser } from './hooks/useUser'
 import Layout from './components/Layout'
 import LoginScreen from './components/LoginScreen'
+import Onboarding from './components/Onboarding'
+
+function AuthenticatedContent() {
+  const { needsOnboarding } = useUser()
+  if (needsOnboarding) return <Onboarding />
+  return <Layout />
+}
 
 function AppContent() {
   const { loading, isAuthenticated } = useAuth()
@@ -22,7 +29,7 @@ function AppContent() {
 
   return (
     <UserProvider>
-      <Layout />
+      <AuthenticatedContent />
     </UserProvider>
   )
 }
