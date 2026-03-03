@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useUser } from '../hooks/useUser'
 import { useAuth } from '../hooks/useAuth'
 import { DEFAULT_SCHEDULES, SLOT_TYPES } from '../data/schedules'
-import { CATEGORY_LABELS } from '../data/workouts'
+import { CATEGORY_LABELS } from '../data/workoutConstants'
 import { publishSchedule, unpublishSchedule } from '../lib/publishedSchedules'
 
 const DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
@@ -20,7 +20,7 @@ const SLOT_LABELS = {
 export default function ScheduleEditor({ onClose }) {
   const { currentUser, getSchedule, getUserData, setUserData, removeUserData, publishedSchedules, refreshPublishedSchedules } = useUser()
   const { userId, username } = useAuth()
-  const scheduleId = currentUser.scheduleId || currentUser.track || 'hybrid'
+  const scheduleId = currentUser.scheduleId || 'hybrid'
 
   const [presetId, setPresetId] = useState(() => {
     const saved = getUserData('schedule')

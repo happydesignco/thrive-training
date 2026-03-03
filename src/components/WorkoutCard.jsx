@@ -6,9 +6,9 @@ const SECTION_COLORS = [
   'var(--color-orange)',
 ]
 
-import { CATEGORY_LABELS, CATEGORY_COLORS } from '../data/workouts'
+import { CATEGORY_LABELS, CATEGORY_COLORS } from '../data/workoutConstants'
 
-export default function WorkoutCard({ workout }) {
+export default function WorkoutCard({ workout, isOwned, onEdit, onDelete }) {
   const sections = Object.entries(workout.sections)
 
   function handleShare() {
@@ -64,12 +64,30 @@ export default function WorkoutCard({ workout }) {
         )
       })}
 
-      <button
-        onClick={handleShare}
-        className="mt-auto py-2 px-4 bg-black border border-white text-white uppercase tracking-wider font-mono text-xs cursor-pointer hover:bg-magenta transition-colors"
-      >
-        Share
-      </button>
+      <div className="mt-auto flex gap-2">
+        <button
+          onClick={handleShare}
+          className="flex-1 py-2 px-4 bg-black border border-white text-white uppercase tracking-wider font-mono text-xs cursor-pointer hover:bg-magenta transition-colors"
+        >
+          Share
+        </button>
+        {isOwned && onEdit && (
+          <button
+            onClick={() => onEdit(workout)}
+            className="py-2 px-4 bg-black border border-cyan text-cyan uppercase tracking-wider font-mono text-xs cursor-pointer hover:bg-cyan hover:text-black transition-colors"
+          >
+            Edit
+          </button>
+        )}
+        {isOwned && onDelete && (
+          <button
+            onClick={() => onDelete(workout)}
+            className="py-2 px-4 bg-black border border-orange text-orange uppercase tracking-wider font-mono text-xs cursor-pointer hover:bg-orange hover:text-black transition-colors"
+          >
+            Del
+          </button>
+        )}
+      </div>
     </div>
   )
 }

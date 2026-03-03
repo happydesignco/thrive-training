@@ -1,21 +1,25 @@
 import { useState, useEffect } from 'react'
-import { filterWorkouts, categories, CATEGORY_LABELS, formats, tracks, getWorkoutById } from '../data/workouts'
+import { useWorkouts } from '../hooks/useWorkouts'
+import { useAuth } from '../hooks/useAuth'
+import { CATEGORY_LABELS } from '../data/workoutConstants'
 import WorkoutCard from './WorkoutCard'
+import WorkoutEditor from './WorkoutEditor'
 
 export default function WorkoutLibrary() {
+  const { filterWorkouts, categories, formats, deleteWorkout } = useWorkouts()
+  const { userId } = useAuth()
+
   const [category, setCategory] = useState('')
   const [format, setFormat] = useState('')
-  const [track, setTrack] = useState('')
   const [search, setSearch] = useState('')
   const [highlightId, setHighlightId] = useState(null)
+  const [editing, setEditing] = useState(null) // null | 'new' | workout object
 
-  // Read URL params for direct workout link
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const workoutId = params.get('workout')
     if (workoutId) {
       setHighlightId(workoutId)
-      // Scroll to it after render
       setTimeout(() => {
         const el = document.getElementById(`workout-${workoutId}`)
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -23,7 +27,25 @@ export default function WorkoutLibrary() {
     }
   }, [])
 
-  const results = filterWorkouts({ category, format, track, search })
+  const results = filterWorkouts({ category, format, search })
+
+  async function handleDelete(workout) {
+    if (!confirm(`Delete "${workout.name}"?`)) return
+    try {
+      await deleteWorkout(workout.id)
+    } catch (err) {
+      alert('Failed to delete: ' + err.message)
+    }
+  }
+
+  if (editing) {
+    return (
+      <WorkoutEditor
+        workout={editing === 'new' ? undefined : editing}
+        onClose={() => setEditing(null)}
+      />
+    )
+  }
 
   const selectClass = "bg-input-bg border border-border rounded-md px-2 py-2 font-mono text-xs"
 
@@ -45,13 +67,6 @@ export default function WorkoutLibrary() {
           ))}
         </select>
 
-        <select value={track} onChange={e => setTrack(e.target.value)} className={selectClass}>
-          <option value="">All Tracks</option>
-          {tracks.map(t => (
-            <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>
-          ))}
-        </select>
-
         <input
           type="text"
           placeholder="Search..."
@@ -59,6 +74,13 @@ export default function WorkoutLibrary() {
           onChange={e => setSearch(e.target.value)}
           className="bg-input-bg border border-border rounded-md px-2 py-2 font-mono text-xs flex-1 min-w-[120px]"
         />
+
+        <button
+          onClick={() => setEditing('new')}
+          className="px-4 py-2 bg-magenta text-black font-bold uppercase tracking-wider text-xs rounded-md"
+        >
+          + Add Workout
+        </button>
       </div>
 
       {/* Results count */}
@@ -66,16 +88,24 @@ export default function WorkoutLibrary() {
 
       {/* Grid */}
       <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 group/grid">
-        {results.map(workout => (
-          <div
-            key={workout.id}
-            id={`workout-${workout.id}`}
-            className={`transition-opacity group-hover/grid:opacity-50 hover:!opacity-100
-              ${highlightId === workout.id ? 'ring-2 ring-magenta' : ''}`}
-          >
-            <WorkoutCard workout={workout} />
-          </div>
-        ))}
+        {results.map(workout => {
+          const isOwned = workout.created_by === userId && !workout.is_seed
+          return (
+            <div
+              key={workout.id}
+              id={`workout-${workout.id}`}
+              className={`transition-opacity group-hover/grid:opacity-50 hover:!opacity-100
+                ${highlightId === workout.id ? 'ring-2 ring-magenta' : ''}`}
+            >
+              <WorkoutCard
+                workout={workout}
+                isOwned={isOwned}
+                onEdit={isOwned ? (w) => setEditing(w) : undefined}
+                onDelete={isOwned ? handleDelete : undefined}
+              />
+            </div>
+          )
+        })}
       </div>
 
       {results.length === 0 && (

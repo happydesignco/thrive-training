@@ -1,5 +1,6 @@
 import { AuthProvider, useAuth } from './hooks/useAuth'
 import { UserProvider, useUser } from './hooks/useUser'
+import { WorkoutProvider } from './hooks/useWorkouts'
 import Layout from './components/Layout'
 import LoginScreen from './components/LoginScreen'
 import Onboarding from './components/Onboarding'
@@ -29,7 +30,9 @@ function AppContent() {
 
   return (
     <UserProvider>
-      <AuthenticatedContent />
+      <WorkoutProvider>
+        <AuthenticatedContent />
+      </WorkoutProvider>
     </UserProvider>
   )
 }

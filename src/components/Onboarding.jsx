@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useUser } from '../hooks/useUser'
 import { DEFAULT_SCHEDULES, SLOT_TYPES } from '../data/schedules'
-import { CATEGORY_LABELS } from '../data/workouts'
+import { CATEGORY_LABELS } from '../data/workoutConstants'
 
 const DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 const DAY_LABELS = {

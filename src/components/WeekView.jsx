@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useUser } from '../hooks/useUser'
-import { filterWorkouts, getWorkoutById, CATEGORY_LABELS, CATEGORY_COLORS } from '../data/workouts'
+import { useWorkouts } from '../hooks/useWorkouts'
+import { CATEGORY_LABELS, CATEGORY_COLORS } from '../data/workoutConstants'
 import {
   LIFTS, WEEK_LABELS, COLOR_MAP,
   calcWeight, get531WeekIndex, getWeekSets,
@@ -54,6 +55,7 @@ function getTodayIndex(mondayStr) {
 
 export default function WeekView({ onNavigate }) {
   const { getUserData, setUserData, getSchedule, publisherWeekData, setActiveWeekStart } = useUser()
+  const { filterWorkouts, getWorkoutById, loading: workoutsLoading } = useWorkouts()
   const schedule = getSchedule()
 
   const [weekOffset, setWeekOffset] = useState(0)
@@ -98,9 +100,11 @@ export default function WeekView({ onNavigate }) {
       return { type: '531' }
     }
 
+    const liftOrder = LIFTS.map(l => l.key)
     const assignedLiftKeys = Object.entries(fiveThreeOneData.dayAssignments)
       .filter(([, assignedDay]) => assignedDay === day)
       .map(([liftKey]) => liftKey)
+      .sort((a, b) => liftOrder.indexOf(a) - liftOrder.indexOf(b))
 
     if (assignedLiftKeys.length === 0) return { type: '531' }
 
