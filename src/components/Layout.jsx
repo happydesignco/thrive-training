@@ -28,6 +28,28 @@ export default function Layout() {
   const [showScheduleEditor, setShowScheduleEditor] = useState(false)
   const [showPlateCalc, setShowPlateCalc] = useState(false)
 
+  // Keep screen awake while app is open
+  useEffect(() => {
+    let wakeLock = null
+    const request = async () => {
+      try {
+        if ('wakeLock' in navigator) {
+          wakeLock = await navigator.wakeLock.request('screen')
+        }
+      } catch (e) { /* user denied or not supported */ }
+    }
+    request()
+    // Re-acquire when returning from background
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') request()
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibility)
+      if (wakeLock) wakeLock.release()
+    }
+  }, [])
+
   // Sync tab changes to URL
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
