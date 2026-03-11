@@ -4,6 +4,7 @@ import WeekView from './WeekView'
 import FiveThreeOne from './FiveThreeOne'
 import WorkoutLibrary from './WorkoutLibrary'
 import Roulette from './Roulette'
+import Mobility from './Mobility'
 import InstallPrompt from './InstallPrompt'
 import ScheduleEditor from './ScheduleEditor'
 import PlateCalculator, { PlateCalculatorButton } from './PlateCalculator'
@@ -14,6 +15,7 @@ const BASE_TABS = [
   { id: '531', label: '5/3/1' },
   { id: 'library', label: 'Library' },
   { id: 'roulette', label: 'Roulette' },
+  { id: 'mobility', label: 'Mobility' },
 ]
 
 export default function Layout() {
@@ -99,6 +101,7 @@ export default function Layout() {
         {activeTab === '531' && <FiveThreeOne />}
         {activeTab === 'library' && <WorkoutLibrary />}
         {activeTab === 'roulette' && <Roulette />}
+        {activeTab === 'mobility' && <Mobility />}
         {activeTab === 'admin' && isAdmin && <AdminDashboard />}
       </main>
 
