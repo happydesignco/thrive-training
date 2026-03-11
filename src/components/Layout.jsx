@@ -20,7 +20,7 @@ const BASE_TABS = [
 
 export default function Layout() {
   const { username, signOut, isAdmin } = useAuth()
-  const tabs = isAdmin ? [...BASE_TABS, { id: 'admin', label: 'Admin' }] : BASE_TABS
+  const tabs = BASE_TABS
   const [activeTab, setActiveTab] = useState(() => {
     const params = new URLSearchParams(window.location.search)
     return params.get('tab') || 'week'
@@ -56,6 +56,19 @@ export default function Layout() {
               <line x1="21" y1="12" x2="9" y2="12" />
             </svg>
           </button>
+        {isAdmin && (
+          <button
+            onClick={() => setActiveTab('admin')}
+            className={`transition-colors ${
+              activeTab === 'admin' ? 'text-magenta' : 'opacity-50 hover:opacity-100'
+            }`}
+            title="Admin"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+          </button>
+        )}
         <button
           onClick={() => setShowScheduleEditor(s => !s)}
           className={`text-sm transition-colors ${
