@@ -16,6 +16,7 @@ import SendTokens from './pages/SendTokens.jsx'
 import Approvals from './pages/Approvals.jsx'
 import Rules from './pages/Rules.jsx'
 import History from './pages/History.jsx'
+import Board from './pages/Board.jsx'
 import MissingConfig from './pages/MissingConfig.jsx'
 
 function RequireAuth({ children }) {
@@ -52,6 +53,7 @@ export default function App() {
       <Route element={<RequireAuth><RequireFamily><Layout /></RequireFamily></RequireAuth>}>
         <Route path="/" element={<ParentHome />} />
         <Route path="/kids" element={<KidsManage />} />
+        <Route path="/board" element={<Board />} />
         <Route path="/approvals" element={<Approvals />} />
         <Route path="/rules" element={<Rules />} />
         <Route path="/history" element={<History />} />

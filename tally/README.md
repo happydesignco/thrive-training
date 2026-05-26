@@ -31,6 +31,7 @@ Open http://localhost:5173.
    - `sql/001_schema.sql`
    - `sql/002_rls.sql`
    - `sql/003_rpcs.sql`
+   - `sql/004_leaderboard.sql`
 3. Open **Authentication → Providers → Email**:
    - For dev, you can disable "Confirm email" so signups go straight through.
    - For production, keep confirmation on and configure your SMTP.
@@ -48,6 +49,10 @@ Open http://localhost:5173.
 - `003_rpcs.sql` — Stored procedures for the things clients shouldn't do directly:
   `create_family`, `lookup_family_by_invite`, `approve_transfer` / `reject_transfer`,
   `approve_reading` / `reject_reading`, `start_week`, `close_week`.
+- `004_leaderboard.sql` — Adds `neighborhoods` + `neighborhood_members`, kid `handle` +
+  `leaderboard_opt_in` columns, and `get_neighborhood_leaderboard` — a SECURITY DEFINER
+  RPC that returns ONLY `{handle, avatar_color, balance, reading_minutes_this_week, is_mine}`,
+  never names or kid IDs.
 
 ---
 
@@ -107,6 +112,15 @@ gh repo create tally --private --source=. --push
 1. **Sunday**: Parent taps `+ Week` on each kid (or per kid on demand). Each kid gets the configured weekly allowance.
 2. **During the week**: Kids earn extra tokens by logging reading (parent approves), and spend tokens on screen time. Parents can grant/deduct manually (`±` button) for chores or infractions.
 3. **End of week**: Parent goes to **History → Cash out last week** for each kid. Unspent tokens convert to cents at the family's configured rate. The cashout zeros remaining tokens, then next week's `+ Week` issues a fresh allowance.
+
+## How the leaderboard works
+
+1. A family creates a **neighborhood** (e.g. "Oak Street") and shares the code, or joins via someone else's code. A family can be in any number of neighborhoods.
+2. Each kid optionally picks an **anonymous handle** (parent sets/approves it in the Kids tab) and toggles **Show on neighborhood leaderboards**.
+3. The **Board** tab shows each joined neighborhood with two rankings:
+   - **Top Savers** — current token balance
+   - **Top Readers this week** — approved reading minutes since the week started
+4. Cross-family rows are pulled via a single SECURITY DEFINER RPC that returns only `{handle, avatar_color, balance, reading_minutes_this_week, is_mine}` — never real names, kid IDs, or family info. The kid's own family sees `is_mine = true` so the UI can highlight their entries.
 
 ## How marketplace transfers work
 

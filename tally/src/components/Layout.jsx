@@ -26,8 +26,9 @@ export default function Layout() {
       </main>
 
       <nav className="fixed bottom-0 inset-x-0 border-t border-[var(--line)] bg-[var(--panel)]">
-        <div className="max-w-3xl mx-auto grid grid-cols-5 text-center">
+        <div className="max-w-3xl mx-auto grid grid-cols-6 text-center">
           <TabLink to="/" label="Home" icon="🏠" end />
+          <TabLink to="/board" label="Board" icon="🏆" />
           <TabLink to="/approvals" label="Inbox" icon="📥" />
           <TabLink to="/history" label="History" icon="📅" />
           <TabLink to="/kids" label="Kids" icon="👧" />

@@ -6,6 +6,7 @@ import { pinMatches } from '../lib/pin.js'
 import { weekAnchor } from '../lib/week.js'
 import KidAvatar from '../components/KidAvatar.jsx'
 import PinPad from '../components/PinPad.jsx'
+import LeaderboardSummary from '../components/LeaderboardSummary.jsx'
 
 export default function KidView() {
   const { id } = useParams()
@@ -81,6 +82,10 @@ export default function KidView() {
         <div className="text-5xl font-extrabold text-[var(--gold)] my-1 token-amount">{balance}</div>
         <div className="opacity-70 text-sm">= {screenMins} min of screen time · or ${(balance * family.cash_per_unspent_token_cents / 100).toFixed(2)} at week end</div>
       </section>
+
+      {kid.leaderboard_opt_in && kid.handle && (
+        <LeaderboardSummary kid={kid} />
+      )}
 
       <section className="grid grid-cols-2 gap-3">
         <Link to={`/kid/${kid.id}/log-reading`} className="panel p-4 text-center">
