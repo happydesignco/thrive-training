@@ -12,6 +12,7 @@ const DAY_LABELS = {
 const SLOT_LABELS = {
   rest: 'Rest',
   '531': '5/3/1',
+  run: 'Easy Run',
   ...CATEGORY_LABELS,
 }
 
@@ -19,6 +20,7 @@ const SLOT_COLORS = {
   rest: 'opacity-30',
   '531': 'text-cyan',
   conditioning: 'text-cyan',
+  run: 'text-yellow',
   metcon: 'text-magenta',
   accessory: 'text-neon-green',
 }
@@ -26,8 +28,8 @@ const SLOT_COLORS = {
 export default function Onboarding() {
   const { setUserData, completeOnboarding, publishedSchedules } = useUser()
 
-  const [selectedId, setSelectedId] = useState('hybrid')
-  const [days, setDays] = useState({ ...DEFAULT_SCHEDULES.hybrid.days })
+  const [selectedId, setSelectedId] = useState('thrive')
+  const [days, setDays] = useState({ ...DEFAULT_SCHEDULES.thrive.days })
 
   function handleSelect(id) {
     setSelectedId(id)

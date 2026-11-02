@@ -25,7 +25,7 @@ export function UserProvider({ children }) {
     setPublishedSchedules(schedules)
   }, [])
 
-  const currentUser = { id: username, name: username, scheduleId: 'hybrid' }
+  const currentUser = { id: username, name: username, scheduleId: 'thrive' }
 
   const getUserData = useCallback((key) => {
     const raw = localStorage.getItem(storageKey(currentUser.id, key))
@@ -52,7 +52,7 @@ export function UserProvider({ children }) {
       }
       return custom
     }
-    return DEFAULT_SCHEDULES[currentUser.scheduleId] || DEFAULT_SCHEDULES.hybrid
+    return DEFAULT_SCHEDULES[currentUser.scheduleId] || DEFAULT_SCHEDULES.thrive
   }, [currentUser.scheduleId, getUserData, publishedSchedules])
 
   // Derive publisherUserId from the active schedule

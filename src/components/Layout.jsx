@@ -13,10 +13,10 @@ import AdminDashboard from './AdminDashboard'
 const BASE_TABS = [
   { id: 'week', label: 'My Week' },
   { id: '531', label: '5/3/1' },
-  { id: 'library', label: 'Library' },
   { id: 'roulette', label: 'Roulette' },
-  { id: 'mobility', label: 'Mobility' },
 ]
+// Library and Mobility are hidden from the tab bar but still reachable at
+// ?tab=library and ?tab=mobility.
 
 export default function Layout() {
   const { username, signOut, isAdmin } = useAuth()

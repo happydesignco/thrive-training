@@ -14,13 +14,14 @@ const DAY_LABELS = {
 const SLOT_LABELS = {
   rest: 'Rest',
   '531': '5/3/1',
+  run: 'Easy Run',
   ...CATEGORY_LABELS,
 }
 
 export default function ScheduleEditor({ onClose }) {
   const { currentUser, getSchedule, getUserData, setUserData, removeUserData, publishedSchedules, refreshPublishedSchedules } = useUser()
   const { userId, username } = useAuth()
-  const scheduleId = currentUser.scheduleId || 'hybrid'
+  const scheduleId = currentUser.scheduleId || 'thrive'
 
   const [presetId, setPresetId] = useState(() => {
     const saved = getUserData('schedule')

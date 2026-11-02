@@ -1,6 +1,20 @@
-export const SLOT_TYPES = ['rest', '531', 'conditioning', 'metcon', 'accessory']
+export const SLOT_TYPES = ['rest', '531', 'conditioning', 'run', 'metcon', 'accessory']
 
 export const DEFAULT_SCHEDULES = {
+  thrive: {
+    id: 'thrive',
+    name: 'Thrive',
+    description: 'Lift Mon/Fri, conditioning Tue/Thu, easy run Wed',
+    days: {
+      monday: '531',
+      tuesday: 'conditioning',
+      wednesday: 'run',
+      thursday: 'conditioning',
+      friday: '531',
+      saturday: 'rest',
+      sunday: 'rest',
+    },
+  },
   hybrid: {
     id: 'hybrid',
     name: 'Hybrid',

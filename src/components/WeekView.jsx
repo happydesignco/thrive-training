@@ -7,6 +7,11 @@ import {
   calcWeight, get531WeekIndex, getWeekSets,
 } from '../utils/fiveThreeOne'
 import PlateCalculator from './PlateCalculator'
+import SessionView, { SessionEditor } from './SessionView'
+import {
+  parseNote, parseSession, serializeSession, generateLiftSession,
+  DEFAULT_LIFT_DAYS, LIFT_TEXT,
+} from '../utils/session'
 
 const DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 const DAY_LABELS = {
@@ -45,6 +50,63 @@ function getWeekNumber(mondayStr) {
   return Math.floor((monday - start) / (7 * 24 * 60 * 60 * 1000))
 }
 
+function dayDate(mondayStr, dayIdx) {
+  const d = new Date(mondayStr + 'T00:00:00')
+  d.setDate(d.getDate() + dayIdx)
+  const pad = n => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+}
+
+function ImportWeek({ weekLabel, onSave, onClose }) {
+  const [text, setText] = useState('')
+  const [singleDay, setSingleDay] = useState('monday')
+  const parsed = useMemo(() => (text.trim() ? parseNote(text) : null), [text])
+  const days = parsed?.single ? { [singleDay]: parsed.single } : parsed?.days || {}
+  const found = DAYS.filter(d => days[d])
+
+  return (
+    <div className="border border-magenta bg-card-bg p-4 mb-4 flex flex-col gap-2">
+      <p className="text-xs uppercase tracking-wider text-magenta">Paste week of {weekLabel}</p>
+      <textarea
+        value={text}
+        onChange={e => setText(e.target.value)}
+        rows={10}
+        placeholder={'Monday\nSquat 531\nChin ups 3x10\n\nBench 531\nSplit squat 3x8 each leg\n\nTuesday\n25 minute amrap\n...'}
+        className="w-full px-2 py-1.5 text-sm bg-black border border-border rounded font-mono focus:border-magenta focus:outline-none"
+      />
+      {parsed?.single && (
+        <label className="text-xs flex items-center gap-2">
+          <span className="opacity-50">No day names found. Put it on</span>
+          <select
+            value={singleDay}
+            onChange={e => setSingleDay(e.target.value)}
+            className="bg-black border border-border rounded px-2 py-1 text-xs"
+          >
+            {DAYS.map(d => <option key={d} value={d}>{DAY_LABELS[d]}</option>)}
+          </select>
+        </label>
+      )}
+      {found.length > 0 && (
+        <p className="text-xs opacity-60">
+          Found: {found.map(d => DAY_LABELS[d]).join(', ')}. Saving replaces those days.
+        </p>
+      )}
+      <div className="flex gap-2">
+        <button
+          onClick={() => onSave(days)}
+          disabled={!found.length}
+          className="px-3 py-1.5 text-xs bg-magenta text-black rounded font-bold disabled:opacity-30"
+        >
+          Save to week
+        </button>
+        <button onClick={onClose} className="px-3 py-1.5 text-xs opacity-50 hover:opacity-100">
+          Cancel
+        </button>
+      </div>
+    </div>
+  )
+}
+
 function getTodayIndex(mondayStr) {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
@@ -64,6 +126,9 @@ export default function WeekView({ onNavigate }) {
   const [plateCalcWeight, setPlateCalcWeight] = useState(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [customText, setCustomText] = useState('')
+  const [editingDay, setEditingDay] = useState(null)
+  const [shuffles, setShuffles] = useState({})
+  const [showImport, setShowImport] = useState(false)
 
   const weekStart = useMemo(() => {
     const m = getMonday(new Date())
@@ -87,6 +152,7 @@ export default function WeekView({ onNavigate }) {
     setAssignments(getUserData(storageKey) || {})
     setExpandedDay(null)
     setSwappingDay(null)
+    setEditingDay(null)
   }, [storageKey, getUserData])
 
   function getAutoWorkout(category) {
@@ -134,12 +200,60 @@ export default function WeekView({ onNavigate }) {
     }
   }
 
+  const lift531 = useMemo(() => {
+    const d = fiveThreeOneData
+    if (!d?.startDate) return { configured: false, weights: d?.weights }
+    const weekIndex = get531WeekIndex(d.startDate, weekStart, d.useDeload)
+    return {
+      configured: true,
+      weekIndex,
+      weekLabel: WEEK_LABELS[weekIndex],
+      isDeload: !!d.useDeload && weekIndex === 3,
+      cycleLength: d.useDeload ? 4 : 3,
+      sets: getWeekSets(weekIndex, d.useDeload),
+      weights: d.weights || {},
+      mode: d.mode,
+      useRounding: d.useRounding,
+    }
+  }, [fiveThreeOneData, weekStart])
+
+  function liftKeysFor(day) {
+    const assigned = fiveThreeOneData?.dayAssignments
+    if (assigned && Object.keys(assigned).length) {
+      const order = ['squat', 'bench', 'deadlift', 'press']
+      const keys = Object.entries(assigned)
+        .filter(([, d]) => d === day)
+        .map(([k]) => k)
+        .sort((a, b) => order.indexOf(a) - order.indexOf(b))
+      if (keys.length) return keys
+    }
+    return DEFAULT_LIFT_DAYS[day] || []
+  }
+
+  function defaultLiftSession(day) {
+    const keys = liftKeysFor(day)
+    if (!keys.length) return null
+    return generateLiftSession(keys, {
+      seedStr: `${weekStart}:${day}`,
+      shuffle: shuffles[day] || 0,
+      deload: lift531.isDeload,
+    })
+  }
+
   function getAssignment(day) {
     const slotType = schedule.days[day]
+    const asSession = (session, extra = {}) => ({
+      type: 'session',
+      session: slotType === 'run' && session.kind !== 'lift' ? { ...session, kind: 'run' } : session,
+      ...extra,
+    })
 
     // Check overrides first — works for any day including rest and 531
     if (assignments[day]) {
       const val = assignments[day]
+      if (typeof val === 'object' && val.session) {
+        return asSession(val.session, { overridden: true })
+      }
       if (typeof val === 'object' && val.custom) {
         return { type: 'custom', text: val.custom, overridden: true }
       }
@@ -147,14 +261,28 @@ export default function WeekView({ onNavigate }) {
       if (workout) return { type: 'workout', workout, category: workout.category, overridden: true }
     }
 
+    // Published week (e.g. Boyd's programming pasted in by the publisher)
+    const pub = publisherWeekData[day]
+    if (pub && typeof pub === 'object' && pub.session) {
+      return asSession(pub.session, { published: true })
+    }
+
     if (slotType === 'rest') return { type: 'rest' }
-    if (slotType === '531') return get531Assignment(day)
+    if (slotType === '531') {
+      const session = defaultLiftSession(day)
+      return session ? asSession(session, { auto: true }) : get531Assignment(day)
+    }
+    if (slotType === 'run') {
+      return asSession(parseSession('Easy run'), { auto: true })
+    }
 
     // It's a workout category — check publisher data, then auto
     if (publisherWeekData[day]) {
       const workout = getWorkoutById(publisherWeekData[day])
       if (workout) return { type: 'workout', workout, category: slotType }
     }
+
+    if (slotType === 'conditioning') return { type: 'pending' }
 
     const workout = getAutoWorkout(slotType)
     return workout ? { type: 'workout', workout, category: slotType } : { type: 'rest' }
@@ -165,6 +293,26 @@ export default function WeekView({ onNavigate }) {
     setAssignments(next)
     setUserData(storageKey, next)
     setSwappingDay(null)
+  }
+
+  function saveSession(day, session) {
+    handleSwap(day, { session })
+    setEditingDay(null)
+    setExpandedDay(day)
+  }
+
+  function handleImport(days) {
+    const next = { ...assignments }
+    for (const [day, session] of Object.entries(days)) next[day] = { session }
+    setAssignments(next)
+    setUserData(storageKey, next)
+    setShowImport(false)
+  }
+
+  function startEdit(day) {
+    setEditingDay(editingDay === day ? null : day)
+    setSwappingDay(null)
+    setExpandedDay(null)
   }
 
   function handleReset(day) {
@@ -203,6 +351,21 @@ export default function WeekView({ onNavigate }) {
         </button>
       </div>
 
+      {showImport ? (
+        <ImportWeek
+          weekLabel={formatWeekRange(weekStart)}
+          onSave={handleImport}
+          onClose={() => setShowImport(false)}
+        />
+      ) : (
+        <button
+          onClick={() => setShowImport(true)}
+          className="w-full mb-4 py-2 text-xs uppercase tracking-wider border border-border rounded-md hover:border-magenta hover:text-magenta transition-colors"
+        >
+          Paste week
+        </button>
+      )}
+
       {/* Days */}
       <div className="flex flex-col gap-3">
         {DAYS.map((day, dayIdx) => {
@@ -211,6 +374,9 @@ export default function WeekView({ onNavigate }) {
           const isSwapping = swappingDay === day
           const isToday = dayIdx === todayIndex
           const is531Configured = assignment.type === '531' && assignment.configured
+          const isSession = assignment.type === 'session'
+          const isEditing = editingDay === day
+          const date = dayDate(weekStart, dayIdx)
 
           return (
             <div
@@ -222,10 +388,11 @@ export default function WeekView({ onNavigate }) {
               {/* Day header */}
               <div
                 className={`flex items-center justify-between px-4 py-3 ${
-                  assignment.type === 'workout' || is531Configured ? 'cursor-pointer' : ''
+                  assignment.type === 'workout' || is531Configured || isSession ? 'cursor-pointer' : ''
                 }`}
                 onClick={() => {
-                  if (assignment.type === 'workout' || is531Configured) {
+                  if (assignment.type === 'workout' || is531Configured || isSession) {
+                    setEditingDay(null)
                     setExpandedDay(isExpanded ? null : day)
                     setSwappingDay(null)
                   }
@@ -256,6 +423,55 @@ export default function WeekView({ onNavigate }) {
                         </span>
                       </div>
                       <p className="text-xs opacity-50 truncate">{assignment.workout.excerpt || assignment.workout.title}</p>
+                    </div>
+                  )}
+
+                  {isSession && (() => {
+                    const { session } = assignment
+                    const lifts = session.blocks.flatMap(b => b.items).filter(i => i.lift)
+                    const first = session.blocks[0]?.items[0]?.text || ''
+                    const tag = session.kind === 'lift' ? null
+                      : session.kind === 'run' ? { label: 'Run', color: 'var(--color-yellow)' }
+                      : { label: 'HIIT', color: 'var(--color-cyan)' }
+                    const sub = session.kind === 'lift'
+                      ? (lift531.configured
+                          ? `Wk ${lift531.weekIndex + 1}/${lift531.cycleLength} · ${lift531.isDeload ? 'Deload' : lift531.weekLabel}`
+                          : 'Lift day')
+                      : session.blocks.flatMap(b => b.items).slice(1, 3).map(i => i.text).join(' · ')
+                    return (
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-semibold truncate">
+                            {lifts.length ? lifts.map((l, i) => {
+                              const lift = LIFTS.find(x => x.key === l.lift)
+                              return (
+                                <span key={i}>
+                                  {i > 0 && <span className="opacity-30"> · </span>}
+                                  <span style={{ color: COLOR_MAP[lift.color] }}>{LIFT_TEXT[l.lift].toUpperCase()}</span>
+                                </span>
+                              )
+                            }) : session.kind === 'lift'
+                              ? <span className="text-yellow">LIGHT DAY</span>
+                              : first}
+                          </span>
+                          {tag && (
+                            <span
+                              className="text-[9px] uppercase tracking-wider font-bold px-1.5 py-0.5 rounded shrink-0"
+                              style={{ color: tag.color, border: `1px solid ${tag.color}` }}
+                            >{tag.label}</span>
+                          )}
+                        </div>
+                        <p className="text-xs opacity-50 truncate">
+                          {sub}{assignment.auto && session.kind === 'lift' ? ' · default pairings' : ''}
+                        </p>
+                      </div>
+                    )
+                  })()}
+
+                  {assignment.type === 'pending' && (
+                    <div className="min-w-0">
+                      <span className="text-sm opacity-50">Conditioning</span>
+                      <p className="text-xs opacity-40">Not posted yet</p>
                     </div>
                   )}
 
@@ -378,6 +594,28 @@ export default function WeekView({ onNavigate }) {
                   </div>
                 )}
 
+                {(isSession || assignment.type === 'pending') && (
+                  <div className="flex items-center gap-3 shrink-0 ml-2">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); startEdit(day) }}
+                      className="text-xs text-magenta hover:underline"
+                    >
+                      {assignment.type === 'pending' ? 'Add' : 'Edit'}
+                    </button>
+                    {assignment.overridden && (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleReset(day) }}
+                        className="text-xs text-orange hover:underline"
+                      >
+                        Reset
+                      </button>
+                    )}
+                    {isSession && (
+                      <span className="text-xs opacity-30">{isExpanded ? '\u25B2' : '\u25BC'}</span>
+                    )}
+                  </div>
+                )}
+
                 {is531Configured && (
                   <div className="flex items-center gap-3 shrink-0 ml-2">
                     <button
@@ -396,6 +634,44 @@ export default function WeekView({ onNavigate }) {
                   </div>
                 )}
               </div>
+
+              {/* Session editor */}
+              {isEditing && (
+                <div className="px-4 pb-4 pt-3 border-t border-border">
+                  <SessionEditor
+                    initialText={isSession ? serializeSession(assignment.session) : ''}
+                    onSave={session => saveSession(day, session)}
+                    onCancel={() => setEditingDay(null)}
+                    onShuffle={schedule.days[day] === '531' && liftKeysFor(day).length ? () => {
+                      const n = (shuffles[day] || 0) + 1
+                      setShuffles({ ...shuffles, [day]: n })
+                      return serializeSession(generateLiftSession(liftKeysFor(day), {
+                        seedStr: `${weekStart}:${day}`, shuffle: n, deload: lift531.isDeload,
+                      }))
+                    } : null}
+                  />
+                  {assignment.type === 'pending' && (
+                    <button
+                      onClick={() => onNavigate?.('roulette')}
+                      className="text-xs text-cyan hover:underline mt-2"
+                    >
+                      Or spin the roulette →
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {/* Expanded session */}
+              {isExpanded && isSession && !isEditing && (
+                <div className="px-4 pb-4 pt-3 border-t border-border">
+                  <SessionView
+                    session={assignment.session}
+                    date={date}
+                    lift531={lift531}
+                    onPlate={setPlateCalcWeight}
+                  />
+                </div>
+              )}
 
               {/* Swap picker */}
               {isSwapping && (
