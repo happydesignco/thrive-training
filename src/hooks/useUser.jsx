@@ -2,7 +2,10 @@ import { createContext, useContext, useCallback, useState, useEffect } from 'rea
 import { DEFAULT_SCHEDULES } from '../data/schedules'
 import { useAuth } from './useAuth'
 import { pushUserData, deleteUserData } from '../lib/sync'
-import { fetchPublishedSchedules, fetchPublisherWeekData } from '../lib/publishedSchedules'
+import {
+  fetchPublishedSchedules, fetchPublisherWeekData,
+  fetchEditablePublisherIds, postToPublisherWeek,
+} from '../lib/publishedSchedules'
 
 const UserContext = createContext()
 
@@ -15,6 +18,11 @@ export function UserProvider({ children }) {
   const [publishedSchedules, setPublishedSchedules] = useState([])
   const [publisherWeekData, setPublisherWeekData] = useState({})
   const [activeWeekStart, setActiveWeekStart] = useState(null)
+  const [editablePublisherIds, setEditablePublisherIds] = useState([])
+
+  useEffect(() => {
+    fetchEditablePublisherIds(supabaseUserId).then(setEditablePublisherIds)
+  }, [supabaseUserId])
 
   useEffect(() => {
     fetchPublishedSchedules().then(setPublishedSchedules)
@@ -52,6 +60,9 @@ export function UserProvider({ children }) {
       }
       return custom
     }
+    // No saved schedule: follow the group (the first schedule ever published).
+    const group = publishedSchedules[publishedSchedules.length - 1]
+    if (group) return group
     return DEFAULT_SCHEDULES[currentUser.scheduleId] || DEFAULT_SCHEDULES.thrive
   }, [currentUser.scheduleId, getUserData, publishedSchedules])
 
@@ -83,6 +94,16 @@ export function UserProvider({ children }) {
     }
   }, [activePublisherUserId, activeWeekStart])
 
+  // Editors post into the publisher's week instead of their own.
+  const canPostToGroup = !!activePublisherUserId &&
+    activePublisherUserId !== supabaseUserId &&
+    editablePublisherIds.includes(activePublisherUserId)
+
+  const postToGroup = useCallback(async (weekStart, daysPatch) => {
+    const value = await postToPublisherWeek(activePublisherUserId, weekStart, daysPatch)
+    if (weekStart === activeWeekStart) setPublisherWeekData(value)
+  }, [activePublisherUserId, activeWeekStart])
+
   const [onboarded, setOnboarded] = useState(() => !!getUserData('onboarded'))
   const needsOnboarding = !onboarded
 
@@ -97,6 +118,7 @@ export function UserProvider({ children }) {
       getUserData, setUserData, removeUserData, getSchedule,
       publishedSchedules, refreshPublishedSchedules,
       publisherWeekData, setActiveWeekStart,
+      canPostToGroup, postToGroup,
       needsOnboarding, completeOnboarding,
     }}>
       {children}

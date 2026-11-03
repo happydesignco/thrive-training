@@ -81,8 +81,10 @@ const DAY_NAMES = {
   friday: 'Friday', saturday: 'Saturday', sunday: 'Sunday',
 }
 
-function ImportWeek({ weekLabel, defaultDay, onSave, onClose }) {
+function ImportWeek({ weekLabel, defaultDay, groupOption, onSave, onClose }) {
   const [text, setText] = useState('')
+  const [toGroup, setToGroup] = useState(true)
+  const [saving, setSaving] = useState(false)
   const [singleDay, setSingleDay] = useState(defaultDay || 'monday')
   const [reading, setReading] = useState(false)
   const [readError, setReadError] = useState('')
@@ -164,10 +166,27 @@ function ImportWeek({ weekLabel, defaultDay, onSave, onClose }) {
             : `Found ${found.map(d => DAY_LABELS[d]).join(', ')}. Saving replaces those days.`}
         </p>
       )}
+      {groupOption && (
+        <label className="text-xs flex items-center">
+          <input
+            type="checkbox"
+            className="thrive-checkbox"
+            checked={toGroup}
+            onChange={e => setToGroup(e.target.checked)}
+          />
+          Post for the group
+        </label>
+      )}
       <div className="flex gap-2">
         <button
-          onClick={() => onSave(days)}
-          disabled={!found.length}
+          onClick={async () => {
+            setSaving(true)
+            setReadError('')
+            try { await onSave(days, groupOption && toGroup) }
+            catch (err) { setReadError(err.message || 'Couldn\'t save') }
+            finally { setSaving(false) }
+          }}
+          disabled={!found.length || saving}
           className="px-3 py-1.5 text-xs bg-magenta text-black rounded font-bold disabled:opacity-30"
         >
           Save
@@ -189,7 +208,10 @@ function getTodayIndex(mondayStr) {
 }
 
 export default function WeekView({ onNavigate }) {
-  const { getUserData, setUserData, getSchedule, publisherWeekData, setActiveWeekStart } = useUser()
+  const {
+    getUserData, setUserData, getSchedule, publisherWeekData, setActiveWeekStart,
+    canPostToGroup, postToGroup,
+  } = useUser()
   const { filterWorkouts, getWorkoutById, loading: workoutsLoading } = useWorkouts()
   const schedule = getSchedule()
 
@@ -368,13 +390,35 @@ export default function WeekView({ onNavigate }) {
     setSwappingDay(null)
   }
 
-  function saveSession(day, session) {
-    handleSwap(day, { session })
+  async function saveSession(day, session, toGroup) {
+    if (toGroup) {
+      try {
+        await postToGroup(weekStart, { [day]: { session } })
+      } catch (err) {
+        window.alert(`Couldn't post for the group: ${err.message}`)
+        return
+      }
+      // Drop any personal version so the group one shows.
+      if (assignments[day]) handleReset(day)
+    } else {
+      handleSwap(day, { session })
+    }
     setEditingDay(null)
     setExpandedDay(day)
   }
 
-  function handleImport(days) {
+  async function handleImport(days, toGroup) {
+    if (toGroup) {
+      const patch = {}
+      for (const [day, session] of Object.entries(days)) patch[day] = { session }
+      await postToGroup(weekStart, patch)
+      const next = { ...assignments }
+      for (const day of Object.keys(days)) delete next[day]
+      setAssignments(next)
+      setUserData(storageKey, next)
+      setShowImport(false)
+      return
+    }
     const next = { ...assignments }
     for (const [day, session] of Object.entries(days)) next[day] = { session }
     setAssignments(next)
@@ -428,6 +472,7 @@ export default function WeekView({ onNavigate }) {
         <ImportWeek
           weekLabel={formatWeekRange(weekStart)}
           defaultDay={DAYS[todayIndex >= 0 ? Math.min(todayIndex + 1, 6) : 0]}
+          groupOption={canPostToGroup}
           onSave={handleImport}
           onClose={() => setShowImport(false)}
         />
@@ -714,7 +759,8 @@ export default function WeekView({ onNavigate }) {
                 <div className="px-4 pb-4 pt-3 border-t border-border">
                   <SessionEditor
                     initialText={isSession ? serializeSession(assignment.session) : ''}
-                    onSave={session => saveSession(day, session)}
+                    onSave={(session, toGroup) => saveSession(day, session, toGroup)}
+                    groupOption={canPostToGroup}
                     onCancel={() => setEditingDay(null)}
                     onShuffle={schedule.days[day] === '531' && liftKeysFor(day).length ? () => {
                       const n = (shuffles[day] || 0) + 1

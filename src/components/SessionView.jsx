@@ -145,8 +145,9 @@ function AccessoryItem({ item, log, updateItem, lastWeight }) {
   )
 }
 
-export function SessionEditor({ initialText, onSave, onCancel, onShuffle }) {
+export function SessionEditor({ initialText, onSave, onCancel, onShuffle, groupOption }) {
   const [text, setText] = useState(initialText || '')
+  const [toGroup, setToGroup] = useState(true)
   useEffect(() => { setText(initialText || '') }, [initialText])
   return (
     <div className="flex flex-col gap-2" onClick={e => e.stopPropagation()}>
@@ -160,9 +161,20 @@ export function SessionEditor({ initialText, onSave, onCancel, onShuffle }) {
       <p className="text-[10px] opacity-50">
         Blank line between pairs. "Squat 531" pulls in your 5/3/1 sets.
       </p>
+      {groupOption && (
+        <label className="text-xs flex items-center">
+          <input
+            type="checkbox"
+            className="thrive-checkbox"
+            checked={toGroup}
+            onChange={e => setToGroup(e.target.checked)}
+          />
+          Post for the group
+        </label>
+      )}
       <div className="flex gap-2">
         <button
-          onClick={() => { const s = parseSession(text); if (s) onSave(s) }}
+          onClick={() => { const s = parseSession(text); if (s) onSave(s, groupOption && toGroup) }}
           disabled={!text.trim()}
           className="px-3 py-1.5 text-xs bg-magenta text-black rounded font-bold disabled:opacity-30"
         >

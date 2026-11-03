@@ -66,3 +66,42 @@ export async function unpublishSchedule(userId) {
     .eq('user_id', userId)
   if (error) throw error
 }
+
+// Publishers the user may post to (rows in schedule_editors).
+export async function fetchEditablePublisherIds(userId) {
+  if (!supabase || !userId) return []
+  try {
+    const { data, error } = await supabase
+      .from('schedule_editors')
+      .select('publisher_id')
+      .eq('editor_id', userId)
+    if (error) throw error
+    return (data || []).map(r => r.publisher_id)
+  } catch (err) {
+    console.warn('[publishedSchedules] fetchEditablePublisherIds failed:', err)
+    return []
+  }
+}
+
+// Merge days into a publisher's week, as an editor. Reads fresh first so
+// days other people posted aren't lost.
+export async function postToPublisherWeek(publisherUserId, weekStart, daysPatch) {
+  if (!supabase) throw new Error('Supabase not configured')
+  const key = `week:${weekStart}`
+  const { data, error: readError } = await supabase
+    .from('user_data')
+    .select('value')
+    .eq('user_id', publisherUserId)
+    .eq('key', key)
+    .maybeSingle()
+  if (readError) throw readError
+  const value = { ...(data?.value || {}), ...daysPatch }
+  const { error } = await supabase
+    .from('user_data')
+    .upsert(
+      { user_id: publisherUserId, key, value, updated_at: new Date().toISOString() },
+      { onConflict: 'user_id,key' }
+    )
+  if (error) throw error
+  return value
+}
