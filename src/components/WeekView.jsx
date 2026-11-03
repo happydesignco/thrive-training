@@ -7,6 +7,7 @@ import {
   calcWeight, get531WeekIndex, getWeekSets,
 } from '../utils/fiveThreeOne'
 import PlateCalculator from './PlateCalculator'
+import { supabase } from '../lib/supabase'
 import SessionView, { SessionEditor } from './SessionView'
 import {
   parseNote, parseSession, serializeSession, generateLiftSession,
@@ -57,26 +58,96 @@ function dayDate(mondayStr, dayIdx) {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
 }
 
-function ImportWeek({ weekLabel, onSave, onClose }) {
+// Shrink a screenshot to a sensible size and return base64 JPEG.
+function imageToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.onload = () => {
+      const scale = Math.min(1, 1568 / Math.max(img.width, img.height))
+      const canvas = document.createElement('canvas')
+      canvas.width = Math.round(img.width * scale)
+      canvas.height = Math.round(img.height * scale)
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height)
+      URL.revokeObjectURL(img.src)
+      resolve(canvas.toDataURL('image/jpeg', 0.85).split(',')[1])
+    }
+    img.onerror = reject
+    img.src = URL.createObjectURL(file)
+  })
+}
+
+const DAY_NAMES = {
+  monday: 'Monday', tuesday: 'Tuesday', wednesday: 'Wednesday', thursday: 'Thursday',
+  friday: 'Friday', saturday: 'Saturday', sunday: 'Sunday',
+}
+
+function ImportWeek({ weekLabel, defaultDay, onSave, onClose }) {
   const [text, setText] = useState('')
-  const [singleDay, setSingleDay] = useState('monday')
+  const [singleDay, setSingleDay] = useState(defaultDay || 'monday')
+  const [reading, setReading] = useState(false)
+  const [readError, setReadError] = useState('')
+
+  async function readImage(file) {
+    if (!file || !supabase) return
+    setReading(true)
+    setReadError('')
+    try {
+      const image = await imageToBase64(file)
+      const { data, error } = await supabase.functions.invoke('parse-workout', {
+        body: { image, media_type: 'image/jpeg' },
+      })
+      if (error) {
+        const body = await error.context?.json?.().catch(() => null)
+        throw new Error(body?.error || 'Couldn\'t read that image')
+      }
+      if (data.day && data.day !== 'none') setSingleDay(data.day)
+      setText(data.text)
+    } catch (err) {
+      setReadError(err.message)
+    } finally {
+      setReading(false)
+    }
+  }
+
+  function handlePaste(e) {
+    const file = [...(e.clipboardData?.files || [])].find(f => f.type.startsWith('image/'))
+    if (file) {
+      e.preventDefault()
+      readImage(file)
+    }
+  }
   const parsed = useMemo(() => (text.trim() ? parseNote(text) : null), [text])
   const days = parsed?.single ? { [singleDay]: parsed.single } : parsed?.days || {}
   const found = DAYS.filter(d => days[d])
 
   return (
     <div className="border border-magenta bg-card-bg p-4 mb-4 flex flex-col gap-2">
-      <p className="text-xs uppercase tracking-wider text-magenta">Paste week of {weekLabel}</p>
+      <p className="text-xs uppercase tracking-wider text-magenta">Add workout · week of {weekLabel}</p>
+      <label className={`w-full py-2 text-xs uppercase tracking-wider text-center border rounded-md cursor-pointer transition-colors ${
+        reading ? 'border-border opacity-50' : 'border-cyan text-cyan hover:bg-black'
+      }`}>
+        {reading ? 'Reading screenshot…' : 'Upload screenshot'}
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          disabled={reading}
+          onChange={e => { readImage(e.target.files?.[0]); e.target.value = '' }}
+        />
+      </label>
+      {readError && <p className="text-xs text-orange">{readError}</p>}
+      <p className="text-[10px] opacity-50">Or paste the text (or a screenshot) below, then check it before saving.</p>
       <textarea
         value={text}
         onChange={e => setText(e.target.value)}
+        onPaste={handlePaste}
         rows={10}
         placeholder={'Monday\nSquat 531\nChin ups 3x10\n\nBench 531\nSplit squat 3x8 each leg\n\nTuesday\n25 minute amrap\n...'}
         className="w-full px-2 py-1.5 text-sm bg-black border border-border rounded font-mono focus:border-magenta focus:outline-none"
       />
       {parsed?.single && (
         <label className="text-xs flex items-center gap-2">
-          <span className="opacity-50">No day names found. Put it on</span>
+          <span className="opacity-50">Put it on</span>
           <select
             value={singleDay}
             onChange={e => setSingleDay(e.target.value)}
@@ -88,7 +159,9 @@ function ImportWeek({ weekLabel, onSave, onClose }) {
       )}
       {found.length > 0 && (
         <p className="text-xs opacity-60">
-          Found: {found.map(d => DAY_LABELS[d]).join(', ')}. Saving replaces those days.
+          {found.length === 1
+            ? `Saves to ${DAY_NAMES[found[0]]}, replacing what's there.`
+            : `Found ${found.map(d => DAY_LABELS[d]).join(', ')}. Saving replaces those days.`}
         </p>
       )}
       <div className="flex gap-2">
@@ -97,7 +170,7 @@ function ImportWeek({ weekLabel, onSave, onClose }) {
           disabled={!found.length}
           className="px-3 py-1.5 text-xs bg-magenta text-black rounded font-bold disabled:opacity-30"
         >
-          Save to week
+          Save
         </button>
         <button onClick={onClose} className="px-3 py-1.5 text-xs opacity-50 hover:opacity-100">
           Cancel
@@ -354,6 +427,7 @@ export default function WeekView({ onNavigate }) {
       {showImport ? (
         <ImportWeek
           weekLabel={formatWeekRange(weekStart)}
+          defaultDay={DAYS[todayIndex >= 0 ? Math.min(todayIndex + 1, 6) : 0]}
           onSave={handleImport}
           onClose={() => setShowImport(false)}
         />
@@ -362,7 +436,7 @@ export default function WeekView({ onNavigate }) {
           onClick={() => setShowImport(true)}
           className="w-full mb-4 py-2 text-xs uppercase tracking-wider border border-border rounded-md hover:border-magenta hover:text-magenta transition-colors"
         >
-          Paste week
+          + Add workout
         </button>
       )}
 
