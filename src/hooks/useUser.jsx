@@ -43,7 +43,7 @@ export function UserProvider({ children }) {
 
   const setUserData = useCallback((key, value) => {
     localStorage.setItem(storageKey(currentUser.id, key), JSON.stringify(value))
-    pushUserData(supabaseUserId, key, value)
+    return pushUserData(supabaseUserId, key, value)
   }, [currentUser.id, supabaseUserId])
 
   const removeUserData = useCallback((key) => {
@@ -119,6 +119,8 @@ export function UserProvider({ children }) {
       publishedSchedules, refreshPublishedSchedules,
       publisherWeekData, setActiveWeekStart,
       canPostToGroup, postToGroup,
+      activePublisherUserId,
+      isPublisher: !!activePublisherUserId && activePublisherUserId === supabaseUserId,
       needsOnboarding, completeOnboarding,
     }}>
       {children}

@@ -8,6 +8,8 @@ import {
 } from '../utils/fiveThreeOne'
 import PlateCalculator from './PlateCalculator'
 import { supabase } from '../lib/supabase'
+import { useAuth } from '../hooks/useAuth'
+import { pushSupported, needsHomeScreenInstall, enablePush, notifyGroup } from '../lib/push'
 import SessionView, { SessionEditor } from './SessionView'
 import {
   parseNote, parseSession, serializeSession, generateLiftSession,
@@ -199,6 +201,66 @@ function ImportWeek({ weekLabel, defaultDay, groupOption, onSave, onClose }) {
   )
 }
 
+const PUSH_DISMISSED = 'thrive:push-prompt-dismissed'
+
+function NotificationPrompt() {
+  const { userId } = useAuth()
+  const [hidden, setHidden] = useState(() => localStorage.getItem(PUSH_DISMISSED) === '1')
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState('')
+  const [permission, setPermission] = useState(() => (pushSupported() ? Notification.permission : 'unsupported'))
+  const installFirst = needsHomeScreenInstall()
+
+  // Already allowed on this device: keep the subscription saved, quietly.
+  useEffect(() => {
+    if (permission === 'granted') enablePush(userId).catch(() => {})
+  }, [permission, userId])
+
+  function dismiss() {
+    localStorage.setItem(PUSH_DISMISSED, '1')
+    setHidden(true)
+  }
+
+  async function turnOn() {
+    setBusy(true)
+    setError('')
+    try {
+      await enablePush(userId)
+    } catch (err) {
+      setError(err.message || 'Couldn\'t turn on notifications')
+    } finally {
+      setPermission(Notification.permission)
+      setBusy(false)
+    }
+  }
+
+  if (hidden || permission === 'granted' || permission === 'denied') return null
+  if (permission === 'unsupported' && !installFirst) return null
+
+  return (
+    <div className="border border-cyan bg-card-bg p-3 mb-4 flex items-start gap-3">
+      <div className="flex-1 text-xs">
+        <p className="font-semibold text-cyan mb-1">Get a heads-up when workouts are posted</p>
+        {installFirst ? (
+          <p className="opacity-70">
+            On iPhone, tap Share, then Add to Home Screen. Open Thrive from your Home Screen and turn notifications on there.
+          </p>
+        ) : (
+          <button
+            onClick={turnOn}
+            disabled={busy}
+            className="mt-1 px-3 py-1.5 text-xs bg-cyan text-black rounded font-bold disabled:opacity-40"
+          >
+            {busy ? 'Turning on…' : 'Turn on notifications'}
+          </button>
+        )}
+        {error && <p className="text-orange mt-1">{error}</p>}
+      </div>
+      <button onClick={dismiss} className="opacity-40 hover:opacity-100 text-sm leading-none" title="Dismiss">✕</button>
+    </div>
+  )
+}
+
 function getTodayIndex(mondayStr) {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
@@ -210,7 +272,7 @@ function getTodayIndex(mondayStr) {
 export default function WeekView({ onNavigate }) {
   const {
     getUserData, setUserData, getSchedule, publisherWeekData, setActiveWeekStart,
-    canPostToGroup, postToGroup,
+    canPostToGroup, postToGroup, activePublisherUserId, isPublisher,
   } = useUser()
   const { filterWorkouts, getWorkoutById, loading: workoutsLoading } = useWorkouts()
   const schedule = getSchedule()
@@ -386,22 +448,27 @@ export default function WeekView({ onNavigate }) {
   function handleSwap(day, workoutId) {
     const next = { ...assignments, [day]: workoutId }
     setAssignments(next)
-    setUserData(storageKey, next)
     setSwappingDay(null)
+    return setUserData(storageKey, next)
   }
 
   async function saveSession(day, session, toGroup) {
     if (toGroup) {
+      const updated = !!publisherWeekData[day]?.session
       try {
         await postToGroup(weekStart, { [day]: { session } })
       } catch (err) {
         window.alert(`Couldn't post for the group: ${err.message}`)
         return
       }
+      notifyGroup(activePublisherUserId, weekStart, [{ day, updated }])
       // Drop any personal version so the group one shows.
       if (assignments[day]) handleReset(day)
     } else {
-      handleSwap(day, { session })
+      const updated = !!assignments[day]?.session
+      const saved = handleSwap(day, { session })
+      // Notify after the save lands so the server sees the new workout.
+      if (isPublisher) saved.then(() => notifyGroup(activePublisherUserId, weekStart, [{ day, updated }]))
     }
     setEditingDay(null)
     setExpandedDay(day)
@@ -411,7 +478,9 @@ export default function WeekView({ onNavigate }) {
     if (toGroup) {
       const patch = {}
       for (const [day, session] of Object.entries(days)) patch[day] = { session }
+      const changes = Object.keys(days).map(day => ({ day, updated: !!publisherWeekData[day]?.session }))
       await postToGroup(weekStart, patch)
+      notifyGroup(activePublisherUserId, weekStart, changes)
       const next = { ...assignments }
       for (const day of Object.keys(days)) delete next[day]
       setAssignments(next)
@@ -419,11 +488,13 @@ export default function WeekView({ onNavigate }) {
       setShowImport(false)
       return
     }
+    const changes = Object.keys(days).map(day => ({ day, updated: !!assignments[day]?.session }))
     const next = { ...assignments }
     for (const [day, session] of Object.entries(days)) next[day] = { session }
     setAssignments(next)
-    setUserData(storageKey, next)
     setShowImport(false)
+    const saved = setUserData(storageKey, next)
+    if (isPublisher) saved.then(() => notifyGroup(activePublisherUserId, weekStart, changes))
   }
 
   function startEdit(day) {
@@ -467,6 +538,8 @@ export default function WeekView({ onNavigate }) {
           &rarr;
         </button>
       </div>
+
+      <NotificationPrompt />
 
       {showImport ? (
         <ImportWeek
