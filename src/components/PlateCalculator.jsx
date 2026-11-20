@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react'
 
 const PLATES = [45, 25, 15, 10, 5, 2.5]
-const BAR_OPTIONS = [45, 35, 15]
+const BAR_OPTIONS = [45, 35, 15, 65]
+const TRAP_BAR = 65
+
+function barName(bw) {
+  return bw === TRAP_BAR ? `${bw} lb trap bar` : `${bw} lb bar`
+}
 const STORAGE_KEY = 'thrive:bar-weight'
 
 const PLATE_COLORS = {
@@ -142,7 +147,7 @@ function BarDiagram({ plates, barWeight }) {
         x={barStartX + 30} y={barY - barHeight / 2 - 6}
         textAnchor="middle" fontSize="10" fill="#999" fontFamily="monospace"
       >
-        {barWeight}lb bar
+        {barName(barWeight)}
       </text>
       {/* "each side" label */}
       {plates.length > 0 && (
@@ -236,7 +241,7 @@ export default function PlateCalculator({ weight, onClose }) {
                   opacity: barWeight === bw ? 1 : 0.5,
                 }}
               >
-                {bw} lb
+                {bw === TRAP_BAR ? `${bw} lb trap` : `${bw} lb`}
               </button>
             ))}
           </div>
@@ -268,7 +273,7 @@ export default function PlateCalculator({ weight, onClose }) {
             <div className="mb-4 text-center py-4">
               <p className="text-sm opacity-50">
                 {Number(weight) < barWeight
-                  ? `Weight is less than the ${barWeight} lb bar`
+                  ? `Weight is less than the ${barName(barWeight)}`
                   : 'Cannot be made with standard plates'}
               </p>
             </div>
@@ -321,7 +326,7 @@ export default function PlateCalculator({ weight, onClose }) {
                 return (
                   <p className="text-xs opacity-50 mt-3 text-center">
                     {quickRounded < barWeight
-                      ? `Result is less than the ${barWeight} lb bar`
+                      ? `Result is less than the ${barName(barWeight)}`
                       : 'Cannot be made with standard plates'}
                   </p>
                 )
